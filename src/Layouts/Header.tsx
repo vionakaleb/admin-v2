@@ -115,7 +115,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             {
               content: (
                 <Link href="/">
-                  <a className="logo">Admin Template</a>
+                  <a className="logo">Super Admin</a>
                 </Link>
               ),
             },
