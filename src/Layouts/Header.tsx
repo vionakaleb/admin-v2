@@ -55,8 +55,6 @@ interface HeaderProps {
     set: (value: DefaultTheme['name']) => void;
     value: DefaultTheme['name'];
   };
-  changeDir: () => void;
-  dir: 'rtl' | 'ltr';
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
@@ -67,7 +65,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       label: (
         <Label>
           <EvaIcon name="droplet" options={{ fill: '#a6c1ff' }} />
-          Default
+          Style 1
         </Label>
       ),
     },
@@ -76,7 +74,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       label: (
         <Label>
           <EvaIcon name="droplet" options={{ fill: '#192038' }} />
-          Dark
+          Style 2
         </Label>
       ),
     },
@@ -85,7 +83,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       label: (
         <Label>
           <EvaIcon name="droplet" options={{ fill: '#5a37b8' }} />
-          Cosmic
+          Style 3
         </Label>
       ),
     },
@@ -94,7 +92,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       label: (
         <Label>
           <EvaIcon name="droplet" options={{ fill: '#3366ff' }} />
-          Corporate
+          Style 4
         </Label>
       ),
       selected: true,
@@ -115,10 +113,28 @@ const Header: React.FC<HeaderProps> = (props) => {
             {
               content: (
                 <Link href="/">
-                  <a className="logo">Super Admin</a>
+                  <a className="logo">SuperAdmin</a>
                 </Link>
               ),
             },
+            {
+              content: <Button size="Small">New Member</Button>,
+            },
+            {
+              content: <Button size="Small">Deposit</Button>,
+            },
+            {
+              content: <Button size="Small">Withdraw</Button>,
+            },
+            {
+              content: <Button size="Small">Adjustment</Button>,
+            },
+          ]}
+        />
+        <Actions
+          size="Small"
+          className="right"
+          actions={[
             {
               content: (
                 <SelectStyled
@@ -132,47 +148,17 @@ const Header: React.FC<HeaderProps> = (props) => {
                 />
               ),
             },
-            {
-              content: (
-                <Button size="Small" onClick={() => props.changeDir()}>
-                  {props.dir}
-                </Button>
-              ),
-            },
-          ]}
-        />
-        <Actions
-          size="Small"
-          className="right"
-          actions={[
-            {
-              content: (
-                <a
-                  className="left"
-                  href={`https://github.com/paljs/nextjs-admin-template`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="github">Support us in GitHub</span>
-                  <img src={`https://badgen.net/github/stars/paljs/nextjs-admin-template`} />
-                </a>
-              ),
-            },
-            {
-              content: (
-                <a
-                  href="https://join.slack.com/t/paljs/shared_invite/zt-ju5j9bb9-onkc9ZksqPZq~yIYJ3BfKw"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img height="20" src="/slack.svg" alt="slack" />
-                </a>
-              ),
-            },
-            {
-              icon: 'twitter',
-              url: { href: 'https://twitter.com/AhmedElywh', target: '_blank' },
-            },
+            // {
+            //   content: (
+            //     <a href="https://slack.com" target="_blank" rel="noreferrer">
+            //       <img height="20" src="/slack.svg" alt="slack" />
+            //     </a>
+            //   ),
+            // },
+            // {
+            //   icon: 'twitter',
+            //   url: { href: 'https://twitter.com/', target: '_blank' },
+            // },
             {
               content: (
                 <ContextMenu
@@ -186,7 +172,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                   ]}
                   Link={Link}
                 >
-                  <User image="url('/icons/icon-72x72.png')" name="Ahmed Elywa" title="Manger" size="Medium" />
+                  <User image="url('/icons/icon-72x72.png')" name="John Doe" title="User" size="Medium" />
                 </ContextMenu>
               ),
             },

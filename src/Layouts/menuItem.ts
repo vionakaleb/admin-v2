@@ -213,190 +213,110 @@ const items: MenuItemType[] = [
     icon: { name: 'browser-outline' },
     children: [
       {
-        title: 'Product Maintenance',
-        link: { href: '/tools/product-maintenance' },
+        title: 'Announcement',
+        link: { href: '/settings/announcement' },
       },
       {
-        title: 'Game Management',
-        link: { href: '/tools/game-management' },
+        title: 'Daily Withdrawal Limit',
+        link: { href: '/settings/daily-withdrawal-limit' },
       },
       {
-        title: 'Provider Management',
-        link: { href: '/tools/provider-management' },
+        title: 'SMS',
+        link: { href: '/settings/sms' },
       },
       {
-        title: 'Content Management',
-        link: { href: '/tools/content-management' },
+        title: 'Email',
+        link: { href: '/settings/email' },
       },
       {
-        title: 'Banner Management',
-        link: { href: '/tools/banner-management' },
+        title: 'Reject Reason',
+        link: { href: '/settings/reject-reason' },
       },
       {
-        title: 'API Robot',
-        link: { href: '/tools/api-robot' },
+        title: 'Remarks',
+        link: { href: '/settings/remarks' },
       },
       {
-        title: 'IP Look Up',
-        link: { href: '/tools/ip-lookup' },
+        title: 'IP Access',
+        link: { href: '/settings/ip-access' },
       },
       {
-        title: 'Live Tracker',
-        link: { href: '/tools/live-tracker' },
+        title: 'Payment Gateway',
+        link: { href: '/settings/payment-gateway' },
       },
     ],
   },
   {
-    title: '----------',
-    group: true,
-  },
-  {
-    title: 'Extra Components',
-    icon: { name: 'star-outline' },
-    children: [
-      {
-        title: 'Accordion',
-        link: { href: '/extra-components/accordion' },
-      },
-      {
-        title: 'Actions',
-        link: { href: '/extra-components/actions' },
-      },
-      {
-        title: 'Alert',
-        link: { href: '/extra-components/alert' },
-      },
-      {
-        title: 'List',
-        link: { href: '/extra-components/list' },
-      },
-      {
-        title: 'Spinner',
-        link: { href: '/extra-components/spinner' },
-      },
-      {
-        title: 'Progress Bar',
-        link: { href: '/extra-components/progress' },
-      },
-      {
-        title: 'Tabs',
-        link: { href: '/extra-components/tabs' },
-      },
-      {
-        title: 'Chat',
-        link: { href: '/extra-components/chat' },
-      },
-      {
-        title: 'Cards',
-        link: { href: '/extra-components/cards' },
-      },
-      {
-        title: 'Flip Card',
-        link: { href: '/extra-components/flip-card' },
-      },
-      {
-        title: 'Reveal Card',
-        link: { href: '/extra-components/reveal-card' },
-      },
-    ],
-  },
-  {
-    title: 'Forms',
-    icon: { name: 'edit-2-outline' },
-    children: [
-      {
-        title: 'Inputs',
-        link: { href: '/forms/inputs' },
-      },
-      {
-        title: 'Layout',
-        link: { href: '/forms/form-layout' },
-      },
-      {
-        title: 'Buttons',
-        link: { href: '/forms/buttons' },
-      },
-      {
-        title: 'Select',
-        link: { href: '/forms/select' },
-      },
-    ],
-  },
-  {
-    title: 'UI Features',
-    icon: { name: 'keypad-outline' },
-    children: [
-      {
-        title: 'Grid',
-        link: { href: '/ui-features/grid' },
-      },
-      {
-        title: 'Animated Searches',
-        link: { href: '/ui-features/search' },
-      },
-    ],
-  },
-  {
-    title: 'Modal & Overlays',
+    title: 'Admins',
     icon: { name: 'browser-outline' },
     children: [
       {
-        title: 'Popover',
-        link: { href: '/modal-overlays/popover' },
+        title: 'Bonus List',
+        link: { href: '/admins/acoount' },
       },
       {
-        title: 'Tooltip',
-        link: { href: '/modal-overlays/tooltip' },
+        title: 'Rebate List',
+        link: { href: '/admins/departments' },
       },
       {
-        title: 'Toastr',
-        link: { href: '/modal-overlays/toastr' },
-      },
-    ],
-  },
-  {
-    title: 'Editors',
-    icon: { name: 'text-outline' },
-    children: [
-      {
-        title: 'TinyMCE',
-        link: { href: '/editors/tinymce' },
+        title: 'Cashback',
+        link: { href: '/admins/log' },
       },
       {
-        title: 'CKEditor',
-        link: { href: '/editors/ckeditor' },
+        title: 'Auto Rebate List',
+        link: { href: '/admins/change-password' },
       },
     ],
   },
   {
-    title: 'Miscellaneous',
-    icon: { name: 'shuffle-2-outline' },
+    title: 'Archive',
+    icon: { name: 'browser-outline' },
     children: [
       {
-        title: '404',
-        link: { href: '/miscellaneous/404' },
+        title: 'Bet Enquiries [All]',
+        link: { href: '/archive/bet-all' },
+      },
+      {
+        title: 'Bet Enquiries [Slot]',
+        link: { href: '/archive/bet-slot' },
+      },
+      {
+        title: 'Bet Enquiries [Sports]',
+        link: { href: '/archive/bet-sports' },
+      },
+      {
+        title: 'Bet Enquiries [Live Casino]',
+        link: { href: '/archive/bet-live-casino' },
+      },
+      {
+        title: 'Profit & Loss',
+        link: { href: '/archive/profit-loss' },
       },
     ],
   },
   {
-    title: 'Auth',
-    icon: { name: 'lock-outline' },
+    title: 'Super Admin',
+    icon: { name: 'browser-outline' },
     children: [
       {
-        title: 'Login',
-        link: { href: '/auth/login' },
+        title: 'Permissions',
+        link: { href: '/super-admin/permissions' },
       },
       {
-        title: 'Register',
-        link: { href: '/auth/register' },
+        title: 'Product Category',
+        link: { href: '/super-admin/product-category' },
       },
       {
-        title: 'Request Password',
-        link: { href: '/auth/request-password' },
+        title: 'Product',
+        link: { href: '/super-admin/product' },
       },
       {
-        title: 'Reset Password',
-        link: { href: '/auth/reset-password' },
+        title: 'Languages',
+        link: { href: '/super-admin/languages' },
+      },
+      {
+        title: 'Real Bet Odds Limit',
+        link: { href: '/super-admin/odds-limit' },
       },
     ],
   },
