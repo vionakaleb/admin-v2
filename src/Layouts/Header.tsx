@@ -87,16 +87,6 @@ const Header: React.FC<HeaderProps> = (props) => {
         </Label>
       ),
     },
-    {
-      value: 'corporate',
-      label: (
-        <Label>
-          <EvaIcon name="droplet" options={{ fill: '#3366ff' }} />
-          Style 4
-        </Label>
-      ),
-      selected: true,
-    },
   ];
   return (
     <LayoutHeader fixed>
@@ -118,16 +108,32 @@ const Header: React.FC<HeaderProps> = (props) => {
               ),
             },
             {
-              content: <Button size="Small">New Member</Button>,
+              content: (
+                <Button size="Small" shape="Round">
+                  <EvaIcon name="person-add" options={{ height: '25px', animation: { type: 'shake' } }} /> New Member
+                </Button>
+              ),
             },
             {
-              content: <Button size="Small">Deposit</Button>,
+              content: (
+                <Button size="Small" shape="Round">
+                  <EvaIcon name="upload" options={{ height: '25px', animation: { type: 'shake' } }} /> Deposit
+                </Button>
+              ),
             },
             {
-              content: <Button size="Small">Withdraw</Button>,
+              content: (
+                <Button size="Small" shape="Round">
+                  <EvaIcon name="download" options={{ height: '25px', animation: { type: 'shake' } }} /> Withdraw
+                </Button>
+              ),
             },
             {
-              content: <Button size="Small">Adjustment</Button>,
+              content: (
+                <Button size="Small" shape="Round">
+                  <EvaIcon name="repeat" options={{ height: '25px', animation: { type: 'shake' } }} /> Adjustment
+                </Button>
+              ),
             },
           ]}
         />
@@ -135,6 +141,13 @@ const Header: React.FC<HeaderProps> = (props) => {
           size="Small"
           className="right"
           actions={[
+            {
+              content: (
+                <Button size="Small" shape="Round">
+                  <EvaIcon name="globe-2" options={{ animation: { type: 'shake' } }} />
+                </Button>
+              ),
+            },
             {
               content: (
                 <SelectStyled

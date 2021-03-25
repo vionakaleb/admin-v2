@@ -3,12 +3,12 @@ import { MenuItemType } from '@paljs/ui/types';
 const items: MenuItemType[] = [
   {
     title: 'Dashboard',
-    icon: { name: 'home' },
+    icon: { name: 'home', options: { animation: { type: 'shake' }} },
     link: { href: '/dashboard' },
   },
   {
     title: 'Transaction',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'monitor-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Instant Transaction',
@@ -34,7 +34,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Members',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'person-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'New Member',
@@ -64,7 +64,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Bank',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'shield-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Bank Summary',
@@ -82,7 +82,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Agents / Affiliate',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'people-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'New Agent',
@@ -104,7 +104,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Report',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'pie-chart-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Outstanding Wager',
@@ -150,7 +150,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Bonus & Rebate',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'shopping-bag-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Bonus List',
@@ -172,7 +172,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Tools',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'external-link-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Product Maintenance',
@@ -210,7 +210,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Settings',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'settings-2-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Announcement',
@@ -248,7 +248,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Admins',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'person-done-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Bonus List',
@@ -270,7 +270,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Archive',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'trending-up-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Bet Enquiries [All]',
@@ -296,7 +296,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Super Admin',
-    icon: { name: 'browser-outline' },
+    icon: { name: 'person', options: { animation: { type: 'shake' }} },
     children: [
       {
         title: 'Permissions',
