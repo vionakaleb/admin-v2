@@ -143,9 +143,21 @@ const Header: React.FC<HeaderProps> = (props) => {
           actions={[
             {
               content: (
-                <Button size="Small" shape="Round">
-                  <EvaIcon name="globe-2" options={{ animation: { type: 'shake' } }} />
-                </Button>
+                <ContextMenu
+                  nextJs
+                  style={{ cursor: 'pointer' }}
+                  placement="bottom"
+                  currentPath={router.pathname}
+                  items={[
+                    { title: 'English', link: { href: '/dashboard' } },
+                    { title: 'Indonesia', link: { href: '/dashboard' } },
+                  ]}
+                  Link={Link}
+                >
+                  <Button size="Small" shape="Round">
+                    <EvaIcon name="globe-2" options={{ animation: { type: 'shake' } }} />
+                  </Button>
+                </ContextMenu>
               ),
             },
             {

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import Layout from 'Layouts';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
@@ -8,9 +11,21 @@ import { InputGroup } from '@paljs/ui/Input';
 import { Button } from '@paljs/ui/Button';
 
 export default function Dashboard() {
-  const Input = styled(InputGroup)`
-    margin-bottom: 10px;
+  const DateWrapper = styled(InputGroup)`
+    margin-bottom: 5px;
+
+    .react-datepicker {
+      position: absolute;
+      z-index: 99;
+    }
+
+    input {
+      width: 100%;
+    }
   `;
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const months = ['+0D', '-1D', '+0W', '-1W', 'MTD', 'LastM', 'All'];
   const totalDeposit = 50000;
@@ -123,20 +138,30 @@ export default function Dashboard() {
                 >
                   <Row>
                     <Col breakPoint={{ xs: 12, md: 6 }}>
-                      <Input fullWidth>
-                        <input type="text" />
-                      </Input>
+                      <DateWrapper>
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(startDate) => setStartDate(startDate)}
+                          style={{ position: 'absolute', zIndex: 99 }}
+                        />
+                      </DateWrapper>
                     </Col>
                     <Col breakPoint={{ xs: 12, md: 6 }}>
-                      <Input fullWidth>
-                        <input type="text" />
-                      </Input>
+                      <DateWrapper>
+                        <DatePicker
+                          selected={endDate}
+                          onChange={(endDate) => setEndDate(endDate)}
+                          style={{ position: 'absolute', zIndex: 99 }}
+                        />
+                      </DateWrapper>
                     </Col>
                   </Row>
                   <small>
-                    <Row style={{ justifyContent: 'space-evenly' }}>
+                    <Row style={{ justifyContent: 'space-evenly', marginBottom: '10px' }}>
                       {months.map((month) => (
-                        <Col breakPoint={{ xs: 1.5 }}>{month}</Col>
+                        <Col breakPoint={{ xs: 1.7 }}>
+                          <Link href="/dashboard">{month}</Link>
+                        </Col>
                       ))}
                     </Row>
                   </small>
