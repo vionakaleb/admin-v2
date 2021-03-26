@@ -21,10 +21,26 @@ export default function Dashboard() {
   const totalWinLose = 0;
   const totalTurnover = 0;
   const bankLevel = 'Level 1';
-  const bankCode = 11111;
-  const bankName = 'BCA';
-  const bankAccount = '000000';
-  const bankBalance = 2468536000;
+  const banks = [
+    {
+      bankCode: 11111,
+      bankName: 'BCA',
+      bankAccount: '1234567890',
+      bankBalance: 1100000000,
+    },
+    {
+      bankCode: 22222,
+      bankName: 'BNI',
+      bankAccount: '2345678901',
+      bankBalance: 2200000000,
+    },
+    {
+      bankCode: 33333,
+      bankName: 'Mandiri',
+      bankAccount: '3456789012',
+      bankBalance: 3300000000,
+    },
+  ];
 
   const formatterIDR = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -140,16 +156,20 @@ export default function Dashboard() {
           <Card status="Primary">
             <CardHeader>{bankLevel}</CardHeader>
             <CardBody>
-              <Col breakPoint={{ xs: 12, md: 3 }}>
-                <Card status="Primary" size="Tiny">
-                  <CardHeader>{bankCode}</CardHeader>
-                  <CardBody>
-                    <p>{bankName}</p>
-                    <p>{bankAccount}</p>
-                    <b>{formatter.format(bankBalance) + '.00'}</b>
-                  </CardBody>
-                </Card>
-              </Col>
+              <Row>
+                {banks.map((bank) => (
+                  <Col breakPoint={{ xs: 12, md: 3 }}>
+                    <Card status="Primary" size="Tiny">
+                      <CardHeader>{bank.bankCode}</CardHeader>
+                      <CardBody>
+                        <p>{bank.bankName}</p>
+                        <p>{bank.bankAccount}</p>
+                        <b>{formatter.format(bank.bankBalance) + '.00'}</b>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
             </CardBody>
           </Card>
         </Col>
