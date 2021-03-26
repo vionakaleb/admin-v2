@@ -33,7 +33,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 const rows = [
   {
     transactionId: 1,
-    transactionDate: '2021-03-24 11:18:35',
+    transactionDate: '24 Mar',
     transactionSerial: 'A0020',
     transactionMember: 'John Doe',
     transactionName: 'John Doe',
@@ -48,7 +48,7 @@ const rows = [
   },
   {
     transactionId: 2,
-    transactionDate: '2021-03-25 13:18:35',
+    transactionDate: '25 Mar',
     transactionSerial: 'A0021',
     transactionMember: 'Andy Doe',
     transactionName: 'Andy Doe',
@@ -63,7 +63,7 @@ const rows = [
   },
   {
     transactionId: 3,
-    transactionDate: '2021-03-26 17:18:35',
+    transactionDate: '26 Mar',
     transactionSerial: 'A0022',
     transactionMember: 'Jenn Doe',
     transactionName: 'Chris Doe',

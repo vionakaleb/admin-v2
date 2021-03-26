@@ -116,7 +116,7 @@ export default function PopoverPage() {
                 placement="bottom"
                 items={[
                   { title: 'Profile', link: { href: '/modal-overlays/tooltip' } },
-                  { title: 'Log out', link: { href: '/logout' } },
+                  { title: 'Log out', link: { href: '/login' } },
                 ]}
                 Link={Link}
               >

@@ -320,6 +320,16 @@ const items: MenuItemType[] = [
       },
     ],
   },
+  {
+    title: 'Login',
+    icon: { name: 'person', options: { animation: { type: 'shake' }} },
+    link: { href: '/login' },
+  },
+  {
+    title: 'Register',
+    icon: { name: 'person', options: { animation: { type: 'shake' }} },
+    link: { href: '/register' },
+  }
 ];
 
 export default items;
