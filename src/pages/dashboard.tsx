@@ -67,6 +67,14 @@ export default function Dashboard() {
     maximumSignificantDigits: 3,
   });
 
+  const groupedBanks = banks.reduce((arrBank, bank) => {
+    arrBank[bank.level] = [...(arrBank[bank.level] || []), bank];
+    return arrBank;
+  }, {});
+
+  console.log('banks:', banks);
+  console.log('groupedBanks:', groupedBanks);
+
   return (
     <Layout title="Dashboard">
       <Row center="xs">
