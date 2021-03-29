@@ -43,13 +43,13 @@ export default function Dashboard() {
       bankAccount: '1234567890',
       bankBalance: 1100000000,
     },
-    {
-      level: 1,
-      bankCode: 22222,
-      bankName: 'BNI',
-      bankAccount: '2345678901',
-      bankBalance: 2200000000,
-    },
+    // {
+    //   level: 1,
+    //   bankCode: 22222,
+    //   bankName: 'BNI',
+    //   bankAccount: '2345678901',
+    //   bankBalance: 2200000000,
+    // },
     {
       level: 2,
       bankCode: 33333,
