@@ -50,11 +50,6 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
     }
   }, []);
 
-  const changeDir = () => {
-    const newDir = dir === 'ltr' ? 'rtl' : 'ltr';
-    setDir(newDir);
-  };
-
   const authLayout = router.pathname.startsWith('/auth');
 
   return (
@@ -63,14 +58,9 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
       <ThemeProvider theme={themes(theme, dir)}>
         <Fragment>
           <SimpleLayout />
-          <Layout evaIcons={icons} dir={dir} className={!authLayout ? 'auth-layout' : ''}>
+          <Layout evaIcons={icons} className={!authLayout ? 'auth-layout' : ''}>
             {!authLayout && (
-              <Header
-                dir={dir}
-                changeDir={changeDir}
-                theme={{ set: changeTheme, value: theme }}
-                toggleSidebar={() => sidebarRef.current?.toggle()}
-              />
+              <Header theme={{ set: changeTheme, value: theme }} toggleSidebar={() => sidebarRef.current?.toggle()} />
             )}
             <LayoutContainer>
               {!authLayout && (

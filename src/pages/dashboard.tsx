@@ -24,6 +24,15 @@ export default function Dashboard() {
     }
   `;
 
+  const TotalWrapper = styled(Button)`
+    border-radius: 100px;
+    width: fit-content;
+    padding: 3px 10px;
+    margin: 0;
+    font-weight: normal;
+    cursor: auto;
+  `;
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -88,20 +97,20 @@ export default function Dashboard() {
                 >
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Deposit</Col>
-                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: 'right' }}>
-                      {formatterIDR.format(totalDeposit)}
+                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
+                      <TotalWrapper>{formatterIDR.format(totalDeposit)}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Withdraw</Col>
-                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: 'right' }}>
-                      {formatterIDR.format(totalWithdrawal)}
+                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
+                      <TotalWrapper>{formatterIDR.format(totalWithdrawal)}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Balance</Col>
-                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: 'right' }}>
-                      {formatterIDR.format(totalBalance)}
+                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
+                      <TotalWrapper>{formatterIDR.format(totalBalance)}</TotalWrapper>
                     </Col>
                   </Row>
                 </Col>
@@ -111,20 +120,20 @@ export default function Dashboard() {
                 >
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Registered</Col>
-                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: 'right' }}>
-                      {totalRegistered}
+                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
+                      <TotalWrapper>{totalRegistered}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Active</Col>
-                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: 'right' }}>
-                      {totalActive}
+                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
+                      <TotalWrapper>{totalActive}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Win/Lose</Col>
-                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: 'right' }}>
-                      {formatterIDR.format(totalWinLose)}
+                    <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
+                      <TotalWrapper>{formatterIDR.format(totalWinLose)}</TotalWrapper>
                     </Col>
                   </Row>
                 </Col>
@@ -140,7 +149,7 @@ export default function Dashboard() {
                 >
                   <Row>Total Turnover</Row>
                   <Row>IDR</Row>
-                  <Row>{formatter.format(totalTurnover) + '.00'}</Row>
+                  <Row style={{ fontSize: '3.2rem' }}>{formatter.format(totalTurnover) + '.00'}</Row>
                 </Col>
                 <Col
                   breakPoint={{ xs: 12, sm: 6, md: 4, lg: 3 }}
