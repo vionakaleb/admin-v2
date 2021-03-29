@@ -35,21 +35,23 @@ export default function Dashboard() {
   const totalActive = 0;
   const totalWinLose = 0;
   const totalTurnover = 0;
-  const bankLevel = 'Level 1';
   const banks = [
     {
+      level: 1,
       bankCode: 11111,
       bankName: 'BCA',
       bankAccount: '1234567890',
       bankBalance: 1100000000,
     },
     {
+      level: 1,
       bankCode: 22222,
       bankName: 'BNI',
       bankAccount: '2345678901',
       bankBalance: 2200000000,
     },
     {
+      level: 2,
       bankCode: 33333,
       bankName: 'Mandiri',
       bankAccount: '3456789012',
@@ -177,12 +179,12 @@ export default function Dashboard() {
         </Col>
       </Row>
       <Row center="xs">
-        <Col breakPoint={{ xs: 12, md: 9 }}>
-          <Card status="Primary">
-            <CardHeader>{bankLevel}</CardHeader>
-            <CardBody>
-              <Row>
-                {banks.map((bank) => (
+        {banks.map((bank) => (
+          <Col breakPoint={{ xs: 12, md: 9 }}>
+            <Card status="Primary">
+              <CardHeader>{bank.level}</CardHeader>
+              <CardBody>
+                <Row>
                   <Col breakPoint={{ xs: 12, md: 3 }}>
                     <Card status="Primary" size="Tiny">
                       <CardHeader>{bank.bankCode}</CardHeader>
@@ -193,11 +195,11 @@ export default function Dashboard() {
                       </CardBody>
                     </Card>
                   </Col>
-                ))}
-              </Row>
-            </CardBody>
-          </Card>
-        </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        ))}
       </Row>
     </Layout>
   );
