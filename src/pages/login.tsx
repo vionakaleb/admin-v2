@@ -2,18 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
-import { Checkbox } from '@paljs/ui/Checkbox';
-import Link from 'next/link';
 
 import Auth, { Group } from 'components/Auth';
 import Socials from 'components/Auth/Socials';
 import Layout from 'Layouts';
 
 export default function Login() {
-  const onCheckbox = () => {
-    // v will be true or false
-  };
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState();
@@ -29,15 +23,21 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
-      userName: 'testadmin',
-      passWord: 'test1234',
+      userName: username,
+      passWord: password,
     };
     const response = await axios.post('http://localhost:5000/api/Admin/login', user);
-    // set the state of the user
-    setUser(response.data);
-    // store the user in localStorage
+    console.log('login response:', response.data);
     localStorage.setItem('user', JSON.stringify(response.data));
-    window.location.href = '/dashboard';
+
+    setUser(response.data);
+
+    if (response.data.errorCode === 0) {
+      alert('Success');
+      window.location.href = '/dashboard';
+    } else {
+      alert('Fail Login');
+    }
   };
 
   return (
@@ -60,27 +60,12 @@ export default function Login() {
               placeholder="Password"
             />
           </InputGroup>
-          <Group>
-            <Checkbox checked onChange={onCheckbox}>
-              Remember me
-            </Checkbox>
-            <Link href="/auth/request-password">
-              <a>Forgot Password?</a>
-            </Link>
-          </Group>
+          <Group></Group>
           <Button status="Success" type="submit" shape="SemiRound" fullWidth>
-            <Link href="/dashboard">
-              <a>Login</a>
-            </Link>
+            <a>Login</a>
           </Button>
         </form>
         <Socials />
-        <p>
-          Don&apos;t have account?{' '}
-          <Link href="/">
-            <a>Register</a>
-          </Link>
-        </p>
       </Auth>
     </Layout>
   );
