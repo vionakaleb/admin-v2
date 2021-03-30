@@ -20,7 +20,7 @@ export default function Login() {
     }
   }, []);
 
-  const handleSubmit = async (e) => {
+  const apiLogin = async (e) => {
     e.preventDefault();
     const user = {
       userName: username,
@@ -43,7 +43,7 @@ export default function Login() {
   return (
     <Layout title="Login">
       <Auth title="Login" subTitle="Hello! Login with your email">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={apiLogin}>
           <InputGroup fullWidth>
             <input
               type="text"

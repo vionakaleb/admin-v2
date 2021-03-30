@@ -23,6 +23,19 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import axios from 'axios';
+
+const apiAdmin = async () => {
+  const adminParam = {
+    Page: 1,
+    Size: 20,
+    Sort: null,
+    KeyWord: null,
+  };
+  const response = await axios.post('http://localhost:5000/api/Admin/Admin/GetAdminList', adminParam);
+  console.log('login response:', response.data);
+};
+apiAdmin();
 
 const rows = [
   {

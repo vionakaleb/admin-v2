@@ -10,10 +10,7 @@ import { Actions } from '@paljs/ui/Actions';
 import ContextMenu from '@paljs/ui/ContextMenu';
 import User from '@paljs/ui/User';
 import { breakpointDown } from '@paljs/ui/breakpoints';
-
 import axios from 'axios';
-import Popover from '@paljs/ui/Popover';
-import { InputGroup } from '@paljs/ui/Input';
 
 const HeaderStyle = styled.div`
   display: flex;
@@ -67,7 +64,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState();
-  console.log(user?.session);
+  // console.log(user?.session);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
@@ -77,7 +74,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     }
   }, []);
 
-  const handleLogout = () => {
+  const apiLogout = () => {
     setUser({});
     setUsername('');
     setPassword('');
@@ -85,24 +82,10 @@ const Header: React.FC<HeaderProps> = (props) => {
     window.location.href = '/login';
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const user = {
-      userName: 'testadmin',
-      passWord: 'test1234',
-    };
-    const response = await axios.post('http://localhost:5000/api/Admin/login', user);
-    // set the state of the user
-    setUser(response.data);
-    console.log(response);
-    // store the user in localStorage
-    localStorage.setItem('user', JSON.stringify(response.data));
-  };
-
   const isLogout = user && (
     <div style={{ display: 'flex' }}>
       <User image="url('/icons/icon-72x72.png')" name={user.userName} title="User" size="Medium" />
-      <Button size="Small" shape="SemiRound" onClick={handleLogout} style={{ marginLeft: '10px' }}>
+      <Button size="Small" shape="SemiRound" onClick={apiLogout} style={{ marginLeft: '10px' }}>
         Log Out
       </Button>
     </div>
@@ -222,74 +205,6 @@ const Header: React.FC<HeaderProps> = (props) => {
                 />
               ),
             },
-            // {
-            //   content: (
-            //     <a href="https://slack.com" target="_blank" rel="noreferrer">
-            //       <img height="20" src="/slack.svg" alt="slack" />
-            //     </a>
-            //   ),
-            // },
-            // {
-            //   icon: 'twitter',
-            //   url: { href: 'https://twitter.com/', target: '_blank' },
-            // },
-            // {
-            //   content: (
-            //     <ContextMenu
-            //       nextJs
-            //       style={{ cursor: 'pointer' }}
-            //       placement="bottom"
-            //       currentPath={router.pathname}
-            //       items={[
-            //         { title: 'Profile', link: { href: '/dashboard' } },
-            //         { title: 'Log out', link: { href: '/login' } },
-            //       ]}
-            //       Link={Link}
-            //     >
-            //       <User image="url('/icons/icon-72x72.png')" name="John Doe" title="User" size="Medium" />
-            //     </ContextMenu>
-            //   ),
-            // },
-            // {
-            //   content: (
-            //     <Popover
-            //       // className="with-margin inline-block"
-            //       trigger="click"
-            //       placement="bottom"
-            //       overlay={
-            //         <div style={{ width: '250px' }}>
-            //           <h4 style={{ padding: '10px', margin: 0, textAlign: 'center' }}>Login</h4>
-            //           <form onSubmit={handleSubmit} style={{ padding: '10px' }}>
-            //             <InputGroup fullWidth style={{ margin: '10px 0' }}>
-            //               <input
-            //                 type="text"
-            //                 value={username}
-            //                 onChange={({ target }) => setUsername(target.value)}
-            //                 placeholder="Username"
-            //               />
-            //             </InputGroup>
-            //             <InputGroup fullWidth style={{ margin: '10px 0' }}>
-            //               <input
-            //                 type="password"
-            //                 value={password}
-            //                 onChange={({ target }) => setPassword(target.value)}
-            //                 placeholder="Password"
-            //               />
-            //             </InputGroup>
-            //             <Button status="Success" type="submit" shape="SemiRound" fullWidth style={{ margin: '10px 0' }}>
-            //               <a>Login</a>
-            //             </Button>
-            //           </form>
-            //         </div>
-            //       }
-            //       // eventListener="#popoverScroll"
-            //     >
-            //       <div style={{ width: '180px' }}>
-            //         <User image="url('/icons/icon-72x72.png')" name="John Doe" title="User" size="Medium" />
-            //       </div>
-            //     </Popover>
-            //   ),
-            // },
             {
               content: <div>{isLogout}</div>,
             },
