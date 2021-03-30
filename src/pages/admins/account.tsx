@@ -21,60 +21,19 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
 const rows = [
   {
-    transactionId: 1,
-    transactionDate: '24 Mar',
-    transactionSerial: 'A0020',
-    transactionMember: 'John Doe',
-    transactionName: 'John Doe',
-    transactionTags: '',
-    transactionMethod: 'Deposit',
-    transactionStatus: 'Processing',
-    transactionCredit: 111,
-    transactionDebit: '',
-    transactionBalance: 100000,
-    transactionProcessing: 'mycashadmin',
-    transactionAction: 'activated',
-  },
-  {
-    transactionId: 2,
-    transactionDate: '25 Mar',
-    transactionSerial: 'A0021',
-    transactionMember: 'Andy Doe',
-    transactionName: 'Andy Doe',
-    transactionTags: '',
-    transactionMethod: 'Withdrawal',
-    transactionStatus: 'Pending',
-    transactionCredit: '',
-    transactionDebit: 100,
-    transactionBalance: 200000,
-    transactionProcessing: '',
-    transactionAction: 'activated',
-  },
-  {
-    transactionId: 3,
-    transactionDate: '26 Mar',
-    transactionSerial: 'A0022',
-    transactionMember: 'Jenn Doe',
-    transactionName: 'Chris Doe',
-    transactionTags: '',
-    transactionMethod: 'Deposit',
-    transactionStatus: 'Processing',
-    transactionCredit: 113,
-    transactionDebit: '',
-    transactionBalance: 50000,
-    transactionProcessing: 'mycashadmin',
-    transactionAction: 'activated',
+    adminId: 1,
+    name: 'John',
+    fullName: 'John Doe',
+    role: 'Admin',
+    department: 'Marketing',
+    status: 'Activated',
+    date: '2021-03-24 11:18:35',
+    action: 'Edit',
   },
 ];
 
@@ -105,19 +64,14 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'transactionId', numeric: true, disablePadding: true, label: '#' },
-  { id: 'transactionDate', numeric: false, disablePadding: false, label: 'Date' },
-  { id: 'transactionSerial', numeric: false, disablePadding: false, label: 'Serial' },
-  { id: 'transactionMember', numeric: false, disablePadding: false, label: 'Member' },
-  { id: 'transactionName', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'transactionTags', numeric: false, disablePadding: false, label: 'Tags' },
-  { id: 'transactionMethod', numeric: false, disablePadding: false, label: 'Method' },
-  { id: 'transactionStatus', numeric: false, disablePadding: false, label: 'Status' },
-  { id: 'transactionCredit', numeric: false, disablePadding: false, label: 'Credit' },
-  { id: 'transactionDebit', numeric: false, disablePadding: false, label: 'Debit' },
-  { id: 'transactionBalance', numeric: false, disablePadding: false, label: 'Balance' },
-  { id: 'transactionProcessing', numeric: false, disablePadding: false, label: 'Processing' },
-  { id: 'transactionAction', numeric: false, disablePadding: false, label: 'Actions' },
+  { id: 'adminId', numeric: true, disablePadding: true, label: '#' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'fullName', numeric: false, disablePadding: false, label: 'Full Name' },
+  { id: 'role', numeric: false, disablePadding: false, label: 'Role' },
+  { id: 'department', numeric: false, disablePadding: false, label: 'Department' },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
+  { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
+  { id: 'action', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
 function EnhancedTableHead(props) {
@@ -277,7 +231,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Instant() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('transactionId');
+  const [orderBy, setOrderBy] = React.useState('adminId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -290,19 +244,19 @@ export default function Instant() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.transactionId);
+      const newSelecteds = rows.map((n) => n.adminId);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, transactionId) => {
-    const selectedIndex = selected.indexOf(transactionId);
+  const handleClick = (event, adminId) => {
+    const selectedIndex = selected.indexOf(adminId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, transactionId);
+      newSelected = newSelected.concat(selected, adminId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -323,7 +277,7 @@ export default function Instant() {
     setPage(0);
   };
 
-  const isSelected = (transactionId) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (adminId) => selected.indexOf(adminId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -356,37 +310,32 @@ export default function Instant() {
                         {stableSort(rows, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((row, index) => {
-                            const isItemSelected = isSelected(row.transactionId);
+                            const isItemSelected = isSelected(row.adminId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, row.transactionId)}
+                                onClick={(event) => handleClick(event, row.adminId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={row.transactionId}
+                                key={row.adminId}
                                 selected={isItemSelected}
                               >
                                 <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
-                                  {row.transactionId}
+                                  {row.adminId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionDate}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionSerial}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionMember}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionName}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionTags}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionMethod}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionStatus}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionCredit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionDebit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionBalance}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionProcessing}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionAction}</StyledTableCell>
+                                <StyledTableCell align="left">{row.name}</StyledTableCell>
+                                <StyledTableCell align="left">{row.fullName}</StyledTableCell>
+                                <StyledTableCell align="left">{row.role}</StyledTableCell>
+                                <StyledTableCell align="left">{row.department}</StyledTableCell>
+                                <StyledTableCell align="left">{row.status}</StyledTableCell>
+                                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                                <StyledTableCell align="left">{row.action}</StyledTableCell>
                                 {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">
                                   {row.transactionDate}
                                 </StyledTableCell> */}

@@ -251,19 +251,19 @@ const items: MenuItemType[] = [
     icon: { name: 'person-done-outline', options: { animation: { type: 'shake' }} },
     children: [
       {
-        title: 'Bonus List',
-        link: { href: '/admins/acoount' },
+        title: 'Account',
+        link: { href: '/admins/account' },
       },
       {
-        title: 'Rebate List',
+        title: 'Departments',
         link: { href: '/admins/departments' },
       },
       {
-        title: 'Cashback',
+        title: 'Admin Log',
         link: { href: '/admins/log' },
       },
       {
-        title: 'Auto Rebate List',
+        title: 'Change Password',
         link: { href: '/admins/change-password' },
       },
     ],
