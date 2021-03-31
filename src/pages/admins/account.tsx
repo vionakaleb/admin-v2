@@ -53,11 +53,11 @@ function stableSort(array: any, comparator: any) {
 
 const headCells = [
   { id: 'adminId', numeric: true, disablePadding: true, label: '#' },
-  { id: 'adminName', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'adminFullName', numeric: false, disablePadding: false, label: 'Full Name' },
-  { id: 'adminRole', numeric: false, disablePadding: false, label: 'Role' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'fullName', numeric: false, disablePadding: false, label: 'Full Name' },
+  { id: 'role', numeric: false, disablePadding: false, label: 'Role' },
   { id: 'adminDepartment', numeric: false, disablePadding: false, label: 'Department' },
-  { id: 'adminStatus', numeric: false, disablePadding: false, label: 'Status' },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
   { id: 'adminDate', numeric: false, disablePadding: false, label: 'Date' },
   { id: 'adminAction', numeric: false, disablePadding: false, label: 'Actions' },
 ];
@@ -232,36 +232,21 @@ const AdminList = () => {
         return response.data;
       })
       .then((data) => {
-        const id = data.userAdmins.map((admin: any, index: number) => {
-          return index + 1;
-        });
-        const name = data.userAdmins.map((admin: any) => {
-          return admin.name;
-        });
-        const fullName = data.userAdmins.map((admin: any) => {
-          return admin.fullName;
-        });
-        const role = data.userAdmins.map((admin: any) => {
-          return admin.role;
-        });
-        const status = data.userAdmins.map((admin: any) => {
-          return admin.status;
-        });
+        const rows = data.userAdmins;
+        console.log('admin rows:', rows);
 
-        // console.log(id);
-
-        const rows = [
-          {
-            adminId: id,
-            adminName: name,
-            adminFullName: fullName,
-            adminRole: role,
-            adminDepartment: '',
-            adminStatus: status,
-            adminDate: new Date().toLocaleDateString(),
-            adminAction: <a href="">Edit</a>,
-          },
-        ];
+        // const rows = [
+        //   {
+        //     adminId: id,
+        //     adminName: name,
+        //     adminFullName: fullName,
+        //     adminRole: role,
+        //     adminDepartment: '',
+        //     adminStatus: status,
+        //     adminDate: new Date().toLocaleDateString(),
+        //     adminAction: <a href="">Edit</a>,
+        //   },
+        // ];
 
         setRows(rows);
       })
@@ -370,11 +355,11 @@ const AdminList = () => {
                                 <StyledTableCell align="left" padding="none">
                                   {row.adminId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.adminName}</StyledTableCell>
-                                <StyledTableCell align="left">{row.adminFullName}</StyledTableCell>
-                                <StyledTableCell align="left">{row.adminRole}</StyledTableCell>
+                                <StyledTableCell align="left">{row.name}</StyledTableCell>
+                                <StyledTableCell align="left">{row.fullName}</StyledTableCell>
+                                <StyledTableCell align="left">{row.role}</StyledTableCell>
                                 <StyledTableCell align="left">{row.adminDepartment}</StyledTableCell>
-                                <StyledTableCell align="left">{row.adminStatus}</StyledTableCell>
+                                <StyledTableCell align="left">{row.status}</StyledTableCell>
                                 <StyledTableCell align="left">{row.adminDate}</StyledTableCell>
                                 <StyledTableCell align="left">{row.adminAction}</StyledTableCell>
                                 {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">

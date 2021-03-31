@@ -238,7 +238,7 @@ const InstantTransaction = () => {
       })
       .then((data) => {
         const rows = data.transactions;
-        console.log(rows);
+        console.log('transaction rows:', rows);
 
         // const rows = [
         //   {
