@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from 'Layouts';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
@@ -23,54 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-
-const rows = [
-  {
-    transactionId: 1,
-    transactionDate: '2021-03-24 11:18:35',
-    transactionSerial: 'A0020',
-    transactionMember: 'John Doe',
-    transactionName: 'John Doe',
-    transactionTags: '',
-    transactionMethod: 'Deposit',
-    transactionStatus: 'Processing',
-    transactionCredit: 111,
-    transactionDebit: '',
-    transactionBalance: 100000,
-    transactionProcessing: 'mycashadmin',
-    transactionAction: 'activated',
-  },
-  {
-    transactionId: 2,
-    transactionDate: '2021-03-25 13:18:35',
-    transactionSerial: 'A0021',
-    transactionMember: 'Andy Doe',
-    transactionName: 'Andy Doe',
-    transactionTags: '',
-    transactionMethod: 'Withdrawal',
-    transactionStatus: 'Pending',
-    transactionCredit: '',
-    transactionDebit: 100,
-    transactionBalance: 200000,
-    transactionProcessing: '',
-    transactionAction: 'activated',
-  },
-  {
-    transactionId: 3,
-    transactionDate: '2021-03-26 17:18:35',
-    transactionSerial: 'A0022',
-    transactionMember: 'Jenn Doe',
-    transactionName: 'Chris Doe',
-    transactionTags: '',
-    transactionMethod: 'Deposit',
-    transactionStatus: 'Processing',
-    transactionCredit: 113,
-    transactionDebit: '',
-    transactionBalance: 50000,
-    transactionProcessing: 'mycashadmin',
-    transactionAction: 'activated',
-  },
-];
+import axios from 'axios';
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -84,8 +37,8 @@ function descendingComparator(a: any, b: any, orderBy: any) {
 
 function getComparator(order: any, orderBy: any) {
   return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    ? (a: any, b: any) => descendingComparator(a, b, orderBy)
+    : (a: any, b: any) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array: any, comparator: any) {
@@ -268,7 +221,93 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Instant() {
+const InstantTransaction = () => {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const transactionParam = {
+      Page: 1,
+      Size: 20,
+      Sort: null,
+      KeyWord: null,
+    };
+    axios
+      .post('http://localhost:5000/api/Transaction/GetTransactionList/', transactionParam)
+      .then((response) => {
+        return response.data;
+      })
+      // "date": "2021-03-30T18:16:32.58357+07:00",
+      // "serial": "masih belom tahu, harus tanya",
+      // "member": "testadmin",
+      // "name": "testadmin",
+      // "method": "Deposit",
+      // "status": "Pending",
+      // "credit": 10.0000,
+      // "debit": 0,
+      // "balance": 0,
+      // "processing": null
+      .then((data) => {
+        const id = data.transactions.map((transaction: any, index: number) => {
+          return index + 1;
+        });
+        const date = data.transactions.map((transaction: any) => {
+          return transaction.date;
+        });
+        const serial = data.transactions.map((transaction: any) => {
+          return transaction.serial;
+        });
+        const member = data.transactions.map((transaction: any) => {
+          return transaction.member;
+        });
+        const name = data.transactions.map((transaction: any) => {
+          return transaction.name;
+        });
+        const method = data.transactions.map((transaction: any) => {
+          return transaction.method;
+        });
+        const status = data.transactions.map((transaction: any) => {
+          return transaction.status;
+        });
+        const credit = data.transactions.map((transaction: any) => {
+          return transaction.credit;
+        });
+        const debit = data.transactions.map((transaction: any) => {
+          return transaction.debit;
+        });
+        const balance = data.transactions.map((transaction: any) => {
+          return transaction.balance;
+        });
+        const processing = data.transactions.map((transaction: any) => {
+          return transaction.processing;
+        });
+
+        console.log(id);
+
+        const rows = [
+          {
+            transactionId: id,
+            transactionDate: date,
+            transactionSerial: serial,
+            transactionMember: member,
+            transactionName: name,
+            transactionTags: '',
+            transactionMethod: method,
+            transactionStatus: status,
+            transactionCredit: credit,
+            transactionDebit: debit,
+            transactionBalance: balance,
+            transactionProcessing: processing,
+            transactionAction: <a href="">Edit</a>,
+          },
+        ];
+
+        setRows(rows);
+      })
+      .catch(() => {
+        console.log('Error retrieving data.');
+      });
+  }, []);
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('transactionId');
@@ -276,13 +315,13 @@ export default function Instant() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.transactionId);
       setSelected(newSelecteds);
@@ -291,7 +330,7 @@ export default function Instant() {
     setSelected([]);
   };
 
-  const handleClick = (event: any, transactionId: number) => {
+  const handleClick = (event: any, transactionId: never) => {
     const selectedIndex = selected.indexOf(transactionId);
     let newSelected = [];
 
@@ -317,7 +356,7 @@ export default function Instant() {
     setPage(0);
   };
 
-  const isSelected = (transactionId: number) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (transactionId: never) => selected.indexOf(transactionId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -412,4 +451,6 @@ export default function Instant() {
       </Row>
     </Layout>
   );
-}
+};
+
+export default InstantTransaction;
