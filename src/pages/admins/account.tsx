@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from 'Layouts';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
@@ -25,32 +25,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 
-const apiAdmin = async () => {
-  const adminParam = {
-    Page: 1,
-    Size: 20,
-    Sort: null,
-    KeyWord: null,
-  };
-  const response = await axios.post('http://localhost:5000/api/Admin/Admin/GetAdminList', adminParam);
-  console.log('login response:', response.data);
-};
-apiAdmin();
-
-const rows = [
-  {
-    adminId: 1,
-    name: 'John',
-    fullName: 'John Doe',
-    role: 'Admin',
-    department: 'Marketing',
-    status: 'Activated',
-    date: '2021-03-24 11:18:35',
-    action: 'Edit',
-  },
-];
-
-function descendingComparator(a, b, orderBy) {
+function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -60,20 +35,20 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
+function getComparator(order: any, orderBy: any) {
   return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    ? (a: any, b: any) => descendingComparator(a, b, orderBy)
+    : (a: any, b: any) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
+function stableSort(array: any, comparator: any) {
+  const stabilizedThis = array.map((el: any, index: number) => [el, index]);
+  stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map((el: any) => el[0]);
 }
 
 const headCells = [
@@ -87,9 +62,9 @@ const headCells = [
   { id: 'action', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
-function EnhancedTableHead(props) {
+function EnhancedTableHead(props: any) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
+  const createSortHandler = (property: any) => (event: any) => {
     onRequestSort(event, property);
   };
 
@@ -158,7 +133,7 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = (props: any) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
@@ -241,7 +216,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Instant() {
+const Instant = () => {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const adminParam = {
+      Page: 1,
+      Size: 20,
+      Sort: null,
+      KeyWord: null,
+    };
+    axios
+      .post('http://localhost:5000/api/Admin/Admin/GetAdminList', adminParam)
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        const adminId = data.userAdmins.map((admin: any, index: number) => {
+          return index;
+        });
+        const adminName = data.userAdmins.map((admin: any) => {
+          return admin.name;
+        });
+        const adminFullName = data.userAdmins.map((admin: any) => {
+          return admin.fullName;
+        });
+        const adminRole = data.userAdmins.map((admin: any) => {
+          return admin.role;
+        });
+        const adminStatus = data.userAdmins.map((admin: any) => {
+          return admin.status;
+        });
+
+        const rows = [
+          {
+            adminId: adminId,
+            name: adminName,
+            fullName: adminFullName,
+            role: adminRole,
+            department: '',
+            status: adminStatus,
+            date: '',
+            action: <a href="">Edit</a>,
+          },
+        ];
+
+        setRows(rows);
+      })
+      .catch(() => {
+        console.log('Error');
+      });
+  }, []);
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('adminId');
@@ -249,13 +275,13 @@ export default function Instant() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.adminId);
       setSelected(newSelecteds);
@@ -264,7 +290,7 @@ export default function Instant() {
     setSelected([]);
   };
 
-  const handleClick = (event, adminId) => {
+  const handleClick = (event: any, adminId: never) => {
     const selectedIndex = selected.indexOf(adminId);
     let newSelected = [];
 
@@ -281,7 +307,7 @@ export default function Instant() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
@@ -290,7 +316,7 @@ export default function Instant() {
     setPage(0);
   };
 
-  const isSelected = (adminId) => selected.indexOf(adminId) !== -1;
+  const isSelected = (adminId: any) => selected.indexOf(adminId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -322,7 +348,7 @@ export default function Instant() {
                       <TableBody>
                         {stableSort(rows, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((row, index) => {
+                          .map((row: any, index: number) => {
                             const isItemSelected = isSelected(row.adminId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -380,4 +406,6 @@ export default function Instant() {
       </Row>
     </Layout>
   );
-}
+};
+
+export default Instant;

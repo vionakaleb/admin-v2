@@ -72,7 +72,7 @@ const rows = [
   },
 ];
 
-function descendingComparator(a, b, orderBy) {
+function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -82,20 +82,20 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
+function getComparator(order: any, orderBy: any) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
+function stableSort(array: any, comparator: any) {
+  const stabilizedThis = array.map((el: any, index: number) => [el, index]);
+  stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map((el: any) => el[0]);
 }
 
 const headCells = [
@@ -114,9 +114,9 @@ const headCells = [
   { id: 'transactionAction', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
-function EnhancedTableHead(props) {
+function EnhancedTableHead(props: any) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
+  const createSortHandler = (property: any) => (event: any) => {
     onRequestSort(event, property);
   };
 
@@ -185,7 +185,7 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = (props: any) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
@@ -291,7 +291,7 @@ export default function Instant() {
     setSelected([]);
   };
 
-  const handleClick = (event, transactionId) => {
+  const handleClick = (event: any, transactionId: number) => {
     const selectedIndex = selected.indexOf(transactionId);
     let newSelected = [];
 
@@ -308,16 +308,16 @@ export default function Instant() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: any) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const isSelected = (transactionId) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (transactionId: number) => selected.indexOf(transactionId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -349,7 +349,7 @@ export default function Instant() {
                       <TableBody>
                         {stableSort(rows, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((row, index) => {
+                          .map((row: any, index: number) => {
                             const isItemSelected = isSelected(row.transactionId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
