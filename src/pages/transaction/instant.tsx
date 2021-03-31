@@ -271,7 +271,7 @@ const InstantTransaction = () => {
           return transaction.processing;
         });
 
-        console.log(id);
+        // console.log(id);
 
         const rows = [
           {

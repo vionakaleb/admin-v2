@@ -248,7 +248,7 @@ const AdminList = () => {
           return admin.status;
         });
 
-        console.log(id);
+        // console.log(id);
 
         const rows = [
           {

@@ -20,7 +20,7 @@ export default function Login() {
     }
   }, []);
 
-  const apiLogin = async (e) => {
+  const apiLogin = async (e: any) => {
     e.preventDefault();
     const user = {
       userName: username,
