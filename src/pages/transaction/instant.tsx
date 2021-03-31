@@ -228,24 +228,14 @@ const InstantTransaction = () => {
     const transactionParam = {
       Page: 1,
       Size: 20,
-      Sort: null,
-      KeyWord: null,
+      Approval: [1, 2, 3],
+      Request: [1, 2, 3, 4],
     };
     axios
       .post('http://localhost:5000/api/Transaction/GetTransactionList/', transactionParam)
       .then((response) => {
         return response.data;
       })
-      // "date": "2021-03-30T18:16:32.58357+07:00",
-      // "serial": "masih belom tahu, harus tanya",
-      // "member": "testadmin",
-      // "name": "testadmin",
-      // "method": "Deposit",
-      // "status": "Pending",
-      // "credit": 10.0000,
-      // "debit": 0,
-      // "balance": 0,
-      // "processing": null
       .then((data) => {
         const id = data.transactions.map((transaction: any, index: number) => {
           return index + 1;
