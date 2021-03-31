@@ -53,17 +53,17 @@ function stableSort(array: any, comparator: any) {
 
 const headCells = [
   { id: 'transactionId', numeric: true, disablePadding: true, label: '#' },
-  { id: 'transactionDate', numeric: false, disablePadding: false, label: 'Date' },
-  { id: 'transactionSerial', numeric: false, disablePadding: false, label: 'Serial' },
-  { id: 'transactionMember', numeric: false, disablePadding: false, label: 'Member' },
-  { id: 'transactionName', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
+  { id: 'serial', numeric: false, disablePadding: false, label: 'Serial' },
+  { id: 'member', numeric: false, disablePadding: false, label: 'Member' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
   { id: 'transactionTags', numeric: false, disablePadding: false, label: 'Tags' },
-  { id: 'transactionMethod', numeric: false, disablePadding: false, label: 'Method' },
-  { id: 'transactionStatus', numeric: false, disablePadding: false, label: 'Status' },
-  { id: 'transactionCredit', numeric: false, disablePadding: false, label: 'Credit' },
-  { id: 'transactionDebit', numeric: false, disablePadding: false, label: 'Debit' },
-  { id: 'transactionBalance', numeric: false, disablePadding: false, label: 'Balance' },
-  { id: 'transactionProcessing', numeric: false, disablePadding: false, label: 'Processing' },
+  { id: 'method', numeric: false, disablePadding: false, label: 'Method' },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
+  { id: 'credit', numeric: false, disablePadding: false, label: 'Credit' },
+  { id: 'debit', numeric: false, disablePadding: false, label: 'Debit' },
+  { id: 'balance', numeric: false, disablePadding: false, label: 'Balance' },
+  { id: 'processing', numeric: false, disablePadding: false, label: 'Processing' },
   { id: 'transactionAction', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
@@ -237,59 +237,26 @@ const InstantTransaction = () => {
         return response.data;
       })
       .then((data) => {
-        const id = data.transactions.map((transaction: any, index: number) => {
-          return index + 1;
-        });
-        const date = data.transactions.map((transaction: any) => {
-          return transaction.date;
-        });
-        const serial = data.transactions.map((transaction: any) => {
-          return transaction.serial;
-        });
-        const member = data.transactions.map((transaction: any) => {
-          return transaction.member;
-        });
-        const name = data.transactions.map((transaction: any) => {
-          return transaction.name;
-        });
-        const method = data.transactions.map((transaction: any) => {
-          return transaction.method;
-        });
-        const status = data.transactions.map((transaction: any) => {
-          return transaction.status;
-        });
-        const credit = data.transactions.map((transaction: any) => {
-          return transaction.credit;
-        });
-        const debit = data.transactions.map((transaction: any) => {
-          return transaction.debit;
-        });
-        const balance = data.transactions.map((transaction: any) => {
-          return transaction.balance;
-        });
-        const processing = data.transactions.map((transaction: any) => {
-          return transaction.processing;
-        });
+        const rows = data.transactions;
+        console.log(rows);
 
-        // console.log(id);
-
-        const rows = [
-          {
-            transactionId: id,
-            transactionDate: date,
-            transactionSerial: serial,
-            transactionMember: member,
-            transactionName: name,
-            transactionTags: '',
-            transactionMethod: method,
-            transactionStatus: status,
-            transactionCredit: credit,
-            transactionDebit: debit,
-            transactionBalance: balance,
-            transactionProcessing: processing,
-            transactionAction: <a href="">Edit</a>,
-          },
-        ];
+        // const rows = [
+        //   {
+        //     transactionId: id,
+        //     transactionDate: date,
+        //     transactionSerial: serial,
+        //     transactionMember: member,
+        //     transactionName: name,
+        //     transactionTags: '',
+        //     transactionMethod: method,
+        //     transactionStatus: status,
+        //     transactionCredit: credit,
+        //     transactionDebit: debit,
+        //     transactionBalance: balance,
+        //     transactionProcessing: processing,
+        //     transactionAction: <a href="">Edit</a>,
+        //   },
+        // ];
 
         setRows(rows);
       })
@@ -398,17 +365,17 @@ const InstantTransaction = () => {
                                 <StyledTableCell align="left" padding="none">
                                   {row.transactionId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionDate}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionSerial}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionMember}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionName}</StyledTableCell>
+                                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                                <StyledTableCell align="left">{row.serial}</StyledTableCell>
+                                <StyledTableCell align="left">{row.member}</StyledTableCell>
+                                <StyledTableCell align="left">{row.name}</StyledTableCell>
                                 <StyledTableCell align="left">{row.transactionTags}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionMethod}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionStatus}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionCredit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionDebit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionBalance}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionProcessing}</StyledTableCell>
+                                <StyledTableCell align="left">{row.method}</StyledTableCell>
+                                <StyledTableCell align="left">{row.status}</StyledTableCell>
+                                <StyledTableCell align="left">{row.credit}</StyledTableCell>
+                                <StyledTableCell align="left">{row.debit}</StyledTableCell>
+                                <StyledTableCell align="left">{row.balance}</StyledTableCell>
+                                <StyledTableCell align="left">{row.processing}</StyledTableCell>
                                 <StyledTableCell align="left">{row.transactionAction}</StyledTableCell>
                                 {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">
                                   {row.transactionDate}
