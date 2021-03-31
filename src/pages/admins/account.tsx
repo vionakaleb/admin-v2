@@ -233,7 +233,7 @@ const Instant = () => {
       })
       .then((data) => {
         const adminId = data.userAdmins.map((admin: any, index: number) => {
-          return index;
+          return index + 1;
         });
         const adminName = data.userAdmins.map((admin: any) => {
           return admin.name;
@@ -248,6 +248,8 @@ const Instant = () => {
           return admin.status;
         });
 
+        console.log(adminId);
+
         const rows = [
           {
             adminId: adminId,
@@ -256,7 +258,7 @@ const Instant = () => {
             role: adminRole,
             department: '',
             status: adminStatus,
-            date: '',
+            date: new Date().toLocaleDateString(),
             action: <a href="">Edit</a>,
           },
         ];
@@ -264,7 +266,7 @@ const Instant = () => {
         setRows(rows);
       })
       .catch(() => {
-        console.log('Error');
+        console.log('Error retrieving data.');
       });
   }, []);
 
