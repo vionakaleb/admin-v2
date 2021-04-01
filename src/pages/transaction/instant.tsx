@@ -228,8 +228,8 @@ const InstantTransaction = () => {
     const transactionParam = {
       Page: 1,
       Size: 20,
-      Approval: [1, 2, 3],
-      Request: [1, 2, 3, 4],
+      Approval: [1, 2, 3], // Pending = 1, Approve = 2, Reject = 3
+      Request: [1, 2, 3, 4], // Deposit = 1, Withdraw = 2, Addition = 3, Subs = 4
     };
     axios
       .post('http://localhost:5000/api/Transaction/GetTransactionList/', transactionParam)

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Layout from 'Layouts';
 import styled from 'styled-components';
-import DatePicker from 'react-datepicker';
+import DatePicker from '@types/react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
