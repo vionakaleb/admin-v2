@@ -227,8 +227,8 @@ const TransactionEnquiry = () => {
     const enquiryParam = {
       Page: 1,
       Size: 20,
-      Approval: [2, 3],
-      Request: [2, 3],
+      Approval: [2, 3], // Approve = 2, Reject = 3
+      Request: [1, 2], // Deposit = 1, Withdraw = 2
     };
     axios
       .post('http://localhost:5000/api/Transaction/GetTransactionList/', enquiryParam)
