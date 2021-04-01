@@ -223,7 +223,7 @@ export default function Dashboard() {
         {bankList?.map((bank: any) => (
           <Col breakPoint={{ xs: 12, md: 9 }}>
             <Card status="Primary">
-              <CardHeader>{level}</CardHeader>
+              <CardHeader>Level {level}</CardHeader>
               <CardBody>
                 <Row>
                   <Col breakPoint={{ xs: 12, md: 3 }}>
