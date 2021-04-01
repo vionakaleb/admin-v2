@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const isLogout = user && (
     <div style={{ display: 'flex' }}>
-      <User image="url('/icons/icon-72x72.png')" name={user.userName} title="User" size="Medium" />
+      <User image="url('/icons/icon-72x72.png')" name={user.userName} title="Admin" size="Medium" />
       <Button size="Small" shape="SemiRound" onClick={apiLogout} style={{ marginLeft: '10px' }}>
         Log Out
       </Button>
