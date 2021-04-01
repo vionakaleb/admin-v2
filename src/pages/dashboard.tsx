@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Link from 'next/link';
 import Layout from 'Layouts';
 import styled from 'styled-components';
@@ -33,40 +34,52 @@ export default function Dashboard() {
     cursor: auto;
   `;
 
+  // "totalDeposit": 10.0000,
+  // "totalWithdrawal": 5.0000,
+  // "balance": 5.0000,
+  // "totalRegistered": 74,
+  // "totalActive": 15,
+  // "totalWinLose": 173499.1500,
+  // "totalTurnover": 124390.8900,
+  // "banks": [
+  //     {
+  //         "bankCode": "Mandiri",
+  //         "accountName": "Mandiri",
+  //         "accountNumber": "112233449900",
+  //         "balance": 25000.0000
+  //     }
+  // ],
+
+  const [dataList, setDataList] = useState([]);
+
+  useEffect(() => {
+    const dashboardParam = {
+      page: 1,
+      size: 20,
+      dateFrom: '2021-02-01',
+      dateTo: '2021-03-31',
+    };
+    axios
+      .post('http://localhost:5000/api/Admin/Dashboard/GetDashboard', dashboardParam)
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        const dataList = data;
+        setDataList(dataList);
+      })
+      .catch(() => {
+        console.log('Error retrieving data.');
+      });
+  }, []);
+
+  const bankList = dataList?.banks;
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
   const months = ['+0D', '-1D', '+0W', '-1W', 'MTD', 'LastM', 'All'];
-  const totalDeposit = 50000;
-  const totalWithdrawal = 0;
-  const totalBalance = 50000;
-  const totalRegistered = 0;
-  const totalActive = 0;
-  const totalWinLose = 0;
-  const totalTurnover = 0;
-  const banks = [
-    {
-      level: 1,
-      bankCode: 11111,
-      bankName: 'BCA',
-      bankAccount: '1234567890',
-      bankBalance: 1100000000,
-    },
-    // {
-    //   level: 1,
-    //   bankCode: 22222,
-    //   bankName: 'BNI',
-    //   bankAccount: '2345678901',
-    //   bankBalance: 2200000000,
-    // },
-    {
-      level: 2,
-      bankCode: 33333,
-      bankName: 'Mandiri',
-      bankAccount: '3456789012',
-      bankBalance: 3300000000,
-    },
-  ];
+  const level = 1;
 
   const formatterIDR = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -76,13 +89,10 @@ export default function Dashboard() {
     maximumSignificantDigits: 3,
   });
 
-  const groupedBanks = banks.reduce((arrBank, bank) => {
-    arrBank[bank.level] = [...(arrBank[bank.level] || []), bank];
-    return arrBank;
-  }, {});
-
-  console.log('banks:', banks);
-  console.log('groupedBanks:', groupedBanks);
+  // const groupedBanks = banks.reduce((arrBank, bank) => {
+  //   arrBank[bank.level] = [...(arrBank[bank.level] || []), bank];
+  //   return arrBank;
+  // }, {});
 
   return (
     <Layout title="Dashboard">
@@ -98,19 +108,19 @@ export default function Dashboard() {
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Deposit</Col>
                     <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
-                      <TotalWrapper>{formatterIDR.format(totalDeposit)}</TotalWrapper>
+                      <TotalWrapper>{formatterIDR.format(dataList.totalDeposit)}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Withdraw</Col>
                     <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
-                      <TotalWrapper>{formatterIDR.format(totalWithdrawal)}</TotalWrapper>
+                      <TotalWrapper>{formatterIDR.format(dataList.totalWithdrawal)}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Balance</Col>
                     <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
-                      <TotalWrapper>{formatterIDR.format(totalBalance)}</TotalWrapper>
+                      <TotalWrapper>{formatterIDR.format(dataList.balance)}</TotalWrapper>
                     </Col>
                   </Row>
                 </Col>
@@ -121,19 +131,19 @@ export default function Dashboard() {
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Registered</Col>
                     <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
-                      <TotalWrapper>{totalRegistered}</TotalWrapper>
+                      <TotalWrapper>{dataList.totalRegistered}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Active</Col>
                     <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
-                      <TotalWrapper>{totalActive}</TotalWrapper>
+                      <TotalWrapper>{dataList.totalActive}</TotalWrapper>
                     </Col>
                   </Row>
                   <Row style={{ alignItems: 'center' }}>
                     <Col breakPoint={{ xs: 12, sm: 6 }}>Total Win/Lose</Col>
                     <Col breakPoint={{ xs: 12, sm: 6 }} style={{ textAlign: '-webkit-right' }}>
-                      <TotalWrapper>{formatterIDR.format(totalWinLose)}</TotalWrapper>
+                      <TotalWrapper>{formatterIDR.format(dataList.totalWinLose)}</TotalWrapper>
                     </Col>
                   </Row>
                 </Col>
@@ -149,7 +159,21 @@ export default function Dashboard() {
                 >
                   <Row>Total Turnover</Row>
                   <Row>IDR</Row>
-                  <Row style={{ fontSize: '3.2rem' }}>{formatter.format(totalTurnover) + '.00'}</Row>
+                  <Row
+                    style={{
+                      display: 'block',
+                      fontSize: '3rem',
+                      whiteSpace: 'nowrap',
+                      width: '238px',
+                      height: '44px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      textAlign: 'center',
+                      padding: '5px',
+                    }}
+                  >
+                    {formatter.format(dataList.totalTurnover) + '.00'}
+                  </Row>
                 </Col>
                 <Col
                   breakPoint={{ xs: 12, sm: 6, md: 4, lg: 3 }}
@@ -160,7 +184,7 @@ export default function Dashboard() {
                       <DateWrapper>
                         <DatePicker
                           selected={startDate}
-                          onChange={(startDate) => setStartDate(startDate)}
+                          onChange={(startDate: any) => setStartDate(startDate)}
                           style={{ position: 'absolute', zIndex: 99 }}
                         />
                       </DateWrapper>
@@ -169,7 +193,7 @@ export default function Dashboard() {
                       <DateWrapper>
                         <DatePicker
                           selected={endDate}
-                          onChange={(endDate) => setEndDate(endDate)}
+                          onChange={(endDate: any) => setEndDate(endDate)}
                           style={{ position: 'absolute', zIndex: 99 }}
                         />
                       </DateWrapper>
@@ -196,19 +220,19 @@ export default function Dashboard() {
         </Col>
       </Row>
       <Row center="xs">
-        {banks.map((bank) => (
+        {bankList?.map((bank: any) => (
           <Col breakPoint={{ xs: 12, md: 9 }}>
             <Card status="Primary">
-              <CardHeader>{bank.level}</CardHeader>
+              <CardHeader>{level}</CardHeader>
               <CardBody>
                 <Row>
                   <Col breakPoint={{ xs: 12, md: 3 }}>
                     <Card status="Primary" size="Tiny">
                       <CardHeader>{bank.bankCode}</CardHeader>
                       <CardBody>
-                        <p>{bank.bankName}</p>
-                        <p>{bank.bankAccount}</p>
-                        <b>{formatter.format(bank.bankBalance) + '.00'}</b>
+                        <p>{bank.accountName}</p>
+                        <p>{bank.accountNumber}</p>
+                        <b>{formatter.format(bank.balance) + '.00'}</b>
                       </CardBody>
                     </Card>
                   </Col>

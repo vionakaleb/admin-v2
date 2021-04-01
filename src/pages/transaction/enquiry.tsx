@@ -221,7 +221,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TransactionEnquiry = () => {
-  const [rows, setRows] = useState([]);
+  const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
     const enquiryParam = {
@@ -236,10 +236,10 @@ const TransactionEnquiry = () => {
         return response.data;
       })
       .then((data) => {
-        const rows = data.transactions;
-        console.log('enquiry rows:', rows);
+        const dataList = data.transactions;
+        // console.log('enquiry dataList:', dataList);
 
-        // const rows = [
+        // const dataList = [
         //   {
         //     enquiryId: id,
         //     enquiryDate: date,
@@ -257,7 +257,7 @@ const TransactionEnquiry = () => {
         //   },
         // ];
 
-        setRows(rows);
+        setDataList(dataList);
       })
       .catch(() => {
         console.log('Error retrieving data.');
@@ -279,7 +279,7 @@ const TransactionEnquiry = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.enquiryId);
+      const newSelecteds = dataList.map((n) => n.enquiryId);
       setSelected(newSelecteds);
       return;
     }
@@ -314,7 +314,7 @@ const TransactionEnquiry = () => {
 
   const isSelected = (enquiryId: never) => selected.indexOf(enquiryId) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
   return (
     <Layout title="Transaction Enquiry">
@@ -339,44 +339,44 @@ const TransactionEnquiry = () => {
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={rows.length}
+                        rowCount={dataList.length}
                       />
                       <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy))
+                        {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((row: any, index: number) => {
-                            const isItemSelected = isSelected(row.enquiryId);
+                          .map((data: any, index: number) => {
+                            const isItemSelected = isSelected(data.enquiryId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, row.enquiryId)}
+                                onClick={(event) => handleClick(event, data.enquiryId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={row.enquiryId}
+                                key={data.enquiryId}
                                 selected={isItemSelected}
                               >
                                 <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
-                                  {row.enquiryId}
+                                  {data.enquiryId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.date}</StyledTableCell>
-                                <StyledTableCell align="left">{row.serial}</StyledTableCell>
-                                <StyledTableCell align="left">{row.member}</StyledTableCell>
-                                <StyledTableCell align="left">{row.name}</StyledTableCell>
-                                <StyledTableCell align="left">{row.enquiryTags}</StyledTableCell>
-                                <StyledTableCell align="left">{row.method}</StyledTableCell>
-                                <StyledTableCell align="left">{row.status}</StyledTableCell>
-                                <StyledTableCell align="left">{row.credit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.debit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.balance}</StyledTableCell>
-                                <StyledTableCell align="left">{row.processing}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">
-                                  {row.enquiryDate}
+                                <StyledTableCell align="left">{data.date}</StyledTableCell>
+                                <StyledTableCell align="left">{data.serial}</StyledTableCell>
+                                <StyledTableCell align="left">{data.member}</StyledTableCell>
+                                <StyledTableCell align="left">{data.name}</StyledTableCell>
+                                <StyledTableCell align="left">{data.enquiryTags}</StyledTableCell>
+                                <StyledTableCell align="left">{data.method}</StyledTableCell>
+                                <StyledTableCell align="left">{data.status}</StyledTableCell>
+                                <StyledTableCell align="left">{data.credit}</StyledTableCell>
+                                <StyledTableCell align="left">{data.debit}</StyledTableCell>
+                                <StyledTableCell align="left">{data.balance}</StyledTableCell>
+                                <StyledTableCell align="left">{data.processing}</StyledTableCell>
+                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
+                                  {data.enquiryDate}
                                 </StyledTableCell> */}
                               </StyledTableRow>
                             );
@@ -392,7 +392,7 @@ const TransactionEnquiry = () => {
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={dataList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}

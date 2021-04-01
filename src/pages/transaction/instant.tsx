@@ -222,7 +222,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InstantTransaction = () => {
-  const [rows, setRows] = useState([]);
+  const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
     const transactionParam = {
@@ -237,10 +237,10 @@ const InstantTransaction = () => {
         return response.data;
       })
       .then((data) => {
-        const rows = data.transactions;
-        console.log('transaction rows:', rows);
+        const dataList = data.transactions;
+        // console.log('transaction dataList:', dataList);
 
-        // const rows = [
+        // const dataList = [
         //   {
         //     transactionId: id,
         //     transactionDate: date,
@@ -258,7 +258,7 @@ const InstantTransaction = () => {
         //   },
         // ];
 
-        setRows(rows);
+        setDataList(dataList);
       })
       .catch(() => {
         console.log('Error retrieving data.');
@@ -280,7 +280,7 @@ const InstantTransaction = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.transactionId);
+      const newSelecteds = dataList.map((n) => n.transactionId);
       setSelected(newSelecteds);
       return;
     }
@@ -315,7 +315,7 @@ const InstantTransaction = () => {
 
   const isSelected = (transactionId: never) => selected.indexOf(transactionId) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
   return (
     <Layout title="Instant Transaction">
@@ -340,45 +340,45 @@ const InstantTransaction = () => {
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={rows.length}
+                        rowCount={dataList.length}
                       />
                       <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy))
+                        {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((row: any, index: number) => {
-                            const isItemSelected = isSelected(row.transactionId);
+                          .map((data: any, index: number) => {
+                            const isItemSelected = isSelected(data.transactionId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, row.transactionId)}
+                                onClick={(event) => handleClick(event, data.transactionId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={row.transactionId}
+                                key={data.transactionId}
                                 selected={isItemSelected}
                               >
                                 <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
-                                  {row.transactionId}
+                                  {data.transactionId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.date}</StyledTableCell>
-                                <StyledTableCell align="left">{row.serial}</StyledTableCell>
-                                <StyledTableCell align="left">{row.member}</StyledTableCell>
-                                <StyledTableCell align="left">{row.name}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionTags}</StyledTableCell>
-                                <StyledTableCell align="left">{row.method}</StyledTableCell>
-                                <StyledTableCell align="left">{row.status}</StyledTableCell>
-                                <StyledTableCell align="left">{row.credit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.debit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.balance}</StyledTableCell>
-                                <StyledTableCell align="left">{row.processing}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionAction}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">
-                                  {row.transactionDate}
+                                <StyledTableCell align="left">{data.date}</StyledTableCell>
+                                <StyledTableCell align="left">{data.serial}</StyledTableCell>
+                                <StyledTableCell align="left">{data.member}</StyledTableCell>
+                                <StyledTableCell align="left">{data.name}</StyledTableCell>
+                                <StyledTableCell align="left">{data.transactionTags}</StyledTableCell>
+                                <StyledTableCell align="left">{data.method}</StyledTableCell>
+                                <StyledTableCell align="left">{data.status}</StyledTableCell>
+                                <StyledTableCell align="left">{data.credit}</StyledTableCell>
+                                <StyledTableCell align="left">{data.debit}</StyledTableCell>
+                                <StyledTableCell align="left">{data.balance}</StyledTableCell>
+                                <StyledTableCell align="left">{data.processing}</StyledTableCell>
+                                <StyledTableCell align="left">{data.transactionAction}</StyledTableCell>
+                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
+                                  {data.transactionDate}
                                 </StyledTableCell> */}
                               </StyledTableRow>
                             );
@@ -394,7 +394,7 @@ const InstantTransaction = () => {
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={dataList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}

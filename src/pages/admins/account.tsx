@@ -217,7 +217,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminList = () => {
-  const [rows, setRows] = useState([]);
+  const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
     const adminParam = {
@@ -232,10 +232,10 @@ const AdminList = () => {
         return response.data;
       })
       .then((data) => {
-        const rows = data.userAdmins;
-        console.log('admin rows:', rows);
+        const dataList = data.userAdmins;
+        // console.log('admin dataList:', dataList);
 
-        // const rows = [
+        // const dataList = [
         //   {
         //     adminId: id,
         //     adminName: name,
@@ -248,7 +248,7 @@ const AdminList = () => {
         //   },
         // ];
 
-        setRows(rows);
+        setDataList(dataList);
       })
       .catch(() => {
         console.log('Error retrieving data.');
@@ -270,7 +270,7 @@ const AdminList = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.adminId);
+      const newSelecteds = dataList.map((n) => n.adminId);
       setSelected(newSelecteds);
       return;
     }
@@ -305,7 +305,7 @@ const AdminList = () => {
 
   const isSelected = (adminId: never) => selected.indexOf(adminId) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
   return (
     <Layout title="Admin List">
@@ -330,40 +330,40 @@ const AdminList = () => {
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={rows.length}
+                        rowCount={dataList.length}
                       />
                       <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy))
+                        {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((row: any, index: number) => {
-                            const isItemSelected = isSelected(row.adminId);
+                          .map((data: any, index: number) => {
+                            const isItemSelected = isSelected(data.adminId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, row.adminId)}
+                                onClick={(event) => handleClick(event, data.adminId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={row.adminId}
+                                key={data.adminId}
                                 selected={isItemSelected}
                               >
                                 <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
-                                  {row.adminId}
+                                  {data.adminId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.name}</StyledTableCell>
-                                <StyledTableCell align="left">{row.fullName}</StyledTableCell>
-                                <StyledTableCell align="left">{row.role}</StyledTableCell>
-                                <StyledTableCell align="left">{row.adminDepartment}</StyledTableCell>
-                                <StyledTableCell align="left">{row.status}</StyledTableCell>
-                                <StyledTableCell align="left">{row.adminDate}</StyledTableCell>
-                                <StyledTableCell align="left">{row.adminAction}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">
-                                  {row.transactionDate}
+                                <StyledTableCell align="left">{data.name}</StyledTableCell>
+                                <StyledTableCell align="left">{data.fullName}</StyledTableCell>
+                                <StyledTableCell align="left">{data.role}</StyledTableCell>
+                                <StyledTableCell align="left">{data.adminDepartment}</StyledTableCell>
+                                <StyledTableCell align="left">{data.status}</StyledTableCell>
+                                <StyledTableCell align="left">{data.adminDate}</StyledTableCell>
+                                <StyledTableCell align="left">{data.adminAction}</StyledTableCell>
+                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
+                                  {data.transactionDate}
                                 </StyledTableCell> */}
                               </StyledTableRow>
                             );
@@ -379,7 +379,7 @@ const AdminList = () => {
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={dataList.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
