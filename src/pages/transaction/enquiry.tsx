@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from 'Layouts';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
@@ -23,54 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-
-const rows = [
-  {
-    transactionId: 1,
-    transactionDate: '2021-03-24 11:18:35',
-    transactionSerial: 'A0020',
-    transactionMember: 'John Doe',
-    transactionName: 'John Doe',
-    transactionTags: '',
-    transactionMethod: 'Deposit',
-    transactionStatus: 'Processing',
-    transactionCredit: 111,
-    transactionDebit: '',
-    transactionBalance: 100000,
-    transactionProcessing: 'mycashadmin',
-    transactionAction: 'activated',
-  },
-  {
-    transactionId: 2,
-    transactionDate: '2021-03-25 13:18:35',
-    transactionSerial: 'A0021',
-    transactionMember: 'Andy Doe',
-    transactionName: 'Andy Doe',
-    transactionTags: '',
-    transactionMethod: 'Withdrawal',
-    transactionStatus: 'Pending',
-    transactionCredit: '',
-    transactionDebit: 100,
-    transactionBalance: 200000,
-    transactionProcessing: '',
-    transactionAction: 'activated',
-  },
-  {
-    transactionId: 3,
-    transactionDate: '2021-03-26 17:18:35',
-    transactionSerial: 'A0022',
-    transactionMember: 'Jenn Doe',
-    transactionName: 'Chris Doe',
-    transactionTags: '',
-    transactionMethod: 'Deposit',
-    transactionStatus: 'Processing',
-    transactionCredit: 113,
-    transactionDebit: '',
-    transactionBalance: 50000,
-    transactionProcessing: 'mycashadmin',
-    transactionAction: 'activated',
-  },
-];
+import axios from 'axios';
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -84,8 +37,8 @@ function descendingComparator(a: any, b: any, orderBy: any) {
 
 function getComparator(order: any, orderBy: any) {
   return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    ? (a: any, b: any) => descendingComparator(a, b, orderBy)
+    : (a: any, b: any) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array: any, comparator: any) {
@@ -99,19 +52,18 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'transactionId', numeric: true, disablePadding: true, label: '#' },
-  { id: 'transactionDate', numeric: false, disablePadding: false, label: 'Date' },
-  { id: 'transactionSerial', numeric: false, disablePadding: false, label: 'Serial' },
-  { id: 'transactionMember', numeric: false, disablePadding: false, label: 'Member' },
-  { id: 'transactionName', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'transactionTags', numeric: false, disablePadding: false, label: 'Tags' },
-  { id: 'transactionMethod', numeric: false, disablePadding: false, label: 'Method' },
-  { id: 'transactionStatus', numeric: false, disablePadding: false, label: 'Status' },
-  { id: 'transactionCredit', numeric: false, disablePadding: false, label: 'Credit' },
-  { id: 'transactionDebit', numeric: false, disablePadding: false, label: 'Debit' },
-  { id: 'transactionBalance', numeric: false, disablePadding: false, label: 'Balance' },
-  { id: 'transactionProcessing', numeric: false, disablePadding: false, label: 'Processing' },
-  { id: 'transactionAction', numeric: false, disablePadding: false, label: 'Actions' },
+  { id: 'enquiryId', numeric: true, disablePadding: true, label: '#' },
+  { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
+  { id: 'serial', numeric: false, disablePadding: false, label: 'Serial' },
+  { id: 'member', numeric: false, disablePadding: false, label: 'Member' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'enquiryTags', numeric: false, disablePadding: false, label: 'Tags' },
+  { id: 'method', numeric: false, disablePadding: false, label: 'Method' },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
+  { id: 'credit', numeric: false, disablePadding: false, label: 'Credit' },
+  { id: 'debit', numeric: false, disablePadding: false, label: 'Debit' },
+  { id: 'balance', numeric: false, disablePadding: false, label: 'Balance' },
+  { id: 'processing', numeric: false, disablePadding: false, label: 'Processing' },
 ];
 
 function EnhancedTableHead(props: any) {
@@ -201,7 +153,7 @@ const EnhancedTableToolbar = (props: any) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Instant Transaction
+          Transaction Enquiry
         </Typography>
       )}
 
@@ -268,35 +220,78 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Instant() {
+const TransactionEnquiry = () => {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const enquiryParam = {
+      Page: 1,
+      Size: 20,
+      Approval: [2, 3],
+      Request: [2, 3],
+    };
+    axios
+      .post('http://localhost:5000/api/Transaction/GetTransactionList/', enquiryParam)
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        const rows = data.transactions;
+        console.log('enquiry rows:', rows);
+
+        // const rows = [
+        //   {
+        //     enquiryId: id,
+        //     enquiryDate: date,
+        //     enquirySerial: serial,
+        //     enquiryMember: member,
+        //     enquiryName: name,
+        //     enquiryTags: '',
+        //     enquiryMethod: method,
+        //     enquiryStatus: status,
+        //     enquiryCredit: credit,
+        //     enquiryDebit: debit,
+        //     enquiryBalance: balance,
+        //     enquiryProcessing: processing,
+        //     enquiryAction: <a href="">Edit</a>,
+        //   },
+        // ];
+
+        setRows(rows);
+      })
+      .catch(() => {
+        console.log('Error retrieving data.');
+      });
+  }, []);
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('transactionId');
+  const [orderBy, setOrderBy] = React.useState('enquiryId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.transactionId);
+      const newSelecteds = rows.map((n) => n.enquiryId);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, transactionId: number) => {
-    const selectedIndex = selected.indexOf(transactionId);
+  const handleClick = (event: any, enquiryId: never) => {
+    const selectedIndex = selected.indexOf(enquiryId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, transactionId);
+      newSelected = newSelected.concat(selected, enquiryId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -317,12 +312,12 @@ export default function Instant() {
     setPage(0);
   };
 
-  const isSelected = (transactionId: number) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (enquiryId: never) => selected.indexOf(enquiryId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <Layout title="Instant Transaction">
+    <Layout title="Transaction Enquiry">
       <Row center="xs">
         <Col breakPoint={{ xs: 12 }}>
           <Card>
@@ -350,39 +345,38 @@ export default function Instant() {
                         {stableSort(rows, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((row: any, index: number) => {
-                            const isItemSelected = isSelected(row.transactionId);
+                            const isItemSelected = isSelected(row.enquiryId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, row.transactionId)}
+                                onClick={(event) => handleClick(event, row.enquiryId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={row.transactionId}
+                                key={row.enquiryId}
                                 selected={isItemSelected}
                               >
                                 <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
-                                  {row.transactionId}
+                                  {row.enquiryId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionDate}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionSerial}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionMember}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionName}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionTags}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionMethod}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionStatus}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionCredit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionDebit}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionBalance}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionProcessing}</StyledTableCell>
-                                <StyledTableCell align="left">{row.transactionAction}</StyledTableCell>
+                                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                                <StyledTableCell align="left">{row.serial}</StyledTableCell>
+                                <StyledTableCell align="left">{row.member}</StyledTableCell>
+                                <StyledTableCell align="left">{row.name}</StyledTableCell>
+                                <StyledTableCell align="left">{row.enquiryTags}</StyledTableCell>
+                                <StyledTableCell align="left">{row.method}</StyledTableCell>
+                                <StyledTableCell align="left">{row.status}</StyledTableCell>
+                                <StyledTableCell align="left">{row.credit}</StyledTableCell>
+                                <StyledTableCell align="left">{row.debit}</StyledTableCell>
+                                <StyledTableCell align="left">{row.balance}</StyledTableCell>
+                                <StyledTableCell align="left">{row.processing}</StyledTableCell>
                                 {/* <StyledTableCell component="th" id={labelId} scope="row" padding="none">
-                                  {row.transactionDate}
+                                  {row.enquiryDate}
                                 </StyledTableCell> */}
                               </StyledTableRow>
                             );
@@ -412,4 +406,6 @@ export default function Instant() {
       </Row>
     </Layout>
   );
-}
+};
+
+export default TransactionEnquiry;
