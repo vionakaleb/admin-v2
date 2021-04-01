@@ -34,22 +34,6 @@ export default function Dashboard() {
     cursor: auto;
   `;
 
-  // "totalDeposit": 10.0000,
-  // "totalWithdrawal": 5.0000,
-  // "balance": 5.0000,
-  // "totalRegistered": 74,
-  // "totalActive": 15,
-  // "totalWinLose": 173499.1500,
-  // "totalTurnover": 124390.8900,
-  // "banks": [
-  //     {
-  //         "bankCode": "Mandiri",
-  //         "accountName": "Mandiri",
-  //         "accountNumber": "112233449900",
-  //         "balance": 25000.0000
-  //     }
-  // ],
-
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
@@ -85,9 +69,9 @@ export default function Dashboard() {
     style: 'currency',
     currency: 'IDR',
   });
-  const formatter = new Intl.NumberFormat('en-US', {
-    maximumSignificantDigits: 3,
-  });
+
+  const dataTotalTurnover = formatterIDR.format(dataList.totalTurnover);
+  const dataBankBalance = bankList?.map((bank: any) => formatterIDR.format(bank.balance));
 
   // const groupedBanks = banks.reduce((arrBank, bank) => {
   //   arrBank[bank.level] = [...(arrBank[bank.level] || []), bank];
@@ -164,7 +148,7 @@ export default function Dashboard() {
                       display: 'block',
                       fontSize: '3rem',
                       whiteSpace: 'nowrap',
-                      width: '238px',
+                      width: '252px',
                       height: '44px',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
@@ -172,7 +156,7 @@ export default function Dashboard() {
                       padding: '5px',
                     }}
                   >
-                    {formatter.format(dataList.totalTurnover) + '.00'}
+                    {dataTotalTurnover.toString().split('IDR')}
                   </Row>
                 </Col>
                 <Col
@@ -232,7 +216,7 @@ export default function Dashboard() {
                       <CardBody>
                         <p>{bank.accountName}</p>
                         <p>{bank.accountNumber}</p>
-                        <b>{formatter.format(bank.balance) + '.00'}</b>
+                        <b>{dataBankBalance.toString().split('IDR')}</b>
                       </CardBody>
                     </Card>
                   </Col>

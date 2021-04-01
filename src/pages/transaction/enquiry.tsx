@@ -231,38 +231,20 @@ const TransactionEnquiry = () => {
       Request: [1, 2], // Deposit = 1, Withdraw = 2
     };
     axios
-      .post('http://localhost:5000/api/Transaction/GetTransactionList/', enquiryParam)
+      .post('http://localhost:5000/api/Admin/Transaction/GetTransactionList/', enquiryParam)
       .then((response) => {
         return response.data;
       })
       .then((data) => {
         const dataList = data.transactions;
-        // console.log('enquiry dataList:', dataList);
-
-        // const dataList = [
-        //   {
-        //     enquiryId: id,
-        //     enquiryDate: date,
-        //     enquirySerial: serial,
-        //     enquiryMember: member,
-        //     enquiryName: name,
-        //     enquiryTags: '',
-        //     enquiryMethod: method,
-        //     enquiryStatus: status,
-        //     enquiryCredit: credit,
-        //     enquiryDebit: debit,
-        //     enquiryBalance: balance,
-        //     enquiryProcessing: processing,
-        //     enquiryAction: <a href="">Edit</a>,
-        //   },
-        // ];
-
         setDataList(dataList);
       })
       .catch(() => {
         console.log('Error retrieving data.');
       });
   }, []);
+
+  // console.log('enquiry dataList:', dataList);
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');

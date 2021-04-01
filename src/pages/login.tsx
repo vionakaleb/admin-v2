@@ -27,10 +27,10 @@ export default function Login() {
       passWord: password,
     };
     const response = await axios.post('http://localhost:5000/api/Admin/login', user);
-    // console.log('login response:', response.data);
     localStorage.setItem('user', JSON.stringify(response.data));
-
     setUser(response.data);
+
+    // console.log('login response:', response.data);
 
     if (response.data.errorCode === 0) {
       alert('Success');

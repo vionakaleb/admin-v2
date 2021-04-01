@@ -227,33 +227,20 @@ const AdminList = () => {
       KeyWord: null,
     };
     axios
-      .post('http://localhost:5000/api/Admin/Admin/GetAdminList', adminParam)
+      .post('http://localhost:5000/api/Admin/Admin/GetUserList', adminParam)
       .then((response) => {
         return response.data;
       })
       .then((data) => {
         const dataList = data.userAdmins;
-        // console.log('admin dataList:', dataList);
-
-        // const dataList = [
-        //   {
-        //     adminId: id,
-        //     adminName: name,
-        //     adminFullName: fullName,
-        //     adminRole: role,
-        //     adminDepartment: '',
-        //     adminStatus: status,
-        //     adminDate: new Date().toLocaleDateString(),
-        //     adminAction: <a href="">Edit</a>,
-        //   },
-        // ];
-
         setDataList(dataList);
       })
       .catch(() => {
         console.log('Error retrieving data.');
       });
   }, []);
+
+  // console.log('admin dataList:', dataList);
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');

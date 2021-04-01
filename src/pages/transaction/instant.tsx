@@ -232,38 +232,20 @@ const InstantTransaction = () => {
       Request: [1, 2, 3, 4], // Deposit = 1, Withdraw = 2, Addition = 3, Subs = 4
     };
     axios
-      .post('http://localhost:5000/api/Transaction/GetTransactionList/', transactionParam)
+      .post('http://localhost:5000/api/Admin/Transaction/GetTransactionList/', transactionParam)
       .then((response) => {
         return response.data;
       })
       .then((data) => {
         const dataList = data.transactions;
-        // console.log('transaction dataList:', dataList);
-
-        // const dataList = [
-        //   {
-        //     transactionId: id,
-        //     transactionDate: date,
-        //     transactionSerial: serial,
-        //     transactionMember: member,
-        //     transactionName: name,
-        //     transactionTags: '',
-        //     transactionMethod: method,
-        //     transactionStatus: status,
-        //     transactionCredit: credit,
-        //     transactionDebit: debit,
-        //     transactionBalance: balance,
-        //     transactionProcessing: processing,
-        //     transactionAction: <a href="">Edit</a>,
-        //   },
-        // ];
-
         setDataList(dataList);
       })
       .catch(() => {
         console.log('Error retrieving data.');
       });
   }, []);
+
+  // console.log('transaction dataList:', dataList);
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
