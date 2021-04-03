@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 
-import Auth, { Group } from 'components/Auth';
-import Socials from 'components/Auth/Socials';
 import Layout from 'Layouts';
+import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
+import Row from '@paljs/ui/Row';
+import Col from '@paljs/ui/Col';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -42,31 +43,100 @@ export default function Login() {
 
   return (
     <Layout title="Login">
-      <Auth title="Login" subTitle="Hello! Login with your email">
-        <form onSubmit={apiLogin}>
-          <InputGroup fullWidth>
-            <input
-              type="text"
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-              placeholder="Username"
-            />
-          </InputGroup>
-          <InputGroup fullWidth>
-            <input
-              type="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-              placeholder="Password"
-            />
-          </InputGroup>
-          <Group></Group>
-          <Button status="Success" type="submit" shape="SemiRound" fullWidth>
-            <a>Login</a>
-          </Button>
-        </form>
-        <Socials />
-      </Auth>
+      <Row center="xs">
+        <Col breakPoint={{ xs: 12, md: 9 }}>
+          <Card>
+            <CardBody>
+              <form onSubmit={apiLogin}>
+                <Row>
+                  <Col
+                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-evenly',
+                    }}
+                  >
+                    <InputGroup fullWidth>
+                      <input
+                        type="text"
+                        value={MemberUserName}
+                        onChange={({ target }) => setUsername(target.value)}
+                        placeholder="User Name"
+                      />
+                      {/* DONE */}
+                    </InputGroup>
+                    <InputGroup fullWidth>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
+                        placeholder="Password"
+                      />
+                    </InputGroup>
+                    <InputGroup fullWidth>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
+                        placeholder="Password"
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col
+                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-evenly',
+                    }}
+                  >
+                    <InputGroup fullWidth>
+                      <input
+                        type="text"
+                        value={username}
+                        onChange={({ target }) => setUsername(target.value)}
+                        placeholder="Username"
+                      />
+                    </InputGroup>
+                    <InputGroup fullWidth>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
+                        placeholder="Password"
+                      />
+                    </InputGroup>
+                    <InputGroup fullWidth>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
+                        placeholder="Password"
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col
+                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-evenly',
+                    }}
+                  >
+                    <Button status="Success" type="submit" shape="SemiRound" fullWidth>
+                      <a>Login</a>
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     </Layout>
   );
 }
