@@ -112,7 +112,7 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify(response.data));
     setUser(response.data);
 
-    console.log('login response:', response.data);
+    // console.log('login response:', response.data);
 
     if (username !== null || username !== '' || password !== null || password !== '') {
       if (response.data.errorCode === 0) {

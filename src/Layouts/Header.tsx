@@ -74,6 +74,26 @@ const Header: React.FC<HeaderProps> = (props) => {
     }
   }, []);
 
+  const apiCheckLogin = async () => {
+    const checkLoginParam = {
+      UserName: 'testadmin',
+      SessionCode: user?.session,
+    };
+
+    const response = await axios.post('http://localhost:5000/api/Admin/ValidateUserSession', checkLoginParam);
+
+    console.log(user?.session);
+
+    if (response.data.errorCode === 0) {
+      alert(response.data.errorMessage);
+    } else {
+      alert(response.data.errorMessage);
+      // window.location.href = '/login';
+    }
+  };
+
+  apiCheckLogin();
+
   const apiLogout = () => {
     setUser({});
     setUsername('');
