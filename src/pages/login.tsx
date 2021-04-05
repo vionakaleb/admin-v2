@@ -8,12 +8,22 @@ import { InputGroup } from '@paljs/ui/Input';
 import Auth from 'components/Auth';
 
 const PageWrapper = styled.div`
-  background-image: url('https://www.wallpapertip.com/wmimgs/58-580609_login-background-images-for-android.jpg');
-  height: 100%;
+  background: url('https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80');
+  color: #eee;
   width: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  height: 98vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  animation: animation 100s linear infinite;
+
+  @keyframes animation {
+    100% {
+      background-position: 0px -3000px;
+    }
+  }
 `;
 
 const LayoutWrapper = styled(Card)`

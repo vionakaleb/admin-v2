@@ -36,6 +36,7 @@ export const Group = styled.div`
 
 const CardAuth = styled(Card)`
   margin-bottom: 0;
+  width: 50%;
   height: calc(100vh - 5rem);
   ${breakpointDown('sm')`
     height: 100vh;
