@@ -114,15 +114,15 @@ export default function Login() {
 
     // console.log('login response:', response.data);
 
-    if (username !== null || username !== '' || password !== null || password !== '') {
+    if (username === null || username === '' || password === null || password === '') {
+      alert('Login info must be filled.');
+    } else {
       if (response.data.errorCode === 0) {
         alert(response.data.errorMessage);
         window.location.href = '/dashboard';
       } else {
         alert(response.data.errorMessage);
       }
-    } else {
-      alert('Login info must be filled.');
     }
   };
 
