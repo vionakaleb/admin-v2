@@ -38,8 +38,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     const dashboardParam = {
-      page: 1,
-      size: 20,
       dateFrom: '2021-02-01',
       dateTo: '2021-03-31',
     };

@@ -3,12 +3,12 @@ import { MenuItemType } from '@paljs/ui/types';
 const items: MenuItemType[] = [
   {
     title: 'Dashboard',
-    icon: { name: 'home', options: { animation: { type: 'shake' }} },
+    icon: { name: 'home', options: { animation: { type: 'shake' } } },
     link: { href: '/dashboard' },
   },
   {
     title: 'Transaction',
-    icon: { name: 'monitor-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'monitor-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Instant Transaction',
@@ -34,37 +34,37 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Members',
-    icon: { name: 'person-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'person-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'New Member',
-        link: { href: '/member/new' },
+        link: { href: '/members/new' },
       },
       {
         title: 'Member List',
-        link: { href: '/member/list' },
+        link: { href: '/members/list' },
       },
       {
         title: 'Member Tags',
-        link: { href: '/member/tags' },
+        link: { href: '/members/tags' },
       },
       {
         title: 'Member Referral Report',
-        link: { href: '/member/referral-report' },
+        link: { href: '/members/referral-report' },
       },
       {
         title: 'Member Referral Report (All)',
-        link: { href: '/member/referral-report-all' },
+        link: { href: '/members/referral-report-all' },
       },
       {
         title: 'Agent Member Turnover Report',
-        link: { href: '/member/agent-turnover-report' },
+        link: { href: '/members/agent-turnover-report' },
       },
     ],
   },
   {
     title: 'Bank',
-    icon: { name: 'shield-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'shield-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Bank Summary',
@@ -82,7 +82,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Agents / Affiliate',
-    icon: { name: 'people-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'people-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'New Agent',
@@ -104,7 +104,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Report',
-    icon: { name: 'pie-chart-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'pie-chart-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Outstanding Wager',
@@ -150,7 +150,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Bonus & Rebate',
-    icon: { name: 'shopping-bag-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'shopping-bag-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Bonus List',
@@ -172,7 +172,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Tools',
-    icon: { name: 'external-link-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'external-link-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Product Maintenance',
@@ -210,7 +210,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Settings',
-    icon: { name: 'settings-2-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'settings-2-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Announcement',
@@ -248,7 +248,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Admins',
-    icon: { name: 'person-done-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'person-done-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Account',
@@ -270,7 +270,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Archive',
-    icon: { name: 'trending-up-outline', options: { animation: { type: 'shake' }} },
+    icon: { name: 'trending-up-outline', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Bet Enquiries [All]',
@@ -296,7 +296,7 @@ const items: MenuItemType[] = [
   },
   {
     title: 'Super Admin',
-    icon: { name: 'person', options: { animation: { type: 'shake' }} },
+    icon: { name: 'person', options: { animation: { type: 'shake' } } },
     children: [
       {
         title: 'Permissions',

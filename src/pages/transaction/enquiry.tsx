@@ -279,7 +279,7 @@ const TransactionEnquiry = () => {
   const [orderBy, setOrderBy] = React.useState('enquiryId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === 'asc';

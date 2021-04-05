@@ -54,19 +54,24 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'transactionId', numeric: true, disablePadding: true, label: '#' },
-  { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
-  { id: 'serial', numeric: false, disablePadding: false, label: 'Serial' },
-  { id: 'member', numeric: false, disablePadding: false, label: 'Member' },
+  { id: 'memberId', numeric: true, disablePadding: true, label: '#' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'transactionTags', numeric: false, disablePadding: false, label: 'Tags' },
-  { id: 'method', numeric: false, disablePadding: false, label: 'Method' },
+  { id: 'code', numeric: false, disablePadding: false, label: 'Code' },
+  { id: 'memberTags', numeric: false, disablePadding: false, label: 'Member Tags' },
+  { id: 'fullName', numeric: false, disablePadding: false, label: 'Full Name' },
+  { id: 'channel', numeric: false, disablePadding: false, label: 'Channel' },
+  { id: 'mainWallet', numeric: false, disablePadding: false, label: 'Main Wallet' },
+  { id: 'deposit', numeric: false, disablePadding: false, label: 'Deposit' },
+  { id: 'withdrawal', numeric: false, disablePadding: false, label: 'Withdrawal' },
+  { id: 'contact', numeric: false, disablePadding: false, label: 'Contact' },
+  { id: 'dateOfBirth', numeric: false, disablePadding: false, label: 'Date Of Birth' },
+  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
+  { id: 'wechat', numeric: false, disablePadding: false, label: 'WeChat' },
+  { id: 'registeredAt', numeric: false, disablePadding: false, label: 'Registered At' },
+  { id: 'lastDeposit', numeric: false, disablePadding: false, label: 'Last Deposit' },
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
-  { id: 'credit', numeric: false, disablePadding: false, label: 'Credit' },
-  { id: 'debit', numeric: false, disablePadding: false, label: 'Debit' },
-  { id: 'balance', numeric: false, disablePadding: false, label: 'Balance' },
-  { id: 'processing', numeric: false, disablePadding: false, label: 'Processing' },
-  { id: 'transactionAction', numeric: false, disablePadding: false, label: 'Actions' },
+  { id: 'ip', numeric: false, disablePadding: false, label: 'IP' },
+  { id: 'actions', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
 function EnhancedTableHead(props: any) {
@@ -156,7 +161,7 @@ const EnhancedTableToolbar = (props: any) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Instant Transaction
+          Member List
         </Typography>
       )}
 
@@ -177,7 +182,7 @@ const EnhancedTableToolbar = (props: any) => {
               right: 0,
             }}
           >
-            <Link href="/transaction/instant-add">
+            <Link href="/members/new">
               <Button size="Small" status="Warning" style={{ width: '90%' }}>
                 Add
               </Button>
@@ -249,23 +254,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TransactionInstant = () => {
+const MemberList = () => {
   const [dataList, setDataList] = useState([]);
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
 
   useEffect(() => {
-    const transactionParam = {
-      Page: 1,
-      Size: 20,
-      Approval: [1, 2, 3], // Pending = 1, Approve = 2, Reject = 3
-      Request: [1, 2, 3, 4], // Deposit = 1, Withdraw = 2, Addition = 3, Subs = 4
+    const memberParam = {
+      DateFrom: dateFrom,
+      DateTo: dateTo,
     };
     axios
-      .post('http://localhost:5000/api/Admin/Transaction/GetTransactionList/', transactionParam)
+      .post('http://localhost:5000/api/Admin/Member/GetMemberList/', memberParam)
       .then((response) => {
         return response.data;
       })
       .then((data) => {
-        const dataList = data.transactions;
+        const dataList = data.members;
         setDataList(dataList);
       })
       .catch(() => {
@@ -273,11 +278,11 @@ const TransactionInstant = () => {
       });
   }, []);
 
-  // console.log('transaction dataList:', dataList);
+  // console.log('Member dataList:', dataList);
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('transactionId');
+  const [orderBy, setOrderBy] = React.useState('memberId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -290,19 +295,19 @@ const TransactionInstant = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = dataList.map((n) => n.transactionId);
+      const newSelecteds = dataList.map((n) => n.memberId);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, transactionId: never) => {
-    const selectedIndex = selected.indexOf(transactionId);
+  const handleClick = (event: any, memberId: never) => {
+    const selectedIndex = selected.indexOf(memberId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, transactionId);
+      newSelected = newSelected.concat(selected, memberId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -323,12 +328,12 @@ const TransactionInstant = () => {
     setPage(0);
   };
 
-  const isSelected = (transactionId: never) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (memberId: never) => selected.indexOf(memberId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
   return (
-    <Layout title="Instant Transaction">
+    <Layout title="Member List">
       <Row center="xs">
         <Col breakPoint={{ xs: 12 }}>
           <Card>
@@ -356,37 +361,42 @@ const TransactionInstant = () => {
                         {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(data.transactionId);
+                            const isItemSelected = isSelected(data.memberId);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, data.transactionId)}
+                                onClick={(event) => handleClick(event, data.memberId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data.transactionId}
+                                key={data.memberId}
                                 selected={isItemSelected}
                               >
                                 <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
-                                  {data.transactionId}
+                                  {data.memberId}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{data.date}</StyledTableCell>
-                                <StyledTableCell align="left">{data.serial}</StyledTableCell>
-                                <StyledTableCell align="left">{data.member}</StyledTableCell>
                                 <StyledTableCell align="left">{data.name}</StyledTableCell>
-                                <StyledTableCell align="left">{data.transactionTags}</StyledTableCell>
-                                <StyledTableCell align="left">{data.method}</StyledTableCell>
+                                <StyledTableCell align="left">{data.code}</StyledTableCell>
+                                <StyledTableCell align="left">{data.memberTags}</StyledTableCell>
+                                <StyledTableCell align="left">{data.fullName}</StyledTableCell>
+                                <StyledTableCell align="left">{data.channel}</StyledTableCell>
+                                <StyledTableCell align="left">{data.mainWallet}</StyledTableCell>
+                                <StyledTableCell align="left">{data.deposit}</StyledTableCell>
+                                <StyledTableCell align="left">{data.withdrawal}</StyledTableCell>
+                                <StyledTableCell align="left">{data.contact}</StyledTableCell>
+                                <StyledTableCell align="left">{data.dateOfBirth}</StyledTableCell>
+                                <StyledTableCell align="left">{data.email}</StyledTableCell>
+                                <StyledTableCell align="left">{data.wechat}</StyledTableCell>
+                                <StyledTableCell align="left">{data.registeredAt}</StyledTableCell>
+                                <StyledTableCell align="left">{data.lastDeposit}</StyledTableCell>
                                 <StyledTableCell align="left">{data.status}</StyledTableCell>
-                                <StyledTableCell align="left">{data.credit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.debit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.balance}</StyledTableCell>
-                                <StyledTableCell align="left">{data.processing}</StyledTableCell>
-                                <StyledTableCell align="left">{data.transactionAction}</StyledTableCell>
+                                <StyledTableCell align="left">{data.ip}</StyledTableCell>
+                                <StyledTableCell align="left">{data.actions}</StyledTableCell>
                                 {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
                                   {data.transactionDate}
                                 </StyledTableCell> */}
@@ -420,4 +430,4 @@ const TransactionInstant = () => {
   );
 };
 
-export default TransactionInstant;
+export default MemberList;

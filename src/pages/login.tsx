@@ -32,7 +32,7 @@ export default function Login() {
 
     // console.log('login response:', response.data);
 
-    if (response.data.errorCode === 0) {
+    if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert(response.data.errorMessage);
       window.location.href = '/dashboard';
     } else {

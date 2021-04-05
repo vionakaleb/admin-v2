@@ -172,7 +172,7 @@ const EnhancedTableToolbar = (props: any) => {
               right: 0,
             }}
           >
-            <Link href="/transaction/instant-add">
+            <Link href="/admins/account-add">
               <Button size="Small" status="Warning" style={{ width: '90%' }}>
                 Add
               </Button>
@@ -275,7 +275,7 @@ const AdminList = () => {
   const [orderBy, setOrderBy] = React.useState('adminId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === 'asc';

@@ -26,15 +26,15 @@ const InputSelect = styled.select`
   margin: 5.6px 0;
 `;
 
-export default function SaveTransaction() {
-  const [Action, setAction] = useState('Add');
-  const [UserLogin, setUserLogin] = useState('testadmin');
-  const [ApprovalStatus, setApprovalStatus] = useState('');
-  const [WhiteLabelCode, setWhiteLabelCode] = useState('');
-  const [MemberUserName, setMemberUserName] = useState('');
-  const [PrefixUserName, setPrefixUserName] = useState('');
-  const [Amount, setAmount] = useState('');
-  const [RequestType, setRequestType] = useState('');
+export default function AddTransaction() {
+  const [action, setAction] = useState('Add');
+  const [userLogin, setUserLogin] = useState('testadmin');
+  const [approvalStatus, setApprovalStatus] = useState('');
+  const [whiteLabelCode, setWhiteLabelCode] = useState('');
+  const [memberUsername, setMemberUserName] = useState('');
+  const [prefixUsername, setPrefixUserName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [requestType, setRequestType] = useState('');
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
@@ -42,25 +42,34 @@ export default function SaveTransaction() {
     }
   }, []);
 
-  const apiSaveTransaction = async (e: any) => {
+  const apiAddTransaction = async (e: any) => {
     e.preventDefault();
-    const transaction = {
-      Action: Action,
-      UserLogin: UserLogin,
+    const addTransactionParam = {
+      Action: action,
+      UserLogin: userLogin,
       Transaction: {
-        ApprovalStatus: ApprovalStatus,
-        WhiteLabelCode: WhiteLabelCode,
-        MemberUserName: MemberUserName,
-        PrefixUserName: PrefixUserName,
-        Amount: Amount,
-        RequestType: RequestType,
+        ApprovalStatus: approvalStatus,
+        WhiteLabelCode: whiteLabelCode,
+        MemberUserName: memberUsername,
+        PrefixUserName: prefixUsername,
+        Amount: amount,
+        RequestType: requestType,
       },
     };
 
-    const response = await axios.post('http://localhost:5000/api/Admin/Transaction/SaveTransaction/', transaction);
+    const response = await axios.post(
+      'http://localhost:5000/api/Admin/Transaction/SaveTransaction/',
+      addTransactionParam,
+    );
     // console.log('transaction response:', response.data);
 
-    if (response.data.errorCode === 0) {
+    if (
+      response.data.errorCode === 0 ||
+      memberUsername !== '' ||
+      amount !== '' ||
+      approvalStatus !== '' ||
+      requestType !== ''
+    ) {
       alert(response.data.errorMessage);
       window.location.href = '/transaction/instant';
     } else {
@@ -69,13 +78,13 @@ export default function SaveTransaction() {
   };
 
   return (
-    <Layout title="Save Transaction">
+    <Layout title="Add Transaction">
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
-            <CardHeader>Save Transaction</CardHeader>
+            <CardHeader>Add Transaction</CardHeader>
             <CardBody>
-              <form onSubmit={apiSaveTransaction}>
+              <form onSubmit={apiAddTransaction}>
                 <Row>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -89,7 +98,7 @@ export default function SaveTransaction() {
                     <InputWrapper fullWidth>
                       <input
                         type="text"
-                        value={MemberUserName}
+                        value={memberUsername}
                         onChange={({ target }) => setMemberUserName(target.value)}
                         placeholder="Member Username:"
                       />
@@ -97,7 +106,7 @@ export default function SaveTransaction() {
                     <InputWrapper fullWidth>
                       <input
                         type="text"
-                        value={PrefixUserName}
+                        value={prefixUsername}
                         onChange={({ target }) => setPrefixUserName(target.value)}
                         placeholder="Prefix Username:"
                       />
@@ -105,7 +114,7 @@ export default function SaveTransaction() {
                     <InputWrapper fullWidth>
                       <input
                         type="text"
-                        value={WhiteLabelCode}
+                        value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
                         placeholder="White Label Code:"
                       />
@@ -140,7 +149,7 @@ export default function SaveTransaction() {
                     <InputWrapper fullWidth>
                       <input
                         type="number"
-                        value={Amount}
+                        value={amount}
                         onChange={({ target }) => setAmount(target.value)}
                         placeholder="Credit:"
                       />
