@@ -254,8 +254,8 @@ const TransactionInstant = () => {
 
   useEffect(() => {
     const transactionParam = {
-      Page: 1,
-      Size: 20,
+      // Page: 1,
+      // Size: 20,
       Approval: [1, 2, 3], // Pending = 1, Approve = 2, Reject = 3
       Request: [1, 2, 3, 4], // Deposit = 1, Withdraw = 2, Addition = 3, Subs = 4
     };
@@ -297,7 +297,7 @@ const TransactionInstant = () => {
     setSelected([]);
   };
 
-  const handleClick = (event: any, transactionId: never) => {
+  const handleClick = (event: any, transactionId: any) => {
     const selectedIndex = selected.indexOf(transactionId);
     let newSelected = [];
 
@@ -323,7 +323,7 @@ const TransactionInstant = () => {
     setPage(0);
   };
 
-  const isSelected = (transactionId: never) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (transactionId: any) => selected.indexOf(transactionId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 

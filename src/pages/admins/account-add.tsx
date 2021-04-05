@@ -10,12 +10,17 @@ import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 
 const InputWrapper = styled(InputGroup)`
+  flex-direction: column;
   margin: 5px 0;
 `;
 
+const ButtonWrapper = styled(Button)`
+  margin: 25px 0;
+`;
+
 export default function AddAdmin() {
-  const [action, setAction] = useState('Add');
-  const [userLogin, setUserLogin] = useState('testadmin');
+  const [action] = useState('Add');
+  const [userLogin] = useState('testadmin');
   //   const [id, setId] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -76,28 +81,16 @@ export default function AddAdmin() {
                     }}
                   >
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={username}
-                        onChange={({ target }) => setUsername(target.value)}
-                        placeholder="Username:"
-                      />
+                      Username :
+                      <input type="text" value={username} onChange={({ target }) => setUsername(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                        placeholder="Password:"
-                      />
+                      Password :
+                      <input type="password" value={password} onChange={({ target }) => setPassword(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={({ target }) => setEmail(target.value)}
-                        placeholder="Email:"
-                      />
+                      Email :
+                      <input type="email" value={email} onChange={({ target }) => setEmail(target.value)} />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -110,28 +103,16 @@ export default function AddAdmin() {
                     }}
                   >
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={firstName}
-                        onChange={({ target }) => setFirstName(target.value)}
-                        placeholder="FirstName:"
-                      />
+                      First Name :
+                      <input type="text" value={firstName} onChange={({ target }) => setFirstName(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={lastName}
-                        onChange={({ target }) => setLastName(target.value)}
-                        placeholder="Last Name:"
-                      />
+                      Last Name :
+                      <input type="text" value={lastName} onChange={({ target }) => setLastName(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={fullName}
-                        onChange={({ target }) => setFullName(target.value)}
-                        placeholder="Full Name:"
-                      />
+                      Full Name :
+                      <input type="text" value={fullName} onChange={({ target }) => setFullName(target.value)} />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -141,13 +122,11 @@ export default function AddAdmin() {
                       flexDirection: 'column',
                       flexWrap: 'wrap',
                       justifyContent: 'start',
-                      margin: '5px 0',
-                      padding: '0 25px',
                     }}
                   >
-                    <Button size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
+                    <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
                       Save Admin Account
-                    </Button>
+                    </ButtonWrapper>
                   </Col>
                 </Row>
               </form>

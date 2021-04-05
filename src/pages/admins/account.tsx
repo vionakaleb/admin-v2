@@ -249,8 +249,8 @@ const AdminList = () => {
 
   useEffect(() => {
     const adminParam = {
-      Page: 1,
-      Size: 20,
+      // Page: 1,
+      // Size: 20,
       Sort: null,
       KeyWord: null,
     };
@@ -292,7 +292,7 @@ const AdminList = () => {
     setSelected([]);
   };
 
-  const handleClick = (event: any, adminId: never) => {
+  const handleClick = (event: any, adminId: any) => {
     const selectedIndex = selected.indexOf(adminId);
     let newSelected = [];
 
@@ -318,7 +318,7 @@ const AdminList = () => {
     setPage(0);
   };
 
-  const isSelected = (adminId: never) => selected.indexOf(adminId) !== -1;
+  const isSelected = (adminId: any) => selected.indexOf(adminId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 

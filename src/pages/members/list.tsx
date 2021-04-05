@@ -302,7 +302,7 @@ const MemberList = () => {
     setSelected([]);
   };
 
-  const handleClick = (event: any, memberId: never) => {
+  const handleClick = (event: any, memberId: any) => {
     const selectedIndex = selected.indexOf(memberId);
     let newSelected = [];
 
@@ -328,7 +328,7 @@ const MemberList = () => {
     setPage(0);
   };
 
-  const isSelected = (memberId: never) => selected.indexOf(memberId) !== -1;
+  const isSelected = (memberId: any) => selected.indexOf(memberId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 

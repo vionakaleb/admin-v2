@@ -10,7 +10,14 @@ import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 
 const InputWrapper = styled(InputGroup)`
+  flex-direction: column;
   margin: 5px 0;
+`;
+
+const InputSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 5.6px 0;
 `;
 
 const InputSelect = styled.select`
@@ -23,12 +30,15 @@ const InputSelect = styled.select`
   border-radius: 0.25rem;
   line-height: 1.5rem;
   padding: 10px;
-  margin: 5.6px 0;
+`;
+
+const ButtonWrapper = styled(Button)`
+  margin: 25px 0;
 `;
 
 export default function AddTransaction() {
-  const [action, setAction] = useState('Add');
-  const [userLogin, setUserLogin] = useState('testadmin');
+  const [action] = useState('Add');
+  const [userLogin] = useState('testadmin');
   const [approvalStatus, setApprovalStatus] = useState('');
   const [whiteLabelCode, setWhiteLabelCode] = useState('');
   const [memberUsername, setMemberUserName] = useState('');
@@ -96,27 +106,27 @@ export default function AddTransaction() {
                     }}
                   >
                     <InputWrapper fullWidth>
+                      Member Username :
                       <input
                         type="text"
                         value={memberUsername}
                         onChange={({ target }) => setMemberUserName(target.value)}
-                        placeholder="Member Username:"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
+                      Prefix Username :
                       <input
                         type="text"
                         value={prefixUsername}
                         onChange={({ target }) => setPrefixUserName(target.value)}
-                        placeholder="Prefix Username:"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
+                      White Label Code :
                       <input
                         type="text"
                         value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
-                        placeholder="White Label Code:"
                       />
                     </InputWrapper>
                   </Col>
@@ -129,30 +139,28 @@ export default function AddTransaction() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputSelect onChange={({ target }) => setRequestType(target.value)}>
-                      <option value="" selected disabled hidden>
-                        Method:
-                      </option>
-                      <option value={1}>Deposit</option>
-                      <option value={2}>Withdraw</option>
-                      <option value={3}>Addition</option>
-                      <option value={4}>Subs</option>
-                    </InputSelect>
-                    <InputSelect onChange={({ target }) => setApprovalStatus(target.value)}>
-                      <option value="" selected disabled hidden>
-                        Status:
-                      </option>
-                      <option value={1}>Pending</option>
-                      <option value={2}>Approve</option>
-                      <option value={3}>Reject</option>
-                    </InputSelect>
+                    <InputSelectWrapper>
+                      Method :
+                      <InputSelect onChange={({ target }) => setRequestType(target.value)}>
+                        <option value="" selected disabled hidden></option>
+                        <option value={1}>Deposit</option>
+                        <option value={2}>Withdraw</option>
+                        <option value={3}>Addition</option>
+                        <option value={4}>Subs</option>
+                      </InputSelect>
+                    </InputSelectWrapper>
+                    <InputSelectWrapper>
+                      Status :
+                      <InputSelect onChange={({ target }) => setApprovalStatus(target.value)}>
+                        <option value="" selected disabled hidden></option>
+                        <option value={1}>Pending</option>
+                        <option value={2}>Approve</option>
+                        <option value={3}>Reject</option>
+                      </InputSelect>
+                    </InputSelectWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="number"
-                        value={amount}
-                        onChange={({ target }) => setAmount(target.value)}
-                        placeholder="Credit:"
-                      />
+                      Credit :
+                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -162,13 +170,11 @@ export default function AddTransaction() {
                       flexDirection: 'column',
                       flexWrap: 'wrap',
                       justifyContent: 'start',
-                      margin: '5px 0',
-                      padding: '0 25px',
                     }}
                   >
-                    <Button size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
+                    <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
                       Save Transaction
-                    </Button>
+                    </ButtonWrapper>
                   </Col>
                 </Row>
               </form>

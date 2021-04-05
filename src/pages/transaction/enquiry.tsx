@@ -253,8 +253,8 @@ const TransactionEnquiry = () => {
 
   useEffect(() => {
     const enquiryParam = {
-      Page: 1,
-      Size: 20,
+      // Page: 1,
+      // Size: 20,
       Approval: [2, 3], // Approve = 2, Reject = 3
       Request: [1, 2], // Deposit = 1, Withdraw = 2
     };
@@ -296,7 +296,7 @@ const TransactionEnquiry = () => {
     setSelected([]);
   };
 
-  const handleClick = (event: any, enquiryId: never) => {
+  const handleClick = (event: any, enquiryId: any) => {
     const selectedIndex = selected.indexOf(enquiryId);
     let newSelected = [];
 
@@ -322,7 +322,7 @@ const TransactionEnquiry = () => {
     setPage(0);
   };
 
-  const isSelected = (enquiryId: never) => selected.indexOf(enquiryId) !== -1;
+  const isSelected = (enquiryId: any) => selected.indexOf(enquiryId) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 

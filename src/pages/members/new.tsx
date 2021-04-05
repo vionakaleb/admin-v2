@@ -10,25 +10,30 @@ import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 
 const InputWrapper = styled(InputGroup)`
+  flex-direction: column;
+  margin: 5px 0;
+`;
+
+const InputRadioWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 5px 0;
 `;
 
 const InputRadio = styled.div`
+  flex-direction: column;
   width: 100%;
   color: #222b45;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 10px 0;
 `;
 
-const ButtonWrapper = styled.div`
-  width: 100%;
-  padding: 0 10px;
-  margin: 5px 0;
+const ButtonWrapper = styled(Button)`
+  margin: 25px 0;
 `;
 
 export default function NewMember() {
-  const [action, setAction] = useState('Add');
-  const [userLogin, setUserLogin] = useState('testadmin');
+  const [action] = useState('Add');
+  const [userLogin] = useState('testadmin');
   //   const [id, setId] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -99,36 +104,20 @@ export default function NewMember() {
                     }}
                   >
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={fullName}
-                        onChange={({ target }) => setFullName(target.value)}
-                        placeholder="Full Name:"
-                      />
+                      Full Name :
+                      <input type="text" value={fullName} onChange={({ target }) => setFullName(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={username}
-                        onChange={({ target }) => setUsername(target.value)}
-                        placeholder="Username:"
-                      />
+                      Username :
+                      <input type="text" value={username} onChange={({ target }) => setUsername(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={({ target }) => setEmail(target.value)}
-                        placeholder="Email:"
-                      />
+                      Email :
+                      <input type="email" value={email} onChange={({ target }) => setEmail(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                        placeholder="Password:"
-                      />
+                      Password :
+                      <input type="password" value={password} onChange={({ target }) => setPassword(target.value)} />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -140,46 +129,37 @@ export default function NewMember() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputRadio>
-                      <input
-                        type="radio"
-                        name="myRadios"
-                        onChange={({ target }) => setGender(target.value)}
-                        value="1"
-                      />{' '}
-                      Male
-                      <input
-                        type="radio"
-                        name="myRadios"
-                        onChange={({ target }) => setGender(target.value)}
-                        value="2"
-                        style={{ marginLeft: '20px' }}
-                      />{' '}
-                      Female
-                    </InputRadio>
+                    <InputRadioWrapper>
+                      Gender :
+                      <InputRadio>
+                        <input
+                          type="radio"
+                          name="myRadios"
+                          onChange={({ target }) => setGender(target.value)}
+                          value="1"
+                        />{' '}
+                        Male
+                        <input
+                          type="radio"
+                          name="myRadios"
+                          onChange={({ target }) => setGender(target.value)}
+                          value="2"
+                          style={{ marginLeft: '20px' }}
+                        />{' '}
+                        Female
+                      </InputRadio>
+                    </InputRadioWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={dateOfBirth}
-                        onChange={({ target }) => setDateOfBirth(target.value)}
-                        placeholder="Date of Birth:"
-                      />
+                      Date of Birth :
+                      <input type="text" value={dateOfBirth} onChange={({ target }) => setDateOfBirth(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={contact}
-                        onChange={({ target }) => setContact(target.value)}
-                        placeholder="Contact:"
-                      />
+                      Contact :
+                      <input type="text" value={contact} onChange={({ target }) => setContact(target.value)} />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      <input
-                        type="text"
-                        value={contact2}
-                        onChange={({ target }) => setContact2(target.value)}
-                        placeholder="Contact 2:"
-                      />
+                      Contact 2 :
+                      <input type="text" value={contact2} onChange={({ target }) => setContact2(target.value)} />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -192,33 +172,31 @@ export default function NewMember() {
                     }}
                   >
                     <InputWrapper fullWidth>
+                      White Label Code :
                       <input
                         type="text"
                         value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
-                        placeholder="White Label Code:"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
+                      Currency Code :
                       <input
                         type="text"
                         value={currencyCode}
                         onChange={({ target }) => setCurrencyCode(target.value)}
-                        placeholder="Currency Code:"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
+                      Referral Code :
                       <input
                         type="text"
                         value={referralReference}
                         onChange={({ target }) => setReferralReference(target.value)}
-                        placeholder="Referral Code:"
                       />
                     </InputWrapper>
-                    <ButtonWrapper>
-                      <Button size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
-                        Add New Member
-                      </Button>
+                    <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
+                      Add New Member
                     </ButtonWrapper>
                   </Col>
                 </Row>
