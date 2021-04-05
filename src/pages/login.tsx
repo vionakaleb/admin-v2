@@ -33,10 +33,10 @@ export default function Login() {
     // console.log('login response:', response.data);
 
     if (response.data.errorCode === 0) {
-      alert('Success');
+      alert(response.data.errorMessage);
       window.location.href = '/dashboard';
     } else {
-      alert('Fail Login');
+      alert(response.data.errorMessage);
     }
   };
 
@@ -62,7 +62,7 @@ export default function Login() {
           </InputGroup>
           <Group></Group>
           <Button status="Success" type="submit" shape="SemiRound" fullWidth>
-            <a>Login</a>
+            Login
           </Button>
         </form>
         <Socials />

@@ -11,29 +11,29 @@ import Col from '@paljs/ui/Col';
 import { InputGroup } from '@paljs/ui/Input';
 import { Button } from '@paljs/ui/Button';
 
+const DateWrapper = styled(InputGroup)`
+  margin-bottom: 5px;
+
+  .react-datepicker {
+    position: absolute;
+    z-index: 99;
+  }
+
+  input {
+    width: 100%;
+  }
+`;
+
+const TotalWrapper = styled(Button)`
+  border-radius: 100px;
+  width: fit-content;
+  padding: 3px 10px;
+  margin: 0;
+  font-weight: normal;
+  cursor: auto;
+`;
+
 export default function Dashboard() {
-  const DateWrapper = styled(InputGroup)`
-    margin-bottom: 5px;
-
-    .react-datepicker {
-      position: absolute;
-      z-index: 99;
-    }
-
-    input {
-      width: 100%;
-    }
-  `;
-
-  const TotalWrapper = styled(Button)`
-    border-radius: 100px;
-    width: fit-content;
-    padding: 3px 10px;
-    margin: 0;
-    font-weight: normal;
-    cursor: auto;
-  `;
-
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
