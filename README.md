@@ -1,4 +1,4 @@
-### nextjs-admin-template
+### Rebuild BO Admin J7 v2.0
 
 Admin dashboard template based on Next.js with [@paljs/ui](https://github.com/paljs/ui) component package
 ![screenshot](./src/images/Dashboard.jpg)
