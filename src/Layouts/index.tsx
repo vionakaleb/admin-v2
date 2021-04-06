@@ -53,19 +53,16 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
 
     const response = await axios.post('http://localhost:5000/api/Admin/ValidateUserSession', checkLoginParam);
 
-    if (user === undefined) {
-      console.log('Login: Undefined, validating session...');
+    if (response.data.errorCode === 0) {
+      console.log('Login success: ', response?.data.errorMessage);
     } else {
-      if (response.data.errorCode === 0 || user !== undefined) {
-        console.log('Login: ' + response.data.errorMessage);
-      } else {
-        console.log('Login: ' + response.data.errorMessage);
-        window.location.href = '/login';
-      }
+      console.log('Login failed: ', response?.data.errorMessage);
+      // window.location.href = '/login';
     }
   };
 
-  setTimeout(apiCheckLogin, 3000);
+  apiCheckLogin();
+  // setTimeout(apiCheckLogin, 3000);
 
   const getState = (state?: 'hidden' | 'visible' | 'compacted' | 'expanded') => {
     setSeeHeader(state !== 'compacted');
