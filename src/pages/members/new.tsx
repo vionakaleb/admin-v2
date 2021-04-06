@@ -77,10 +77,10 @@ export default function NewMember() {
     const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', newMemberParam);
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
-      alert(response.data.errorMessage);
+      alert('Input:' + response.data.errorMessage);
       window.location.href = '/members/list';
     } else {
-      alert(response.data.errorMessage);
+      alert('Input:' + response.data.errorMessage);
     }
   };
 
