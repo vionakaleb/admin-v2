@@ -1,8 +1,7 @@
 ### nextjs-admin-template
 
-![screenshot](./src/images/Dashboard.jpg)
-
 Admin dashboard template based on Next.js with [@paljs/ui](https://github.com/paljs/ui) component package
+![screenshot](./src/images/Dashboard.jpg)
 
 #### Setup:
 
