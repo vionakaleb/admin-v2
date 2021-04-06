@@ -75,7 +75,6 @@ export default function NewMember() {
     };
 
     const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', newMemberParam);
-    // console.log('Member response:', response.data);
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert(response.data.errorMessage);

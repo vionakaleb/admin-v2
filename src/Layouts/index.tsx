@@ -13,6 +13,7 @@ import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
 import SEO, { SEOProps } from 'components/SEO';
+import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -33,6 +34,38 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
   const [menuState, setMenuState] = useState(false);
   const menuRef = useRef<MenuRefObject>(null);
   const [seeHeader, setSeeHeader] = useState(true);
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
+
+  const apiCheckLogin = async () => {
+    const checkLoginParam = {
+      UserName: user?.userName,
+      SessionCode: user?.session,
+    };
+
+    const response = await axios.post('http://localhost:5000/api/Admin/ValidateUserSession', checkLoginParam);
+
+    if (user === undefined) {
+      console.log('Login: Undefined, validating session...');
+    } else {
+      if (response.data.errorCode === 0) {
+        console.log('Login:', response.data.errorMessage);
+      } else {
+        console.log('Login:', response.data.errorMessage);
+        window.location.href = '/login';
+      }
+    }
+  };
+
+  setTimeout(apiCheckLogin, 3000);
 
   const getState = (state?: 'hidden' | 'visible' | 'compacted' | 'expanded') => {
     setSeeHeader(state !== 'compacted');

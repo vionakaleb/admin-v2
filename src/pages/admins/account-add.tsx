@@ -52,7 +52,6 @@ export default function AddAdmin() {
     };
 
     const response = await axios.post('http://localhost:5000/api/Admin/Admin/SaveUser/', adminAddParam);
-    // console.log('account response:', response.data);
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert(response.data.errorMessage);

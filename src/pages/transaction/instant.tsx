@@ -273,8 +273,6 @@ const TransactionInstant = () => {
       });
   }, []);
 
-  // console.log('transaction dataList:', dataList);
-
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('transactionId');

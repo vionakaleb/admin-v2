@@ -71,7 +71,6 @@ export default function AddTransaction() {
       'http://localhost:5000/api/Admin/Transaction/SaveTransaction/',
       addTransactionParam,
     );
-    // console.log('transaction response:', response.data);
 
     if (
       response.data.errorCode === 0 ||

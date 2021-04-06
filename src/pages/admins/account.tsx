@@ -268,8 +268,6 @@ const AdminList = () => {
       });
   }, []);
 
-  // console.log('admin dataList:', dataList);
-
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('adminId');
