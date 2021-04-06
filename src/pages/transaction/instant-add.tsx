@@ -79,10 +79,10 @@ export default function AddTransaction() {
       approvalStatus !== '' ||
       requestType !== ''
     ) {
-      alert('Input:' + response.data.errorMessage);
+      alert('Input: ' + response.data.errorMessage);
       window.location.href = '/transaction/instant';
     } else {
-      alert('Input:' + response.data.errorMessage);
+      alert('Input: ' + response.data.errorMessage);
     }
   };
 

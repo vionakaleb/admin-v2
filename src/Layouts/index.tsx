@@ -56,7 +56,7 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
     if (user === undefined) {
       console.log('Login: Undefined, validating session...');
     } else {
-      if (response.data.errorCode === 0) {
+      if (response.data.errorCode === 0 || user !== undefined) {
         console.log('Login:', response.data.errorMessage);
       } else {
         console.log('Login:', response.data.errorMessage);

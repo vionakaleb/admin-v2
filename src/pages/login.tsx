@@ -116,10 +116,10 @@ export default function Login() {
       alert('Login info must be filled.');
     } else {
       if (response.data.errorCode === 0) {
-        alert('Login:' + response.data.errorMessage);
+        alert('Login: ' + response.data.errorMessage);
         window.location.href = '/dashboard';
       } else {
-        alert('Login:' + response.data.errorMessage);
+        alert('Login: ' + response.data.errorMessage);
       }
     }
   };
