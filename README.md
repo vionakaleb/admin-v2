@@ -1,4 +1,4 @@
-### Rebuild BO Admin J7 v2.0
+### Rebuild J7 v2.0 - Admin Back Office
 
 Admin dashboard template based on Next.js with [@paljs/ui](https://github.com/paljs/ui) component package
 ![screenshot](./src/images/Dashboard.jpg)
