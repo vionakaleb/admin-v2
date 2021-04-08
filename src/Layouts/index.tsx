@@ -130,7 +130,7 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
                   </SidebarBody>
                 </Sidebar>
               )}
-              <LayoutContent>
+              <LayoutContent style={{ marginTop: '50px' }}>
                 <LayoutColumns>
                   <LayoutColumn className="main-content">{children}</LayoutColumn>
                 </LayoutColumns>
