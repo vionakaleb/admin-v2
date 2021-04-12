@@ -18,10 +18,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import Link from 'next/link';
@@ -54,7 +52,7 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'transactionId', numeric: true, disablePadding: true, label: '#' },
+  { id: 'id', numeric: true, disablePadding: true, label: '#' },
   { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
   { id: 'serial', numeric: false, disablePadding: false, label: 'Serial' },
   { id: 'member', numeric: false, disablePadding: false, label: 'Member' },
@@ -78,19 +76,11 @@ function EnhancedTableHead(props: any) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -150,55 +140,41 @@ const EnhancedTableToolbar = (props: any) => {
         [classes.highlight]: numSelected > 0,
       })}
     >
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Instant Transaction
-        </Typography>
-      )}
+      <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+        Instant Transaction
+      </Typography>
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
+      <>
+        <Row
+          style={{
+            flexDirection: 'column',
+            alignContent: 'center',
+            marginRight: '10px',
+            position: 'absolute',
+            right: 0,
+          }}
+        >
+          <Link href="/transaction/instant-add">
+            <Button size="Small" status="Warning" style={{ width: '90%' }}>
+              Add
+            </Button>
+          </Link>
+        </Row>
+        <Tooltip
+          title="Filter list"
+          style={{
+            flexDirection: 'column',
+            alignContent: 'center',
+            marginRight: '10px',
+            position: 'absolute',
+            right: '60px',
+          }}
+        >
+          <IconButton aria-label="filter list">
+            <FilterListIcon />
           </IconButton>
         </Tooltip>
-      ) : (
-        <>
-          <Row
-            style={{
-              flexDirection: 'column',
-              alignContent: 'center',
-              marginRight: '10px',
-              position: 'absolute',
-              right: 0,
-            }}
-          >
-            <Link href="/transaction/instant-add">
-              <Button size="Small" status="Warning" style={{ width: '90%' }}>
-                Add
-              </Button>
-            </Link>
-          </Row>
-          <Tooltip
-            title="Filter list"
-            style={{
-              flexDirection: 'column',
-              alignContent: 'center',
-              marginRight: '10px',
-              position: 'absolute',
-              right: '60px',
-            }}
-          >
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      )}
+      </>
     </Toolbar>
   );
 };
@@ -275,7 +251,7 @@ const TransactionInstant = () => {
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('transactionId');
+  const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -288,19 +264,19 @@ const TransactionInstant = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = dataList.map((n) => n.transactionId);
+      const newSelecteds = dataList.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, transactionId: any) => {
-    const selectedIndex = selected.indexOf(transactionId);
+  const handleClick = (event: any, id: any) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, transactionId);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -321,7 +297,7 @@ const TransactionInstant = () => {
     setPage(0);
   };
 
-  const isSelected = (transactionId: any) => selected.indexOf(transactionId) !== -1;
+  const isSelected = (id: any) => selected.indexOf(id) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
@@ -354,40 +330,36 @@ const TransactionInstant = () => {
                         {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(data.transactionId);
-                            const labelId = `enhanced-table-checkbox-${index}`;
+                            const isItemSelected = isSelected(data.id);
+                            // const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, data.transactionId)}
+                                // onClick={(event) => handleClick(event, data.id)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data.transactionId}
+                                key={data.id}
                                 selected={isItemSelected}
                               >
-                                <StyledTableCell padding="checkbox">
-                                  <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                                </StyledTableCell>
-                                <StyledTableCell align="left" padding="none">
-                                  {data.transactionId}
-                                </StyledTableCell>
+                                <StyledTableCell align="left">{data.id}</StyledTableCell>
                                 <StyledTableCell align="left">{data.date}</StyledTableCell>
                                 <StyledTableCell align="left">{data.serial}</StyledTableCell>
                                 <StyledTableCell align="left">{data.member}</StyledTableCell>
                                 <StyledTableCell align="left">{data.name}</StyledTableCell>
                                 <StyledTableCell align="left">{data.transactionTags}</StyledTableCell>
                                 <StyledTableCell align="left">{data.method}</StyledTableCell>
-                                <StyledTableCell align="left">{data.status}</StyledTableCell>
+                                <StyledTableCell align="left" key={data.id}>
+                                  <Link href={`/transaction/instant-process/${encodeURIComponent(data.id)}`}>
+                                    {data.status}
+                                  </Link>
+                                </StyledTableCell>
                                 <StyledTableCell align="left">{data.credit}</StyledTableCell>
                                 <StyledTableCell align="left">{data.debit}</StyledTableCell>
                                 <StyledTableCell align="left">{data.balance}</StyledTableCell>
                                 <StyledTableCell align="left">{data.processing}</StyledTableCell>
                                 <StyledTableCell align="left">{data.transactionAction}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
-                                  {data.transactionDate}
-                                </StyledTableCell> */}
                               </StyledTableRow>
                             );
                           })}

@@ -367,12 +367,12 @@ const AdminList = () => {
                                 </StyledTableCell>
                                 <StyledTableCell align="left" padding="none">
                                   {data.adminId}
+                      <StyledTableCell padding="checkbox">
+                                  <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{data.name}</StyledTableCell>
-                                <StyledTableCell align="left">{data.fullName}</StyledTableCell>
-                                <StyledTableCell align="left">{data.role}</StyledTableCell>
-                                <StyledTableCell align="left">{data.adminDepartment}</StyledTableCell>
-                                <StyledTableCell align="left">{data.status}</StyledTableCell>
+                                <StyledTableCell align="left" padding="none">
+                                  {data.adminId}
+           <StyledTableCell align="left">{data.status}</StyledTableCell>
                                 <StyledTableCell align="left">{data.adminDate}</StyledTableCell>
                                 <StyledTableCell align="left">{data.adminAction}</StyledTableCell>
                                 {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
