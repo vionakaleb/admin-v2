@@ -8,6 +8,7 @@ import Layout from 'Layouts';
 import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
+import Link from 'next/link';
 
 const InputWrapper = styled(InputGroup)`
   flex-direction: column;
@@ -55,7 +56,7 @@ export default function AddAdmin() {
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert('Input: ' + response.data.errorMessage);
-      window.location.href = '/admins/account';
+      // window.location.href = '/admins/account';
     } else {
       alert('Input: ' + response.data.errorMessage);
     }
@@ -66,7 +67,21 @@ export default function AddAdmin() {
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
-            <CardHeader>Add Admin Account</CardHeader>
+            <CardHeader
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignContent: 'flex-end',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>Add Admin Account</div>
+              <Link href="/admins/account">
+                <Button size="Small" status="Warning">
+                  Back
+                </Button>
+              </Link>
+            </CardHeader>
             <CardBody>
               <form onSubmit={apiAddAdmin}>
                 <Row>

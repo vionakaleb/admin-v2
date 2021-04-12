@@ -18,7 +18,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -83,19 +83,19 @@ function EnhancedTableHead(props: any) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -360,44 +360,55 @@ const MemberList = () => {
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
                             const isItemSelected = isSelected(data.memberId);
-                            const labelId = `enhanced-table-checkbox-${index}`;
+                            // const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, data.memberId)}
+                                // onClick={(event) => handleClick(event, data.memberId)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data.memberId}
+                                key={data?.memberId}
                                 selected={isItemSelected}
                               >
-                                <StyledTableCell padding="checkbox">
+                                {/* <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                                </StyledTableCell>
-                                <StyledTableCell align="left" padding="none">
-                                  {data.memberId}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{data.name}</StyledTableCell>
-                                <StyledTableCell align="left">{data.code}</StyledTableCell>
-                                <StyledTableCell align="left">{data.memberTags}</StyledTableCell>
-                                <StyledTableCell align="left">{data.fullName}</StyledTableCell>
-                                <StyledTableCell align="left">{data.channel}</StyledTableCell>
-                                <StyledTableCell align="left">{data.mainWallet}</StyledTableCell>
-                                <StyledTableCell align="left">{data.deposit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.withdrawal}</StyledTableCell>
-                                <StyledTableCell align="left">{data.contact}</StyledTableCell>
-                                <StyledTableCell align="left">{data.dateOfBirth}</StyledTableCell>
-                                <StyledTableCell align="left">{data.email}</StyledTableCell>
-                                <StyledTableCell align="left">{data.wechat}</StyledTableCell>
-                                <StyledTableCell align="left">{data.registeredAt}</StyledTableCell>
-                                <StyledTableCell align="left">{data.lastDeposit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.status}</StyledTableCell>
-                                <StyledTableCell align="left">{data.ip}</StyledTableCell>
-                                <StyledTableCell align="left">{data.actions}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
-                                  {data.transactionDate}
                                 </StyledTableCell> */}
+                                <StyledTableCell align="left">
+                                  {data?.memberId ? data?.memberId : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.code ? data?.code : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.memberTags ? data?.memberTags : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.fullName ? data?.fullName : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.channel ? data?.channel : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.mainWallet ? data?.mainWallet : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.deposit ? data?.deposit : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.withdrawal ? data?.withdrawal : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.contact ? data?.contact : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.dateOfBirth ? data?.dateOfBirth : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.email ? data?.email : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.wechat ? data?.wechat : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.registeredAt ? data?.registeredAt : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.lastDeposit ? data?.lastDeposit : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.ip ? data?.ip : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.actions ? data?.actions : ' - '}</StyledTableCell>
                               </StyledTableRow>
                             );
                           })}

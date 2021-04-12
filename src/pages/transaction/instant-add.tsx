@@ -8,6 +8,7 @@ import Layout from 'Layouts';
 import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
+import Link from 'next/link';
 
 const InputWrapper = styled(InputGroup)`
   flex-direction: column;
@@ -80,7 +81,7 @@ export default function AddTransaction() {
       requestType !== ''
     ) {
       alert('Input: ' + response.data.errorMessage);
-      window.location.href = '/transaction/instant';
+      // window.location.href = '/transaction/instant';
     } else {
       alert('Input: ' + response.data.errorMessage);
     }
@@ -91,7 +92,21 @@ export default function AddTransaction() {
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
-            <CardHeader>Add Transaction</CardHeader>
+            <CardHeader
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignContent: 'flex-end',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>Add Transaction</div>
+              <Link href="/transaction/instant">
+                <Button size="Small" status="Warning">
+                  Back
+                </Button>
+              </Link>
+            </CardHeader>
             <CardBody>
               <form onSubmit={apiAddTransaction}>
                 <Row>

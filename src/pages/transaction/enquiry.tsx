@@ -18,7 +18,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -54,7 +54,7 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'enquiryId', numeric: true, disablePadding: true, label: '#' },
+  { id: 'id', numeric: true, disablePadding: true, label: '#' },
   { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
   { id: 'serial', numeric: false, disablePadding: false, label: 'Serial' },
   { id: 'member', numeric: false, disablePadding: false, label: 'Member' },
@@ -77,19 +77,19 @@ function EnhancedTableHead(props: any) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -274,7 +274,7 @@ const TransactionEnquiry = () => {
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('enquiryId');
+  const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -287,19 +287,19 @@ const TransactionEnquiry = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = dataList.map((n) => n.enquiryId);
+      const newSelecteds = dataList.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, enquiryId: any) => {
-    const selectedIndex = selected.indexOf(enquiryId);
+  const handleClick = (event: any, id: any) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, enquiryId);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -320,7 +320,7 @@ const TransactionEnquiry = () => {
     setPage(0);
   };
 
-  const isSelected = (enquiryId: any) => selected.indexOf(enquiryId) !== -1;
+  const isSelected = (id: any) => selected.indexOf(id) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
@@ -353,39 +353,38 @@ const TransactionEnquiry = () => {
                         {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(data.enquiryId);
-                            const labelId = `enhanced-table-checkbox-${index}`;
+                            const isItemSelected = isSelected(data.id);
+                            // const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, data.enquiryId)}
+                                // onClick={(event) => handleClick(event, data.id)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data.enquiryId}
+                                key={data?.id ? data?.id : ' - '}
                                 selected={isItemSelected}
                               >
-                                <StyledTableCell padding="checkbox">
+                                {/* <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                                </StyledTableCell>
-                                <StyledTableCell align="left" padding="none">
-                                  {data.enquiryId}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{data.date}</StyledTableCell>
-                                <StyledTableCell align="left">{data.serial}</StyledTableCell>
-                                <StyledTableCell align="left">{data.member}</StyledTableCell>
-                                <StyledTableCell align="left">{data.name}</StyledTableCell>
-                                <StyledTableCell align="left">{data.enquiryTags}</StyledTableCell>
-                                <StyledTableCell align="left">{data.method}</StyledTableCell>
-                                <StyledTableCell align="left">{data.status}</StyledTableCell>
-                                <StyledTableCell align="left">{data.credit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.debit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.balance}</StyledTableCell>
-                                <StyledTableCell align="left">{data.processing}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
-                                  {data.enquiryDate}
                                 </StyledTableCell> */}
+                                <StyledTableCell align="left">{data?.id ? data?.id : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.date ? data?.date : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.serial ? data?.serial : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.member ? data?.member : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.enquiryTags ? data?.enquiryTags : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.method ? data?.method : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.credit ? data?.credit : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.debit ? data?.debit : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.balance ? data?.balance : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.processing ? data?.processing : ' - '}
+                                </StyledTableCell>
                               </StyledTableRow>
                             );
                           })}

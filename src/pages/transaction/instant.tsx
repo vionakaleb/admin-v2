@@ -24,6 +24,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import Link from 'next/link';
 import { Button } from '@paljs/ui/Button';
+// import Checkbox from "@material-ui/core/Checkbox";
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -76,6 +77,14 @@ function EnhancedTableHead(props: any) {
   return (
     <TableHead>
       <TableRow>
+        {/* <TableCell padding="checkbox">
+          <Checkbox
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{ "aria-label": "select all desserts" }}
+          />
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -140,41 +149,55 @@ const EnhancedTableToolbar = (props: any) => {
         [classes.highlight]: numSelected > 0,
       })}
     >
-      <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-        Instant Transaction
-      </Typography>
+      {numSelected > 0 ? (
+        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
+          {numSelected} selected
+        </Typography>
+      ) : (
+        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+          Instant Transaction
+        </Typography>
+      )}
 
-      <>
-        <Row
-          style={{
-            flexDirection: 'column',
-            alignContent: 'center',
-            marginRight: '10px',
-            position: 'absolute',
-            right: 0,
-          }}
-        >
-          <Link href="/transaction/instant-add">
-            <Button size="Small" status="Warning" style={{ width: '90%' }}>
-              Add
-            </Button>
-          </Link>
-        </Row>
-        <Tooltip
-          title="Filter list"
-          style={{
-            flexDirection: 'column',
-            alignContent: 'center',
-            marginRight: '10px',
-            position: 'absolute',
-            right: '60px',
-          }}
-        >
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
+      {numSelected > 0 ? (
+        <Tooltip title="Delete">
+          <IconButton aria-label="delete">
+            <DeleteIcon />
           </IconButton>
         </Tooltip>
-      </>
+      ) : (
+        <>
+          <Row
+            style={{
+              flexDirection: 'column',
+              alignContent: 'center',
+              marginRight: '10px',
+              position: 'absolute',
+              right: 0,
+            }}
+          >
+            <Link href="/transaction/instant-add">
+              <Button size="Small" status="Warning" style={{ width: '90%' }}>
+                Add
+              </Button>
+            </Link>
+          </Row>
+          <Tooltip
+            title="Filter list"
+            style={{
+              flexDirection: 'column',
+              alignContent: 'center',
+              marginRight: '10px',
+              position: 'absolute',
+              right: '60px',
+            }}
+          >
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      )}
     </Toolbar>
   );
 };
@@ -343,23 +366,35 @@ const TransactionInstant = () => {
                                 key={data.id}
                                 selected={isItemSelected}
                               >
-                                <StyledTableCell align="left">{data.id}</StyledTableCell>
-                                <StyledTableCell align="left">{data.date}</StyledTableCell>
-                                <StyledTableCell align="left">{data.serial}</StyledTableCell>
-                                <StyledTableCell align="left">{data.member}</StyledTableCell>
-                                <StyledTableCell align="left">{data.name}</StyledTableCell>
-                                <StyledTableCell align="left">{data.transactionTags}</StyledTableCell>
-                                <StyledTableCell align="left">{data.method}</StyledTableCell>
-                                <StyledTableCell align="left" key={data.id}>
+                                {/* <StyledTableCell padding="checkbox">
+                                  <Checkbox
+                                    checked={isItemSelected}
+                                    inputProps={{ "aria-labelledby": labelId }}
+                                  />
+                                </StyledTableCell> */}
+                                <StyledTableCell align="left">{data?.id ? data.id : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.date ? data.date : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.serial ? data.serial : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.member ? data.member : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.name ? data.name : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.transactionTags ? data.transactionTags : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.method ? data.method : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left" key={data?.id ? data.id : ' - '}>
                                   <Link href={`/transaction/instant-process/${encodeURIComponent(data.id)}`}>
-                                    {data.status}
+                                    {data?.status ? data.status : ' - '}
                                   </Link>
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{data.credit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.debit}</StyledTableCell>
-                                <StyledTableCell align="left">{data.balance}</StyledTableCell>
-                                <StyledTableCell align="left">{data.processing}</StyledTableCell>
-                                <StyledTableCell align="left">{data.transactionAction}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.credit ? data.credit : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.debit ? data.debit : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.balance ? data.balance : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.processing ? data.processing : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.transactionAction ? data.transactionAction : ' - '}
+                                </StyledTableCell>
                               </StyledTableRow>
                             );
                           })}

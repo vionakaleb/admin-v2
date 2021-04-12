@@ -18,7 +18,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -54,7 +54,7 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'adminId', numeric: true, disablePadding: true, label: '#' },
+  { id: 'index', numeric: true, disablePadding: true, label: '#' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
   { id: 'fullName', numeric: false, disablePadding: false, label: 'Full Name' },
   { id: 'role', numeric: false, disablePadding: false, label: 'Role' },
@@ -73,19 +73,19 @@ function EnhancedTableHead(props: any) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
+            inputProps={{ "aria-label": "select all desserts" }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -253,6 +253,7 @@ const AdminList = () => {
       // Size: 20,
       Sort: null,
       KeyWord: null,
+      Status: null,
     };
     axios
       .post('http://localhost:5000/api/Admin/Admin/GetUserList', adminParam)
@@ -270,7 +271,7 @@ const AdminList = () => {
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('adminId');
+  const [orderBy, setOrderBy] = React.useState('index');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -283,19 +284,19 @@ const AdminList = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = dataList.map((n) => n.adminId);
+      const newSelecteds = dataList.map((n, index) => index);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, adminId: any) => {
-    const selectedIndex = selected.indexOf(adminId);
+  const handleClick = (event: any, index: any) => {
+    const selectedIndex = selected.indexOf(index);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, adminId);
+      newSelected = newSelected.concat(selected, index);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -316,7 +317,7 @@ const AdminList = () => {
     setPage(0);
   };
 
-  const isSelected = (adminId: any) => selected.indexOf(adminId) !== -1;
+  const isSelected = (index: any) => selected.indexOf(index) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
@@ -349,35 +350,34 @@ const AdminList = () => {
                         {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(data.adminId);
-                            const labelId = `enhanced-table-checkbox-${index}`;
+                            const isItemSelected = isSelected(data.index);
 
                             return (
                               <StyledTableRow
                                 hover
-                                onClick={(event) => handleClick(event, data.adminId)}
+                                // onClick={(event) => handleClick(event, data.index)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data.adminId}
+                                key={index}
                                 selected={isItemSelected}
                               >
-                                <StyledTableCell padding="checkbox">
-                                  <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                                <StyledTableCell align="left">{index ? index + 1 : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.fullName ? data?.fullName : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left" padding="none">
-                                  {data.adminId}
-                      <StyledTableCell padding="checkbox">
-                                  <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                                <StyledTableCell align="left">{data?.role ? data?.role : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.adminDepartment ? data?.adminDepartment : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left" padding="none">
-                                  {data.adminId}
-           <StyledTableCell align="left">{data.status}</StyledTableCell>
-                                <StyledTableCell align="left">{data.adminDate}</StyledTableCell>
-                                <StyledTableCell align="left">{data.adminAction}</StyledTableCell>
-                                {/* <StyledTableCell component="th" id={labelId} scope="data" padding="none">
-                                  {data.transactionDate}
-                                </StyledTableCell> */}
+                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.adminDate ? data?.adminDate : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.adminAction ? data?.adminAction : ' - '}
+                                </StyledTableCell>
                               </StyledTableRow>
                             );
                           })}

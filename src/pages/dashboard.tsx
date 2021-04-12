@@ -202,12 +202,12 @@ export default function Dashboard() {
         </Col>
       </Row>
       <Row center="xs">
-        {bankList?.map((bank: any) => (
-          <Col breakPoint={{ xs: 12, md: 9 }}>
-            <Card status="Primary">
-              <CardHeader>Level {level}</CardHeader>
-              <CardBody>
-                <Row>
+        <Col breakPoint={{ xs: 12, md: 9 }}>
+          <Card status="Primary">
+            <CardHeader>Level {level}</CardHeader>
+            <CardBody>
+              <Row>
+                {bankList?.map((bank: any) => (
                   <Col breakPoint={{ xs: 12, md: 3 }}>
                     <Card status="Primary" size="Tiny">
                       <CardHeader>{bank.bankCode}</CardHeader>
@@ -218,11 +218,11 @@ export default function Dashboard() {
                       </CardBody>
                     </Card>
                   </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-        ))}
+                ))}
+              </Row>
+            </CardBody>
+          </Card>
+        </Col>
       </Row>
     </Layout>
   );

@@ -8,6 +8,7 @@ import Layout from 'Layouts';
 import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
+import Link from 'next/link';
 
 const InputWrapper = styled(InputGroup)`
   flex-direction: column;
@@ -78,7 +79,7 @@ export default function NewMember() {
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert('Input: ' + response.data.errorMessage);
-      window.location.href = '/members/list';
+      // window.location.href = '/members/list';
     } else {
       alert('Input: ' + response.data.errorMessage);
     }
@@ -89,7 +90,21 @@ export default function NewMember() {
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
-            <CardHeader>New Member</CardHeader>
+            <CardHeader
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignContent: 'flex-end',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>New Member</div>
+              <Link href="/members/list">
+                <Button size="Small" status="Warning">
+                  Back
+                </Button>
+              </Link>
+            </CardHeader>
             <CardBody>
               <form onSubmit={apiNewMember}>
                 <Row>
