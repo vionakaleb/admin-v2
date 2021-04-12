@@ -55,13 +55,12 @@ function stableSort(array: any, comparator: any) {
 
 const headCells = [
   { id: 'index', numeric: true, disablePadding: true, label: '#' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'fullName', numeric: false, disablePadding: false, label: 'Full Name' },
-  { id: 'role', numeric: false, disablePadding: false, label: 'Role' },
-  { id: 'adminDepartment', numeric: false, disablePadding: false, label: 'Department' },
+  { id: 'bankCode', numeric: false, disablePadding: false, label: 'Bank Code' },
+  { id: 'bankName', numeric: false, disablePadding: false, label: 'Bank Name' },
+  { id: 'bankAccountName', numeric: false, disablePadding: false, label: 'Bank Acc. Name' },
+  { id: 'bankNumber', numeric: false, disablePadding: false, label: 'Bank Number' },
+  { id: 'balance', numeric: false, disablePadding: false, label: 'Balance' },
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
-  { id: 'adminDate', numeric: false, disablePadding: false, label: 'Date' },
-  { id: 'adminAction', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
 function EnhancedTableHead(props: any) {
@@ -151,7 +150,7 @@ const EnhancedTableToolbar = (props: any) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Admin List
+          Bank Summary
         </Typography>
       )}
 
@@ -172,7 +171,7 @@ const EnhancedTableToolbar = (props: any) => {
               right: 0,
             }}
           >
-            <Link href="/admins/account-add">
+            <Link href="/bank/summary-add">
               <Button size="Small" status="Warning" style={{ width: '90%' }}>
                 Add
               </Button>
@@ -244,24 +243,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AdminList = () => {
+const BankSummaryList = () => {
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
-    const adminParam = {
+    const bankSummaryParam = {
       // Page: 1,
       // Size: 20,
-      Sort: null,
-      KeyWord: null,
       Status: null,
     };
     axios
-      .post('http://localhost:5000/api/Admin/Admin/GetUserList', adminParam)
+      .post('http://localhost:5000/api/Admin/Bank/GetSummary/', bankSummaryParam)
       .then((response) => {
         return response.data;
       })
       .then((data) => {
-        const dataList = data.userAdmins;
+        const dataList = data.banks;
         setDataList(dataList);
       })
       .catch(() => {
@@ -322,7 +319,7 @@ const AdminList = () => {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
   return (
-    <Layout title="Admin List">
+    <Layout title="Bank Summary List">
       <Row center="xs">
         <Col breakPoint={{ xs: 12 }}>
           <Card>
@@ -367,21 +364,20 @@ const AdminList = () => {
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell> */}
                                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                                <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">
-                                  {data?.fullName ? data?.fullName : ' - '}
+                                  {data?.bankCode ? data?.bankCode : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{data?.role ? data?.role : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">
-                                  {data?.adminDepartment ? data?.adminDepartment : ' - '}
+                                  {data?.bankName ? data?.bankName : ' - '}
                                 </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.bankAccountName ? data?.bankAccountName : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.bankNumber ? data?.bankNumber : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">{data?.balance ? data?.balance : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.adminDate ? data?.adminDate : ' - '}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.adminAction ? data?.adminAction : ' - '}
-                                </StyledTableCell>
                               </StyledTableRow>
                             );
                           })}
@@ -412,4 +408,4 @@ const AdminList = () => {
   );
 };
 
-export default AdminList;
+export default BankSummaryList;
