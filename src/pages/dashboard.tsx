@@ -68,7 +68,7 @@ export default function Dashboard() {
     currency: 'IDR',
   });
 
-  const dataTotalTurnover = formatterIDR.format(dataList.totalTurnover);
+  const dataTotalTurnover = formatterIDR.format(dataList?.totalTurnover);
   const dataBankBalance = bankList?.map((bank: any) => formatterIDR.format(bank.balance));
 
   // const groupedBanks = banks.reduce((arrBank, bank) => {

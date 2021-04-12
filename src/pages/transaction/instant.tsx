@@ -169,16 +169,20 @@ const EnhancedTableToolbar = (props: any) => {
         <>
           <Row
             style={{
-              flexDirection: 'column',
-              alignContent: 'center',
-              marginRight: '10px',
-              position: 'absolute',
-              right: 0,
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginRight: '50px',
+              width: '100%',
             }}
           >
             <Link href="/transaction/instant-add">
-              <Button size="Small" status="Warning" style={{ width: '90%' }}>
+              <Button size="Small" status="Warning" style={{ marginRight: '10px' }}>
                 Add
+              </Button>
+            </Link>
+            <Link href="/transaction/instant-request">
+              <Button size="Small" status="Warning">
+                Request
               </Button>
             </Link>
           </Row>
@@ -189,7 +193,7 @@ const EnhancedTableToolbar = (props: any) => {
               alignContent: 'center',
               marginRight: '10px',
               position: 'absolute',
-              right: '60px',
+              right: 0,
             }}
           >
             <IconButton aria-label="filter list">

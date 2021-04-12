@@ -37,15 +37,20 @@ const ButtonWrapper = styled(Button)`
   margin: 25px 0;
 `;
 
-export default function AddTransaction() {
-  const [action] = useState('Add');
+export default function RequestTransaction() {
   const [userLogin] = useState('testadmin');
-  const [approvalStatus, setApprovalStatus] = useState('');
   const [whiteLabelCode, setWhiteLabelCode] = useState('');
-  const [memberUsername, setMemberUserName] = useState('');
-  const [prefixUsername, setPrefixUserName] = useState('');
+  const [username, setUsername] = useState('');
+  const [channel, setChannel] = useState('');
+  const [reference, setReference] = useState('');
   const [amount, setAmount] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [bankAccount, setBankAccount] = useState('');
   const [requestType, setRequestType] = useState('');
+  const [senderAccountHolder, setSenderAccountHolder] = useState('');
+  const [senderAccountNumber, setSenderAccountNumber] = useState('');
+  const [recipientAccountHolder, setRecipientAccountHolder] = useState('');
+  const [recipientAccountNumber, setRecipientAccountNumber] = useState('');
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
@@ -53,33 +58,33 @@ export default function AddTransaction() {
     }
   }, []);
 
-  const apiAddTransaction = async (e: any) => {
+  const apiRequestTransaction = async (e: any) => {
     e.preventDefault();
-    const addTransactionParam = {
-      Action: action,
+
+    const requestTransactionParam = {
       UserLogin: userLogin,
       Transaction: {
-        ApprovalStatus: approvalStatus,
         WhiteLabelCode: whiteLabelCode,
-        MemberUserName: memberUsername,
-        PrefixUserName: prefixUsername,
+        UserName: username,
+        Channel: channel,
+        Reference: reference,
         Amount: amount,
+        BankName: bankName,
+        BankAccount: bankAccount,
         RequestType: requestType,
+        SenderAccountHolder: senderAccountHolder,
+        SenderAccountNumber: senderAccountNumber,
+        RecipientAccountHolder: recipientAccountHolder,
+        RecipientAccountNumber: recipientAccountNumber,
       },
     };
 
     const response = await axios.post(
-      'http://localhost:5000/api/Admin/Transaction/SaveTransaction/',
-      addTransactionParam,
+      'http://localhost:5000/api/Admin/Transaction/RequestTransaction/',
+      requestTransactionParam,
     );
 
-    if (
-      response.data.errorCode === 0 ||
-      memberUsername !== '' ||
-      amount !== '' ||
-      approvalStatus !== '' ||
-      requestType !== ''
-    ) {
+    if (response.data.errorCode === 0 || username !== '' || amount !== '' || requestType !== '') {
       alert('Input success: ' + response.data.errorMessage);
       window.location.href = '/transaction/instant';
     } else {
@@ -88,7 +93,7 @@ export default function AddTransaction() {
   };
 
   return (
-    <Layout title="Add Transaction">
+    <Layout title="Request Transaction">
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
@@ -100,7 +105,7 @@ export default function AddTransaction() {
                 justifyContent: 'space-between',
               }}
             >
-              <div>Add Transaction</div>
+              <div>Request Transaction</div>
               <Link href="/transaction/instant">
                 <Button size="Small" status="Warning">
                   Back
@@ -108,7 +113,7 @@ export default function AddTransaction() {
               </Link>
             </CardHeader>
             <CardBody>
-              <form onSubmit={apiAddTransaction}>
+              <form onSubmit={apiRequestTransaction}>
                 <Row>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -120,28 +125,24 @@ export default function AddTransaction() {
                     }}
                   >
                     <InputWrapper fullWidth>
-                      Member Username :
-                      <input
-                        type="text"
-                        value={memberUsername}
-                        onChange={({ target }) => setMemberUserName(target.value)}
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Prefix Username :
-                      <input
-                        type="text"
-                        value={prefixUsername}
-                        onChange={({ target }) => setPrefixUserName(target.value)}
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
                       White Label Code :
                       <input
                         type="text"
                         value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
                       />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Username :
+                      <input type="text" value={username} onChange={({ target }) => setUsername(target.value)} />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Channel :
+                      <input type="text" value={channel} onChange={({ target }) => setChannel(target.value)} />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Reference :
+                      <input type="text" value={reference} onChange={({ target }) => setReference(target.value)} />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -153,6 +154,22 @@ export default function AddTransaction() {
                       justifyContent: 'start',
                     }}
                   >
+                    <InputWrapper fullWidth>
+                      Amount :
+                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Bank Name :
+                      <input type="text" value={bankName} onChange={({ target }) => setBankName(target.value)} />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Bank Account :
+                      <input
+                        type="number"
+                        value={bankAccount}
+                        onChange={({ target }) => setBankAccount(target.value)}
+                      />
+                    </InputWrapper>
                     <InputSelectWrapper>
                       Method :
                       <InputSelect onChange={({ target }) => setRequestType(target.value)}>
@@ -163,18 +180,37 @@ export default function AddTransaction() {
                         <option value={4}>Subs</option>
                       </InputSelect>
                     </InputSelectWrapper>
-                    <InputSelectWrapper>
-                      Status :
-                      <InputSelect onChange={({ target }) => setApprovalStatus(target.value)}>
-                        <option value="" selected disabled hidden></option>
-                        <option value={1}>Pending</option>
-                        <option value={2}>Approve</option>
-                        <option value={3}>Reject</option>
-                      </InputSelect>
-                    </InputSelectWrapper>
                     <InputWrapper fullWidth>
-                      Credit :
-                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
+                      Sender Account Holder :
+                      <input
+                        type="text"
+                        value={senderAccountHolder}
+                        onChange={({ target }) => setSenderAccountHolder(target.value)}
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Sender Account Number :
+                      <input
+                        type="number"
+                        value={senderAccountNumber}
+                        onChange={({ target }) => setSenderAccountNumber(target.value)}
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Recipient Account Holder :
+                      <input
+                        type="text"
+                        value={recipientAccountHolder}
+                        onChange={({ target }) => setRecipientAccountHolder(target.value)}
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Recipient Account Number :
+                      <input
+                        type="number"
+                        value={recipientAccountNumber}
+                        onChange={({ target }) => setRecipientAccountNumber(target.value)}
+                      />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -187,7 +223,7 @@ export default function AddTransaction() {
                     }}
                   >
                     <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
-                      Save Transaction
+                      Request Transaction
                     </ButtonWrapper>
                   </Col>
                 </Row>

@@ -74,6 +74,7 @@ export default function ProcessTransaction() {
 
     if (response.data.errorCode === 0 || username !== '' || approvalStatus !== '' || remark !== '') {
       alert('Input success: ' + response.data.errorMessage);
+      window.location.href = '/transaction/instant';
     } else {
       alert('Input failed: ' + response.data.errorMessage);
     }
