@@ -55,7 +55,7 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'memberId', numeric: true, disablePadding: true, label: '#' },
+  { id: 'index', numeric: true, disablePadding: true, label: '#' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
   { id: 'code', numeric: false, disablePadding: false, label: 'Code' },
   { id: 'memberTags', numeric: false, disablePadding: false, label: 'Member Tags' },
@@ -282,7 +282,7 @@ const MemberList = () => {
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('memberId');
+  const [orderBy, setOrderBy] = React.useState('index');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -295,19 +295,19 @@ const MemberList = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = dataList.map((n) => n.memberId);
+      const newSelecteds = dataList.map((n, index) => index);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, memberId: any) => {
-    const selectedIndex = selected.indexOf(memberId);
+  const handleClick = (event: any, index: any) => {
+    const selectedIndex = selected.indexOf(index);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, memberId);
+      newSelected = newSelected.concat(selected, index);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -328,7 +328,7 @@ const MemberList = () => {
     setPage(0);
   };
 
-  const isSelected = (memberId: any) => selected.indexOf(memberId) !== -1;
+  const isSelected = (index: any) => selected.indexOf(index) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
@@ -361,25 +361,23 @@ const MemberList = () => {
                         {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(data.memberId);
+                            const isItemSelected = isSelected(index);
                             // const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                // onClick={(event) => handleClick(event, data.memberId)}
+                                // onClick={(event) => handleClick(event, index)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data?.memberId}
+                                key={index}
                                 selected={isItemSelected}
                               >
                                 {/* <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell> */}
-                                <StyledTableCell align="left">
-                                  {data?.memberId ? data?.memberId : ' - '}
-                                </StyledTableCell>
+                                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.code ? data?.code : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">

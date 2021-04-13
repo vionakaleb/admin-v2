@@ -55,7 +55,7 @@ function stableSort(array: any, comparator: any) {
 }
 
 const headCells = [
-  { id: 'id', numeric: true, disablePadding: true, label: '#' },
+  { id: 'index', numeric: true, disablePadding: true, label: '#' },
   { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
   { id: 'serial', numeric: false, disablePadding: false, label: 'Serial' },
   { id: 'member', numeric: false, disablePadding: false, label: 'Member' },
@@ -276,7 +276,7 @@ const TransactionEnquiry = () => {
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('id');
+  const [orderBy, setOrderBy] = React.useState('index');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -289,19 +289,19 @@ const TransactionEnquiry = () => {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = dataList.map((n) => n.id);
+      const newSelecteds = dataList.map((n, index) => index);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: any, id: any) => {
-    const selectedIndex = selected.indexOf(id);
+  const handleClick = (event: any, index: any) => {
+    const selectedIndex = selected.indexOf(index);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selected, index);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -322,7 +322,7 @@ const TransactionEnquiry = () => {
     setPage(0);
   };
 
-  const isSelected = (id: any) => selected.indexOf(id) !== -1;
+  const isSelected = (index: any) => selected.indexOf(index) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
 
@@ -355,23 +355,23 @@ const TransactionEnquiry = () => {
                         {stableSort(dataList, getComparator(order, orderBy))
                           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(data.id);
+                            const isItemSelected = isSelected(index);
                             // const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                               <StyledTableRow
                                 hover
-                                // onClick={(event) => handleClick(event, data.id)}
+                                // onClick={(event) => handleClick(event, index)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
-                                key={data?.id ? data?.id : ' - '}
+                                key={index}
                                 selected={isItemSelected}
                               >
                                 {/* <StyledTableCell padding="checkbox">
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell> */}
-                                <StyledTableCell align="left">{data?.id ? data?.id : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.date ? data?.date : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.serial ? data?.serial : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.member ? data?.member : ' - '}</StyledTableCell>
