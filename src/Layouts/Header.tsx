@@ -10,7 +10,7 @@ import { Actions } from '@paljs/ui/Actions';
 import ContextMenu from '@paljs/ui/ContextMenu';
 import User from '@paljs/ui/User';
 import { breakpointDown } from '@paljs/ui/breakpoints';
-import axios from 'axios';
+// import axios from 'axios';
 
 const HeaderStyle = styled.div`
   display: flex;
@@ -73,6 +73,15 @@ const Header: React.FC<HeaderProps> = (props) => {
     }
   }, []);
 
+  if (typeof window !== 'undefined') {
+    if (user) {
+      console.log('Logged in.', user);
+    } else {
+      console.log('Not logged in.');
+      // window.location.href = '/login';
+    }
+  }
+
   const apiLogout = () => {
     setUser({});
     setUsername('');
@@ -83,7 +92,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const isLogout = user && (
     <div style={{ display: 'flex' }}>
-      <User image="url('/icons/icon-72x72.png')" name={user.userName} title="Admin" size="Medium" />
+      <User image="url('/icons/icon-72x72.png')" name={user?.userName} title="Admin" size="Medium" />
       <Button size="Small" shape="SemiRound" onClick={apiLogout} style={{ marginLeft: '10px' }}>
         Log Out
       </Button>

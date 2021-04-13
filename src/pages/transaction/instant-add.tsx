@@ -9,6 +9,7 @@ import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 import Link from 'next/link';
+import { EvaIcon } from '@paljs/ui/Icon';
 
 const InputWrapper = styled(InputGroup)`
   flex-direction: column;
@@ -102,8 +103,9 @@ export default function AddTransaction() {
             >
               <div>Add Transaction</div>
               <Link href="/transaction/instant">
-                <Button size="Small" status="Warning">
-                  Back
+                <Button size="Small" status="Warning" style={{ display: 'flex' }}>
+                  <div style={{ alignSelf: 'center', marginRight: '2px' }}>Back</div>
+                  <EvaIcon name="arrow-ios-back" />
                 </Button>
               </Link>
             </CardHeader>

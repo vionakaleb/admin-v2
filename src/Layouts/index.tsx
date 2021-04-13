@@ -61,8 +61,7 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
     }
   };
 
-  apiCheckLogin();
-  // setTimeout(apiCheckLogin, 3000);
+  // apiCheckLogin();
 
   const getState = (state?: 'hidden' | 'visible' | 'compacted' | 'expanded') => {
     setSeeHeader(state !== 'compacted');

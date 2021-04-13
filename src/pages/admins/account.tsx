@@ -26,6 +26,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import Link from 'next/link';
 import { Button } from '@paljs/ui/Button';
+import { EvaIcon } from '@paljs/ui/Icon';
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -173,12 +174,13 @@ const EnhancedTableToolbar = (props: any) => {
             }}
           >
             <Link href="/admins/account-add">
-              <Button size="Small" status="Warning" style={{ width: '90%' }}>
-                Add
+              <Button size="Small" status="Warning" style={{ display: 'flex' }}>
+                <div style={{ alignSelf: 'center', marginRight: '2px' }}>New Admin</div>
+                <EvaIcon name="plus-square" />
               </Button>
             </Link>
           </Row>
-          <Tooltip
+          {/* <Tooltip
             title="Filter list"
             style={{
               flexDirection: 'column',
@@ -191,7 +193,7 @@ const EnhancedTableToolbar = (props: any) => {
             <IconButton aria-label="filter list">
               <FilterListIcon />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </>
       )}
     </Toolbar>
