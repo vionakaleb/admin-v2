@@ -38,7 +38,7 @@ const ButtonWrapper = styled(Button)`
   margin: 25px 0;
 `;
 
-export default function RequestTransaction() {
+export default function Withdraw() {
   const [userLogin] = useState('testadmin');
   const [whiteLabelCode, setWhiteLabelCode] = useState('');
   const [username, setUsername] = useState('');
@@ -47,7 +47,6 @@ export default function RequestTransaction() {
   const [amount, setAmount] = useState('');
   const [bankName, setBankName] = useState('');
   const [bankAccount, setBankAccount] = useState('');
-  const [requestType, setRequestType] = useState('');
   const [senderAccountHolder, setSenderAccountHolder] = useState('');
   const [senderAccountNumber, setSenderAccountNumber] = useState('');
   const [recipientAccountHolder, setRecipientAccountHolder] = useState('');
@@ -59,10 +58,10 @@ export default function RequestTransaction() {
     }
   }, []);
 
-  const apiRequestTransaction = async (e: any) => {
+  const apiWithdraw = async (e: any) => {
     e.preventDefault();
 
-    const requestTransactionParam = {
+    const withdrawParam = {
       UserLogin: userLogin,
       Transaction: {
         WhiteLabelCode: whiteLabelCode,
@@ -72,20 +71,17 @@ export default function RequestTransaction() {
         Amount: amount,
         BankName: bankName,
         BankAccount: bankAccount,
-        RequestType: requestType,
-        SenderAccountHolder: senderAccountHolder,
-        SenderAccountNumber: senderAccountNumber,
-        RecipientAccountHolder: recipientAccountHolder,
-        RecipientAccountNumber: recipientAccountNumber,
+        RequestType: 2,
+        SenderAccountHolder: recipientAccountHolder,
+        SenderAccountNumber: recipientAccountNumber,
+        RecipientAccountHolder: senderAccountHolder,
+        RecipientAccountNumber: senderAccountNumber,
       },
     };
 
-    const response = await axios.post(
-      'http://localhost:5000/api/Admin/Transaction/RequestTransaction/',
-      requestTransactionParam,
-    );
+    const response = await axios.post('http://localhost:5000/api/Admin/Transaction/RequestTransaction/', withdrawParam);
 
-    if (response.data.errorCode === 0 || username !== '' || amount !== '' || requestType !== '') {
+    if (response.data.errorCode === 0 || username !== '' || amount !== '') {
       alert('Input success: ' + response.data.errorMessage);
       window.location.href = '/transaction/instant';
     } else {
@@ -94,7 +90,7 @@ export default function RequestTransaction() {
   };
 
   return (
-    <Layout title="Request Transaction">
+    <Layout title="Withdraw">
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
@@ -106,7 +102,7 @@ export default function RequestTransaction() {
                 justifyContent: 'space-between',
               }}
             >
-              <div>Request Transaction</div>
+              <div>Withdraw</div>
               <Link href="/transaction/instant">
                 <Button size="Small" status="Warning" style={{ display: 'flex' }}>
                   <div style={{ alignSelf: 'center', marginRight: '2px' }}>Back</div>
@@ -115,7 +111,7 @@ export default function RequestTransaction() {
               </Link>
             </CardHeader>
             <CardBody>
-              <form onSubmit={apiRequestTransaction}>
+              <form onSubmit={apiWithdraw}>
                 <Row>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -126,14 +122,6 @@ export default function RequestTransaction() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputWrapper fullWidth>
-                      White Label Code :
-                      <input
-                        type="text"
-                        value={whiteLabelCode}
-                        onChange={({ target }) => setWhiteLabelCode(target.value)}
-                      />
-                    </InputWrapper>
                     <InputWrapper fullWidth>
                       Username :
                       <input type="text" value={username} onChange={({ target }) => setUsername(target.value)} />
@@ -146,6 +134,18 @@ export default function RequestTransaction() {
                       Reference :
                       <input type="text" value={reference} onChange={({ target }) => setReference(target.value)} />
                     </InputWrapper>
+                    <InputWrapper fullWidth>
+                      White Label Code :
+                      <input
+                        type="text"
+                        value={whiteLabelCode}
+                        onChange={({ target }) => setWhiteLabelCode(target.value)}
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Amount :
+                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
+                    </InputWrapper>
                   </Col>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -156,10 +156,6 @@ export default function RequestTransaction() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputWrapper fullWidth>
-                      Amount :
-                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
-                    </InputWrapper>
                     <InputWrapper fullWidth>
                       Bank Name :
                       <input type="text" value={bankName} onChange={({ target }) => setBankName(target.value)} />
@@ -172,18 +168,8 @@ export default function RequestTransaction() {
                         onChange={({ target }) => setBankAccount(target.value)}
                       />
                     </InputWrapper>
-                    <InputSelectWrapper>
-                      Method :
-                      <InputSelect onChange={({ target }) => setRequestType(target.value)}>
-                        <option value="" selected disabled hidden></option>
-                        <option value={1}>Deposit</option>
-                        <option value={2}>Withdraw</option>
-                        <option value={3}>Addition</option>
-                        <option value={4}>Subs</option>
-                      </InputSelect>
-                    </InputSelectWrapper>
                     <InputWrapper fullWidth>
-                      Sender Account Holder :
+                      Sender Account Holder (Office) :
                       <input
                         type="text"
                         value={senderAccountHolder}
@@ -191,7 +177,7 @@ export default function RequestTransaction() {
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      Sender Account Number :
+                      Sender Account Number (Office) :
                       <input
                         type="number"
                         value={senderAccountNumber}
@@ -225,7 +211,7 @@ export default function RequestTransaction() {
                     }}
                   >
                     <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
-                      Request Transaction
+                      Submit
                     </ButtonWrapper>
                   </Col>
                 </Row>

@@ -182,11 +182,6 @@ const EnhancedTableToolbar = (props: any) => {
                 <EvaIcon name="plus-square" />
               </Button>
             </Link>
-            <Link href="/transaction/instant-request">
-              <Button size="Small" status="Warning" style={{ marginLeft: '10px' }}>
-                Request
-              </Button>
-            </Link>
           </Row>
           {/* <Tooltip
             title="Filter list"

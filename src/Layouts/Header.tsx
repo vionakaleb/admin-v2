@@ -149,30 +149,38 @@ const Header: React.FC<HeaderProps> = (props) => {
             },
             {
               content: (
-                <Button size="Small" shape="Round">
-                  <EvaIcon name="person-add" options={{ height: '25px', animation: { type: 'shake' } }} /> New Member
-                </Button>
+                <Link href="/members/new">
+                  <Button size="Small" shape="Round">
+                    <EvaIcon name="person-add" options={{ height: '25px', animation: { type: 'shake' } }} /> New Member
+                  </Button>
+                </Link>
               ),
             },
             {
               content: (
-                <Button size="Small" shape="Round">
-                  <EvaIcon name="upload" options={{ height: '25px', animation: { type: 'shake' } }} /> Deposit
-                </Button>
+                <Link href="/transaction/deposit">
+                  <Button size="Small" shape="Round">
+                    <EvaIcon name="upload" options={{ height: '25px', animation: { type: 'shake' } }} /> Deposit
+                  </Button>
+                </Link>
               ),
             },
             {
               content: (
-                <Button size="Small" shape="Round">
-                  <EvaIcon name="download" options={{ height: '25px', animation: { type: 'shake' } }} /> Withdraw
-                </Button>
+                <Link href="/transaction/withdraw">
+                  <Button size="Small" shape="Round">
+                    <EvaIcon name="download" options={{ height: '25px', animation: { type: 'shake' } }} /> Withdraw
+                  </Button>
+                </Link>
               ),
             },
             {
               content: (
-                <Button size="Small" shape="Round">
-                  <EvaIcon name="repeat" options={{ height: '25px', animation: { type: 'shake' } }} /> Adjustment
-                </Button>
+                <Link href="/transaction/adjustment">
+                  <Button size="Small" shape="Round">
+                    <EvaIcon name="repeat" options={{ height: '25px', animation: { type: 'shake' } }} /> Adjustment
+                  </Button>
+                </Link>
               ),
             },
           ]}
