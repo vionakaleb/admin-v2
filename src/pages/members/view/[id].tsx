@@ -34,7 +34,7 @@ const ButtonWrapper = styled(Button)`
   margin: 25px 0;
 `;
 
-export default function NewMember() {
+export default function ViewMember() {
   const router = useRouter();
   const { id: dataId } = router.query;
 
@@ -52,7 +52,6 @@ export default function NewMember() {
   const [contact2, setContact2] = useState('');
   const [currencyCode, setCurrencyCode] = useState('');
   const [referralReference, setReferralReference] = useState('');
-  const [memberTag, setMemberTag] = useState('');
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
@@ -60,9 +59,9 @@ export default function NewMember() {
     }
   }, []);
 
-  const apiNewMember = async (e: any) => {
+  const apiViewMember = async (e: any) => {
     e.preventDefault();
-    const newMemberParam = {
+    const viewMemberParam = {
       Action: action,
       UserLogin: userLogin,
       Member: {
@@ -81,7 +80,7 @@ export default function NewMember() {
       },
     };
 
-    const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', newMemberParam);
+    const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', viewMemberParam);
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert('Input success: ' + response.data.errorMessage);
@@ -92,7 +91,7 @@ export default function NewMember() {
   };
 
   return (
-    <Layout title="New Member">
+    <Layout title="View Member">
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
@@ -104,7 +103,7 @@ export default function NewMember() {
                 justifyContent: 'space-between',
               }}
             >
-              <div>New Member</div>
+              <div>View Member</div>
               <Link href="/members/list">
                 <Button size="Small" status="Warning" style={{ display: 'flex' }}>
                   <div style={{ alignSelf: 'center', marginRight: '2px' }}>Back</div>
@@ -113,7 +112,7 @@ export default function NewMember() {
               </Link>
             </CardHeader>
             <CardBody>
-              <form onSubmit={apiNewMember}>
+              <form onSubmit={apiViewMember}>
                 <Row>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -124,11 +123,14 @@ export default function NewMember() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputWrapper
-                      fullWidth
-                      style={{ borderBottom: '1px solid #EDF1F7', paddingBottom: '10px', marginBottom: '10px' }}
-                    >
-                      <b>Login Details</b>
+                    <InputWrapper fullWidth>
+                      Full Name :
+                      <input
+                        type="text"
+                        value={fullName}
+                        onChange={({ target }) => setFullName(target.value)}
+                        placeholder="Full Name"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Username :
@@ -137,76 +139,6 @@ export default function NewMember() {
                         value={username}
                         onChange={({ target }) => setUsername(target.value)}
                         placeholder="Username"
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Password :
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                        placeholder="Password"
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Confirm Password :
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                        placeholder="Confirm Password"
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Currency Code :
-                      <input
-                        type="text"
-                        value={currencyCode}
-                        onChange={({ target }) => setCurrencyCode(target.value)}
-                        placeholder="Currency Code"
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Referral Code :
-                      <input
-                        type="text"
-                        value={referralReference}
-                        onChange={({ target }) => setReferralReference(target.value)}
-                        placeholder="Referral Code"
-                      />
-                    </InputWrapper>
-                  </Col>
-                  <Col
-                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flexWrap: 'wrap',
-                      justifyContent: 'start',
-                    }}
-                  >
-                    <InputWrapper
-                      fullWidth
-                      style={{ borderBottom: '1px solid #EDF1F7', paddingBottom: '10px', marginBottom: '10px' }}
-                    >
-                      <b>Personal Details</b>
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      White Label Code :
-                      <input
-                        type="text"
-                        value={whiteLabelCode}
-                        onChange={({ target }) => setWhiteLabelCode(target.value)}
-                        placeholder="White Label Code"
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Full Name :
-                      <input
-                        type="text"
-                        value={fullName}
-                        onChange={({ target }) => setFullName(target.value)}
-                        placeholder="Full Name"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
@@ -219,23 +151,24 @@ export default function NewMember() {
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      Contact :
+                      Password :
                       <input
-                        type="text"
-                        value={contact}
-                        onChange={({ target }) => setContact(target.value)}
-                        placeholder="Contact"
+                        type="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
+                        placeholder="Password"
                       />
                     </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Contact 2 :
-                      <input
-                        type="text"
-                        value={contact2}
-                        onChange={({ target }) => setContact2(target.value)}
-                        placeholder="Contact 2"
-                      />
-                    </InputWrapper>
+                  </Col>
+                  <Col
+                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flexWrap: 'wrap',
+                      justifyContent: 'start',
+                    }}
+                  >
                     <InputRadioWrapper>
                       Gender :
                       <InputRadio>
@@ -265,6 +198,24 @@ export default function NewMember() {
                         placeholder="Date of Birth"
                       />
                     </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Contact :
+                      <input
+                        type="text"
+                        value={contact}
+                        onChange={({ target }) => setContact(target.value)}
+                        placeholder="Contact"
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Contact 2 :
+                      <input
+                        type="text"
+                        value={contact2}
+                        onChange={({ target }) => setContact2(target.value)}
+                        placeholder="Contact 2"
+                      />
+                    </InputWrapper>
                   </Col>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -275,36 +226,33 @@ export default function NewMember() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputWrapper
-                      fullWidth
-                      style={{ borderBottom: '1px solid #EDF1F7', paddingBottom: '10px', marginBottom: '10px' }}
-                    >
-                      <b>Member Details</b>
+                    <InputWrapper fullWidth>
+                      White Label Code :
+                      <input
+                        type="text"
+                        value={whiteLabelCode}
+                        onChange={({ target }) => setWhiteLabelCode(target.value)}
+                        placeholder="White Label Code"
+                      />
                     </InputWrapper>
-                    <InputRadioWrapper>
-                      Member Tags :
-                      <InputRadio>
-                        {/* {memberTags.map((tag) => tag.memberTags)} */}
-                        <div>
-                          <input
-                            type="radio"
-                            name="myRadios"
-                            onChange={({ target }) => setMemberTag(target.value)}
-                            value="1"
-                          />{' '}
-                          Tag
-                        </div>
-                        <div>
-                          <input
-                            type="radio"
-                            name="myRadios"
-                            onChange={({ target }) => setMemberTag(target.value)}
-                            value="2"
-                          />{' '}
-                          Tag 2
-                        </div>
-                      </InputRadio>
-                    </InputRadioWrapper>
+                    <InputWrapper fullWidth>
+                      Currency Code :
+                      <input
+                        type="text"
+                        value={currencyCode}
+                        onChange={({ target }) => setCurrencyCode(target.value)}
+                        placeholder="Currency Code"
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Referral Code :
+                      <input
+                        type="text"
+                        value={referralReference}
+                        onChange={({ target }) => setReferralReference(target.value)}
+                        placeholder="Referral Code"
+                      />
+                    </InputWrapper>
                     <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound">
                       Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>

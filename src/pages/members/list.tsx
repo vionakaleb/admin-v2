@@ -22,11 +22,31 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import Link from 'next/link';
 import { Button } from '@paljs/ui/Button';
 import { EvaIcon } from '@paljs/ui/Icon';
+import styled from 'styled-components';
+
+const InputSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 5.6px 0;
+  width: max-content;
+`;
+
+const InputSelect = styled.select`
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+  background-color: #f7f9fc;
+  border-color: #e4e9f2;
+  color: #222b45;
+  border-radius: 0.25rem;
+  line-height: 1.5rem;
+  padding: 10px;
+`;
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -261,6 +281,11 @@ const MemberList = () => {
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
 
+  const [action] = useState('Add');
+  const [userLogin] = useState('testadmin');
+
+  const [status, setStatus] = useState('');
+
   useEffect(() => {
     const memberParam = {
       DateFrom: dateFrom,
@@ -279,6 +304,17 @@ const MemberList = () => {
         console.log('Error retrieving data.');
       });
   }, []);
+
+  const apiNewMember = async (status: any) => {
+    const newMemberParam = {
+      Action: action,
+      UserLogin: userLogin,
+      Member: {
+        Status: status,
+      },
+    };
+    const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', newMemberParam);
+  };
 
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -378,7 +414,11 @@ const MemberList = () => {
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell> */}
                                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                                <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left" key={data?.name ? data.name : ' - '}>
+                                  <Link href={`/members/view/${encodeURIComponent(data.name)}`}>
+                                    {data?.name ? data.name : ' - '}
+                                  </Link>
+                                </StyledTableCell>
                                 <StyledTableCell align="left">{data?.code ? data?.code : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">
                                   {data?.memberTags ? data?.memberTags : ' - '}
@@ -406,9 +446,52 @@ const MemberList = () => {
                                 <StyledTableCell align="left">
                                   {data?.lastDeposit ? data?.lastDeposit : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  <InputSelectWrapper>
+                                    <InputSelect onChange={({ target }) => apiNewMember(target.value)}>
+                                      <option value="" selected disabled hidden>
+                                        {data?.status ? data?.status : ' - '}
+                                      </option>
+                                      <option value={'Activated'}>Activated</option>
+                                      <option value={'Suspended'}>Suspended</option>
+                                    </InputSelect>
+                                  </InputSelectWrapper>
+                                </StyledTableCell>
                                 <StyledTableCell align="left">{data?.ip ? data?.ip : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left">{data?.actions ? data?.actions : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left" key={data?.name}>
+                                  <div style={{ display: 'flex' }}>
+                                    <Link href={`/admins/edit/${encodeURIComponent(data.name)}`}>
+                                      <Tooltip title="Edit">
+                                        <Button
+                                          size="Tiny"
+                                          style={{ backgroundColor: 'inherit', border: 'none', padding: 0 }}
+                                        >
+                                          <EvaIcon name="edit" options={{ fill: '#1565C0' }} />
+                                        </Button>
+                                      </Tooltip>
+                                    </Link>
+                                    <Link href={`/admins/products/${encodeURIComponent(data.name)}`}>
+                                      <Tooltip title="Products">
+                                        <Button
+                                          size="Tiny"
+                                          style={{ backgroundColor: 'inherit', border: 'none', padding: '0 5px' }}
+                                        >
+                                          <EvaIcon name="list" options={{ fill: '#00695C' }} />
+                                        </Button>
+                                      </Tooltip>
+                                    </Link>
+                                    <Link href={`/admins/reset-password/${encodeURIComponent(data.name)}`}>
+                                      <Tooltip title="Reset Password">
+                                        <Button
+                                          size="Tiny"
+                                          style={{ backgroundColor: 'inherit', border: 'none', padding: '0 5px' }}
+                                        >
+                                          <EvaIcon name="lock" options={{ fill: '#43A047' }} />
+                                        </Button>
+                                      </Tooltip>
+                                    </Link>
+                                  </div>
+                                </StyledTableCell>
                               </StyledTableRow>
                             );
                           })}
