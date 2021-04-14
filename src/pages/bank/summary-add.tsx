@@ -52,7 +52,7 @@ const InputWrapper = styled(InputGroup)`
 `;
 
 const ButtonWrapper = styled(Button)`
-  margin: 25px 0;
+  /* margin: 25px 0; */
 `;
 
 export default function AddSummary() {
@@ -153,24 +153,110 @@ export default function AddSummary() {
                     }}
                   >
                     <InputWrapper fullWidth>
-                      White Label Code :
+                      Code :
                       <input
                         type="text"
                         value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
+                        placeholder="White Label Code"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      Bank Type Code :
+                      Bank :
                       <input
                         type="text"
                         value={bankTypeCode}
                         onChange={({ target }) => setBankTypeCode(target.value)}
+                        placeholder="Bank Type Code"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
+                      Minimum Deposit :
+                      <input
+                        type="text"
+                        value={minDeposit}
+                        onChange={({ target }) => setMinDeposit(target.value)}
+                        placeholder="Minimum Deposit"
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Maximum Deposit :
+                      <input
+                        type="text"
+                        value={maxDeposit}
+                        onChange={({ target }) => setMaxDeposit(target.value)}
+                        placeholder="Maximum Deposit"
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Minimum Withdraw :
+                      <input
+                        type="text"
+                        value={minWithdraw}
+                        onChange={({ target }) => setMinWithdraw(target.value)}
+                        placeholder="Minimum Withdraw"
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Maximum Withdraw :
+                      <input
+                        type="text"
+                        value={maxWithdraw}
+                        onChange={({ target }) => setMaxWithdraw(target.value)}
+                        placeholder="Maximum Withdraw"
+                      />
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Item Sort :
+                      <input
+                        type="text"
+                        value={sortNumber}
+                        onChange={({ target }) => setSortNumber(target.value)}
+                        placeholder="Item Sort Number"
+                      />
+                    </InputWrapper>
+                  </Col>
+                  <Col
+                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flexWrap: 'wrap',
+                      justifyContent: 'start',
+                    }}
+                  >
+                    <InputWrapper fullWidth style={{ display: 'flex', flexDirection: 'row', height: '60px' }}>
+                      <div style={{ width: '50%' }}>
+                        <div>Withdraw :</div>
+                        <div>
+                          <input
+                            type="checkbox"
+                            className="inputCheck"
+                            checked={withdraw}
+                            onChange={() => setWithdraw(!withdraw)}
+                          />
+                        </div>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <div>Deposit :</div>
+                        <div>
+                          <input
+                            type="checkbox"
+                            className="inputCheck"
+                            checked={deposit}
+                            onChange={() => setDeposit(!deposit)}
+                          />
+                        </div>
+                      </div>
+                    </InputWrapper>
+                    <InputWrapper fullWidth>
                       Bank Name :
-                      <input type="text" value={bankName} onChange={({ target }) => setBankName(target.value)} />
+                      <input
+                        type="text"
+                        value={bankName}
+                        onChange={({ target }) => setBankName(target.value)}
+                        placeholder="Bank Name"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Bank Account Name :
@@ -178,20 +264,33 @@ export default function AddSummary() {
                         type="text"
                         value={bankAccountName}
                         onChange={({ target }) => setBankAccountName(target.value)}
+                        placeholder="Bank Account Name"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Bank Number :
-                      <input type="text" value={bankNumber} onChange={({ target }) => setBankNumber(target.value)} />
+                      <input
+                        type="text"
+                        value={bankNumber}
+                        onChange={({ target }) => setBankNumber(target.value)}
+                        placeholder="Bank Number"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Bank Serial :
-                      <input type="text" value={bankSerial} onChange={({ target }) => setBankSerial(target.value)} />
+                      <input
+                        type="text"
+                        value={bankSerial}
+                        onChange={({ target }) => setBankSerial(target.value)}
+                        placeholder="Bank Serial"
+                      />
                     </InputWrapper>
                     <InputSelectWrapper>
                       Status :
                       <InputSelect onChange={({ target }) => setStatus(target.value)}>
-                        <option value="" selected disabled hidden></option>
+                        <option value="" selected disabled hidden>
+                          Active
+                        </option>
                         <option value={1}>Active</option>
                         <option value={2}>Inactive</option>
                       </InputSelect>
@@ -200,62 +299,12 @@ export default function AddSummary() {
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
                     style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flexWrap: 'wrap',
-                      justifyContent: 'start',
+                      textAlign: 'left',
+                      marginTop: '20px',
                     }}
                   >
-                    <InputWrapper fullWidth>
-                      Max Deposit :
-                      <input type="text" value={maxDeposit} onChange={({ target }) => setMaxDeposit(target.value)} />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Max Withdraw :
-                      <input type="text" value={maxWithdraw} onChange={({ target }) => setMaxWithdraw(target.value)} />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Min Deposit :
-                      <input type="text" value={minDeposit} onChange={({ target }) => setMinDeposit(target.value)} />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Min Withdraw :
-                      <input type="text" value={minWithdraw} onChange={({ target }) => setMinWithdraw(target.value)} />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Deposit :
-                      <input
-                        type="checkbox"
-                        className="inputCheck"
-                        checked={deposit}
-                        onChange={() => setDeposit(!deposit)}
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Withdraw :
-                      <input
-                        type="checkbox"
-                        className="inputCheck"
-                        checked={withdraw}
-                        onChange={() => setWithdraw(!withdraw)}
-                      />
-                    </InputWrapper>
-                    <InputWrapper fullWidth>
-                      Sort Number :
-                      <input type="text" value={sortNumber} onChange={({ target }) => setSortNumber(target.value)} />
-                    </InputWrapper>
-                  </Col>
-                  <Col
-                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flexWrap: 'wrap',
-                      justifyContent: 'start',
-                    }}
-                  >
-                    <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
-                      Save Bank Summary
+                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound">
+                      Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>
                   </Col>
                 </Row>

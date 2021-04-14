@@ -22,11 +22,30 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import Link from 'next/link';
 import { Button } from '@paljs/ui/Button';
 import { EvaIcon } from '@paljs/ui/Icon';
+import styled from 'styled-components';
+
+const InputSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 5.6px 0;
+`;
+
+const InputSelect = styled.select`
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+  background-color: #f7f9fc;
+  border-color: #e4e9f2;
+  color: #222b45;
+  border-radius: 0.25rem;
+  line-height: 1.5rem;
+  padding: 10px;
+`;
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -255,7 +274,7 @@ const AdminList = () => {
       // Size: 20,
       Sort: null,
       KeyWord: null,
-      Status: null,
+      Status: status,
     };
     axios
       .post('http://localhost:5000/api/Admin/Admin/GetUserList', adminParam)
@@ -271,12 +290,20 @@ const AdminList = () => {
       });
   }, []);
 
+  const apiAddAdmin = async (status: any) => {
+    const adminParam = {
+      Status: status,
+    };
+    await axios.post('http://localhost:5000/api/Admin/Admin/GetUserList', adminParam);
+  };
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('index');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [status, setStatus] = useState('');
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -377,12 +404,41 @@ const AdminList = () => {
                                 <StyledTableCell align="left">
                                   {data?.adminDepartment ? data?.adminDepartment : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">
-                                  {data?.adminDate ? data?.adminDate : ' - '}
+                                  <InputSelectWrapper>
+                                    <InputSelect onChange={({ target }) => apiAddAdmin(target.value)}>
+                                      <option value="" selected disabled hidden>
+                                        {data?.status ? data?.status : ' - '}
+                                      </option>
+                                      <option value={'Activated'}>Activated</option>
+                                      <option value={'Inactive'}>Inactivated</option>
+                                    </InputSelect>
+                                  </InputSelectWrapper>
                                 </StyledTableCell>
                                 <StyledTableCell align="left">
-                                  {data?.adminAction ? data?.adminAction : ' - '}
+                                  Updated at: {data?.adminDate ? data?.adminDate : ' - '}
+                                </StyledTableCell>
+                                <StyledTableCell align="left" key={data?.name}>
+                                  <Link href={`/admins/edit/${encodeURIComponent(data.name)}`}>
+                                    <Tooltip title="Edit">
+                                      <Button
+                                        size="Tiny"
+                                        style={{ backgroundColor: 'inherit', border: 'none', padding: 0 }}
+                                      >
+                                        <EvaIcon name="edit" options={{ fill: '#1565C0' }} />
+                                      </Button>
+                                    </Tooltip>
+                                  </Link>
+                                  <Link href={`/admins/reset-password/${encodeURIComponent(data.name)}`}>
+                                    <Tooltip title="Reset Password">
+                                      <Button
+                                        size="Tiny"
+                                        style={{ backgroundColor: 'inherit', border: 'none', padding: '0 5px' }}
+                                      >
+                                        <EvaIcon name="lock" options={{ fill: '#43A047' }} />
+                                      </Button>
+                                    </Tooltip>
+                                  </Link>
                                 </StyledTableCell>
                               </StyledTableRow>
                             );

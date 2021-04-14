@@ -2,19 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Layout from 'Layouts';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
-import { Card, CardBody } from '@paljs/ui/Card';
-
+import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
+// import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -22,11 +19,29 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import Link from 'next/link';
 import { Button } from '@paljs/ui/Button';
 import { EvaIcon } from '@paljs/ui/Icon';
+import styled from 'styled-components';
+
+const CellBankAcc = styled.div`
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+`;
+
+const CellBankBalance = styled.div`
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  text-align: center;
+`;
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -53,67 +68,6 @@ function stableSort(array: any, comparator: any) {
   });
   return stabilizedThis.map((el: any) => el[0]);
 }
-
-const headCells = [
-  { id: 'index', numeric: true, disablePadding: true, label: '#' },
-  { id: 'bankCode', numeric: false, disablePadding: false, label: 'Bank Code' },
-  { id: 'bankName', numeric: false, disablePadding: false, label: 'Bank Name' },
-  { id: 'bankAccountName', numeric: false, disablePadding: false, label: 'Bank Acc. Name' },
-  { id: 'bankNumber', numeric: false, disablePadding: false, label: 'Bank Number' },
-  { id: 'balance', numeric: false, disablePadding: false, label: 'Balance' },
-  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
-];
-
-function EnhancedTableHead(props: any) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property: any) => (event: any) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
-          />
-        </TableCell> */}
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={'left'}
-            padding={'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>{order === 'desc' ? '' : ''}</span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -317,8 +271,12 @@ const BankSummaryList = () => {
   };
 
   const isSelected = (index: any) => selected.indexOf(index) !== -1;
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - page * rowsPerPage);
+
+  const formatterIDR = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'IDR',
+  });
 
   return (
     <Layout title="Bank Summary List">
@@ -336,59 +294,60 @@ const BankSummaryList = () => {
                       size={'small'}
                       aria-label="enhanced table"
                     >
-                      <EnhancedTableHead
-                        classes={classes}
-                        numSelected={selected.length}
-                        order={order}
-                        orderBy={orderBy}
-                        onSelectAllClick={handleSelectAllClick}
-                        onRequestSort={handleRequestSort}
-                        rowCount={dataList.length}
-                      />
-                      <TableBody>
-                        {stableSort(dataList, getComparator(order, orderBy))
-                          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                          .map((data: any, index: number) => {
-                            const isItemSelected = isSelected(index);
-                            // const labelId = `enhanced-table-checkbox-${index}`;
-
-                            return (
-                              <StyledTableRow
-                                hover
-                                // onClick={(event) => handleClick(event, index)}
-                                role="checkbox"
-                                aria-checked={isItemSelected}
-                                tabIndex={-1}
-                                key={index}
-                                selected={isItemSelected}
-                              >
-                                {/* <StyledTableCell padding="checkbox">
-                                  <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                                </StyledTableCell> */}
-                                <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.bankCode ? data?.bankCode : ' - '}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.bankName ? data?.bankName : ' - '}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.bankAccountName ? data?.bankAccountName : ' - '}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.bankNumber ? data?.bankNumber : ' - '}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{data?.balance ? data?.balance : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
-                              </StyledTableRow>
-                            );
-                          })}
-                        {emptyRows > 0 && (
-                          <TableRow style={{ height: 33 * emptyRows }}>
-                            <StyledTableCell colSpan={12} />
-                          </TableRow>
-                        )}
-                      </TableBody>
+                      <Card>
+                        <CardHeader>LEVEL 1 {dataList?.map((data: any) => data?.level)}</CardHeader>
+                        <CardBody>
+                          <Row>
+                            {dataList?.map((data: any) => (
+                              <Col breakPoint={{ xs: 12, md: 3 }} style={{ width: '100%', margin: '20px' }}>
+                                <StyledTableRow hover style={{ width: '100%' }}>
+                                  <StyledTableCell width="33%">
+                                    <b>{data?.bankName}</b>
+                                  </StyledTableCell>
+                                  <StyledTableCell>
+                                    <b>Level 1 {data?.level}</b>
+                                  </StyledTableCell>
+                                  <StyledTableCell>
+                                    <b>{data?.status}</b>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow hover style={{ width: '100%' }}>
+                                  <StyledTableCell colSpan="3">
+                                    <Tooltip placement="bottom-start" title={data?.bankAccountName}>
+                                      <CellBankAcc>{data?.bankAccountName}</CellBankAcc>
+                                    </Tooltip>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow hover style={{ width: '100%' }}>
+                                  <StyledTableCell colSpan="3">{data?.bankNumber}</StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow hover style={{ width: '100%' }}>
+                                  <StyledTableCell>
+                                    <Link href="/transaction/adjustment">Credit</Link>
+                                  </StyledTableCell>
+                                  <StyledTableCell>
+                                    <Link href="/transaction/adjustment">Debit</Link>
+                                  </StyledTableCell>
+                                  <StyledTableCell>
+                                    <Link href="/transaction/adjustment">Transfer</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow hover style={{ width: '100%' }}>
+                                  <StyledTableCell colSpan="3">
+                                    <Link href="/transaction/enquiry">
+                                      <Tooltip title={formatterIDR.format(data?.balance)}>
+                                        <CellBankBalance>
+                                          Balance - {formatterIDR.format(data?.balance)}
+                                        </CellBankBalance>
+                                      </Tooltip>
+                                    </Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                              </Col>
+                            ))}
+                          </Row>
+                        </CardBody>
+                      </Card>
                     </Table>
                   </TableContainer>
                   <TablePagination
