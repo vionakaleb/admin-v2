@@ -303,7 +303,7 @@ export default function AddSummary() {
                       marginTop: '20px',
                     }}
                   >
-                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound">
+                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
                       Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>
                   </Col>

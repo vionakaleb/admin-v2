@@ -305,7 +305,7 @@ export default function NewMember() {
                         </div>
                       </InputRadio>
                     </InputRadioWrapper>
-                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound">
+                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
                       Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>
                   </Col>

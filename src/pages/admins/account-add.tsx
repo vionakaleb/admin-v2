@@ -269,7 +269,7 @@ export default function AddAdmin() {
                         />
                       </div>
                     </InputWrapper>
-                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound">
+                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
                       Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>
                   </Col>

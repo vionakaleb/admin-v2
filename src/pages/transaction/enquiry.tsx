@@ -156,7 +156,7 @@ const EnhancedTableToolbar = (props: any) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Transaction Enquiry
+          Transaction List
         </Typography>
       )}
 
@@ -177,7 +177,7 @@ const EnhancedTableToolbar = (props: any) => {
               right: 0,
             }}
           >
-            <Link href="/transaction/instant-add">
+            <Link href="/transaction/adjustment">
               <Button size="Small" status="Warning" style={{ display: 'flex' }}>
                 <div style={{ alignSelf: 'center', marginRight: '2px' }}>Add</div>
                 <EvaIcon name="plus-square" />
@@ -374,13 +374,27 @@ const TransactionEnquiry = () => {
                                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.date ? data?.date : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.serial ? data?.serial : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left">{data?.member ? data?.member : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left" key={data?.id ? data.id : ' - '}>
+                                  <Link href={`/members/view/${encodeURIComponent(data.id)}`}>
+                                    {data?.member ? data?.member : ' - '}
+                                  </Link>
+                                </StyledTableCell>
                                 <StyledTableCell align="left">{data?.name ? data?.name : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">
                                   {data?.enquiryTags ? data?.enquiryTags : ' - '}
                                 </StyledTableCell>
                                 <StyledTableCell align="left">{data?.method ? data?.method : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left">{data?.status ? data?.status : ' - '}</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  {data?.status === 'Approve' ? (
+                                    <div style={{ color: '#55A147' }}>{data?.status}</div>
+                                  ) : data?.status === 'Reject' ? (
+                                    <div style={{ color: '#E73935' }}>{data?.status}</div>
+                                  ) : data?.status ? (
+                                    data?.status
+                                  ) : (
+                                    ' - '
+                                  )}
+                                </StyledTableCell>
                                 <StyledTableCell align="left">{data?.credit ? data?.credit : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.debit ? data?.debit : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.balance ? data?.balance : ' - '}</StyledTableCell>

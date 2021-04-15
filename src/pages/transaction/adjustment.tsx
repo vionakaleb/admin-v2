@@ -38,7 +38,7 @@ const ButtonWrapper = styled(Button)`
   margin: 25px 0;
 `;
 
-export default function RequestTransaction() {
+export default function Adjustment() {
   const [userLogin] = useState('testadmin');
   const [whiteLabelCode, setWhiteLabelCode] = useState('');
   const [username, setUsername] = useState('');
@@ -59,10 +59,10 @@ export default function RequestTransaction() {
     }
   }, []);
 
-  const apiRequestTransaction = async (e: any) => {
+  const apiAdjustment = async (e: any) => {
     e.preventDefault();
 
-    const requestTransactionParam = {
+    const adjustmentParam = {
       UserLogin: userLogin,
       Transaction: {
         WhiteLabelCode: whiteLabelCode,
@@ -82,7 +82,7 @@ export default function RequestTransaction() {
 
     const response = await axios.post(
       'http://localhost:5000/api/Admin/Transaction/RequestTransaction/',
-      requestTransactionParam,
+      adjustmentParam,
     );
 
     if (response.data.errorCode === 0 || username !== '' || amount !== '' || requestType !== '') {
@@ -94,7 +94,7 @@ export default function RequestTransaction() {
   };
 
   return (
-    <Layout title="Request Transaction">
+    <Layout title="Adjustment">
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
@@ -106,7 +106,7 @@ export default function RequestTransaction() {
                 justifyContent: 'space-between',
               }}
             >
-              <div>Request Transaction</div>
+              <div>Adjustment</div>
               <Link href="/transaction/instant">
                 <Button size="Small" status="Warning" style={{ display: 'flex' }}>
                   <div style={{ alignSelf: 'center', marginRight: '2px' }}>Back</div>
@@ -115,7 +115,7 @@ export default function RequestTransaction() {
               </Link>
             </CardHeader>
             <CardBody>
-              <form onSubmit={apiRequestTransaction}>
+              <form onSubmit={apiAdjustment}>
                 <Row>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -129,7 +129,9 @@ export default function RequestTransaction() {
                     <InputSelectWrapper>
                       Adjustment Type :
                       <InputSelect onChange={({ target }) => setRequestType(target.value)}>
-                        <option value="" selected disabled hidden></option>
+                        <option value="" selected disabled hidden>
+                          Adjustment Type
+                        </option>
                         {/* Addition */}
                         <option value={3}>Credit Adjustment</option>
                         {/* Subs */}
@@ -138,11 +140,21 @@ export default function RequestTransaction() {
                     </InputSelectWrapper>
                     <InputWrapper fullWidth>
                       Username :
-                      <input type="text" value={username} onChange={({ target }) => setUsername(target.value)} />
+                      <input
+                        type="text"
+                        value={username}
+                        onChange={({ target }) => setUsername(target.value)}
+                        placeholder="Username"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Amount :
-                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
+                      <input
+                        type="number"
+                        value={amount}
+                        onChange={({ target }) => setAmount(target.value)}
+                        placeholder="Amount"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       White Label Code :
@@ -150,15 +162,26 @@ export default function RequestTransaction() {
                         type="text"
                         value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
+                        placeholder="White Label Code"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Channel :
-                      <input type="text" value={channel} onChange={({ target }) => setChannel(target.value)} />
+                      <input
+                        type="text"
+                        value={channel}
+                        onChange={({ target }) => setChannel(target.value)}
+                        placeholder="Channel"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Reference :
-                      <input type="text" value={reference} onChange={({ target }) => setReference(target.value)} />
+                      <input
+                        type="text"
+                        value={reference}
+                        onChange={({ target }) => setReference(target.value)}
+                        placeholder="Reference"
+                      />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -172,14 +195,20 @@ export default function RequestTransaction() {
                   >
                     <InputWrapper fullWidth>
                       Bank Name :
-                      <input type="text" value={bankName} onChange={({ target }) => setBankName(target.value)} />
+                      <input
+                        type="text"
+                        value={bankName}
+                        onChange={({ target }) => setBankName(target.value)}
+                        placeholder="Bank Name"
+                      />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Bank Account :
                       <input
-                        type="number"
+                        type="text"
                         value={bankAccount}
                         onChange={({ target }) => setBankAccount(target.value)}
+                        placeholder="Bank Account"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
@@ -188,14 +217,16 @@ export default function RequestTransaction() {
                         type="text"
                         value={senderAccountHolder}
                         onChange={({ target }) => setSenderAccountHolder(target.value)}
+                        placeholder="Sender Account Holder"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Sender Account Number :
                       <input
-                        type="number"
+                        type="text"
                         value={senderAccountNumber}
                         onChange={({ target }) => setSenderAccountNumber(target.value)}
+                        placeholder="Sender Account Number"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
@@ -204,14 +235,16 @@ export default function RequestTransaction() {
                         type="text"
                         value={recipientAccountHolder}
                         onChange={({ target }) => setRecipientAccountHolder(target.value)}
+                        placeholder="Recipient Account Holder"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Recipient Account Number :
                       <input
-                        type="number"
+                        type="text"
                         value={recipientAccountNumber}
                         onChange={({ target }) => setRecipientAccountNumber(target.value)}
+                        placeholder="Recipient Account Number"
                       />
                     </InputWrapper>
                   </Col>
@@ -224,8 +257,8 @@ export default function RequestTransaction() {
                       justifyContent: 'start',
                     }}
                   >
-                    <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
-                      Request Transaction
+                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
+                      Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>
                   </Col>
                 </Row>

@@ -25,7 +25,26 @@ import axios from 'axios';
 import Link from 'next/link';
 import { Button } from '@paljs/ui/Button';
 import { EvaIcon } from '@paljs/ui/Icon';
+import styled from 'styled-components';
 // import Checkbox from "@material-ui/core/Checkbox";
+
+const InputSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 5.6px 0;
+`;
+
+const InputSelect = styled.select`
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+  background-color: #f7f9fc;
+  border-color: #e4e9f2;
+  color: #222b45;
+  border-radius: 0.25rem;
+  line-height: 1.5rem;
+  padding: 10px;
+`;
 
 function descendingComparator(a: any, b: any, orderBy: any) {
   if (b[orderBy] < a[orderBy]) {
@@ -176,7 +195,7 @@ const EnhancedTableToolbar = (props: any) => {
               width: '100%',
             }}
           >
-            <Link href="/transaction/instant-add">
+            <Link href="/transaction/adjustment">
               <Button size="Small" status="Warning" style={{ display: 'flex' }}>
                 <div style={{ alignSelf: 'center', marginRight: '2px' }}>Add</div>
                 <EvaIcon name="plus-square" />
@@ -393,8 +412,18 @@ const TransactionInstant = () => {
                                 <StyledTableCell align="left">
                                   {data?.processing ? data.processing : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">
-                                  {data?.transactionAction ? data.transactionAction : ' - '}
+                                <StyledTableCell align="left" key={data?.name}>
+                                  <div style={{ display: 'flex' }}>
+                                    <InputSelectWrapper>
+                                      <InputSelect>
+                                        <option value="" selected disabled hidden>
+                                          👨‍💼
+                                        </option>
+                                        <option value={'Activated'}>Activated</option>
+                                        <option value={'Suspended'}>Suspended</option>
+                                      </InputSelect>
+                                    </InputSelectWrapper>
+                                  </div>
                                 </StyledTableCell>
                               </StyledTableRow>
                             );

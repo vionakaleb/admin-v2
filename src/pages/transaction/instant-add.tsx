@@ -127,6 +127,7 @@ export default function AddTransaction() {
                         type="text"
                         value={memberUsername}
                         onChange={({ target }) => setMemberUserName(target.value)}
+                        placeholder="Username"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
@@ -135,6 +136,7 @@ export default function AddTransaction() {
                         type="text"
                         value={prefixUsername}
                         onChange={({ target }) => setPrefixUserName(target.value)}
+                        placeholder="Prefix Username"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
@@ -143,6 +145,7 @@ export default function AddTransaction() {
                         type="text"
                         value={whiteLabelCode}
                         onChange={({ target }) => setWhiteLabelCode(target.value)}
+                        placeholder="White Label Code"
                       />
                     </InputWrapper>
                   </Col>
@@ -158,7 +161,9 @@ export default function AddTransaction() {
                     <InputSelectWrapper>
                       Method :
                       <InputSelect onChange={({ target }) => setRequestType(target.value)}>
-                        <option value="" selected disabled hidden></option>
+                        <option value="" selected disabled hidden>
+                          Deposit
+                        </option>
                         <option value={1}>Deposit</option>
                         <option value={2}>Withdraw</option>
                         <option value={3}>Addition</option>
@@ -168,7 +173,9 @@ export default function AddTransaction() {
                     <InputSelectWrapper>
                       Status :
                       <InputSelect onChange={({ target }) => setApprovalStatus(target.value)}>
-                        <option value="" selected disabled hidden></option>
+                        <option value="" selected disabled hidden>
+                          Pending
+                        </option>
                         <option value={1}>Pending</option>
                         <option value={2}>Approve</option>
                         <option value={3}>Reject</option>
@@ -176,7 +183,12 @@ export default function AddTransaction() {
                     </InputSelectWrapper>
                     <InputWrapper fullWidth>
                       Credit :
-                      <input type="number" value={amount} onChange={({ target }) => setAmount(target.value)} />
+                      <input
+                        type="number"
+                        value={amount}
+                        onChange={({ target }) => setAmount(target.value)}
+                        placeholder="Credit"
+                      />
                     </InputWrapper>
                   </Col>
                   <Col
@@ -188,8 +200,8 @@ export default function AddTransaction() {
                       justifyContent: 'start',
                     }}
                   >
-                    <ButtonWrapper size="Medium" status="Primary" type="submit" shape="SemiRound" fullWidth>
-                      Save Transaction
+                    <ButtonWrapper size="Medium" status="Success" type="submit" shape="SemiRound" fullWidth>
+                      Submit <EvaIcon name="corner-up-right" />
                     </ButtonWrapper>
                   </Col>
                 </Row>
