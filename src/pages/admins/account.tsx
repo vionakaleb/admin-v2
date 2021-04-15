@@ -418,8 +418,8 @@ const AdminList = () => {
                                 <StyledTableCell align="left">
                                   Updated at: {data?.adminDate ? data?.adminDate : ' - '}
                                 </StyledTableCell>
-                                <StyledTableCell align="left" key={data?.name}>
-                                  <Link href={`/admins/edit/${encodeURIComponent(data.name)}`}>
+                                <StyledTableCell align="left" key={data?.id}>
+                                  <Link href={`/admins/edit/${encodeURIComponent(data?.id)}`}>
                                     <Tooltip title="Edit">
                                       <Button
                                         size="Tiny"
@@ -429,7 +429,7 @@ const AdminList = () => {
                                       </Button>
                                     </Tooltip>
                                   </Link>
-                                  <Link href={`/admins/reset-password/${encodeURIComponent(data.name)}`}>
+                                  <Link href={`/admins/reset-password/${encodeURIComponent(data?.id)}`}>
                                     <Tooltip title="Reset Password">
                                       <Button
                                         size="Tiny"

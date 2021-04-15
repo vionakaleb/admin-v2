@@ -414,8 +414,8 @@ const MemberList = () => {
                                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                                 </StyledTableCell> */}
                                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                                <StyledTableCell align="left" key={data?.name ? data.name : ' - '}>
-                                  <Link href={`/members/view/${encodeURIComponent(data.name)}`}>
+                                <StyledTableCell align="left" key={data?.id}>
+                                  <Link href={`/members/view/${encodeURIComponent(data?.id)}`}>
                                     {data?.name ? data.name : ' - '}
                                   </Link>
                                 </StyledTableCell>
@@ -458,9 +458,9 @@ const MemberList = () => {
                                   </InputSelectWrapper>
                                 </StyledTableCell>
                                 <StyledTableCell align="left">{data?.ip ? data?.ip : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left" key={data?.name}>
+                                <StyledTableCell align="left" key={data?.id}>
                                   <div style={{ display: 'flex' }}>
-                                    <Link href={`/admins/edit/${encodeURIComponent(data.name)}`}>
+                                    <Link href={`/admins/edit/${encodeURIComponent(data?.id)}`}>
                                       <Tooltip title="Edit">
                                         <Button
                                           size="Tiny"
@@ -470,7 +470,7 @@ const MemberList = () => {
                                         </Button>
                                       </Tooltip>
                                     </Link>
-                                    <Link href={`/admins/products/${encodeURIComponent(data.name)}`}>
+                                    <Link href={`/admins/products/${encodeURIComponent(data?.id)}`}>
                                       <Tooltip title="Products">
                                         <Button
                                           size="Tiny"
@@ -480,7 +480,7 @@ const MemberList = () => {
                                         </Button>
                                       </Tooltip>
                                     </Link>
-                                    <Link href={`/admins/reset-password/${encodeURIComponent(data.name)}`}>
+                                    <Link href={`/admins/reset-password/${encodeURIComponent(data?.id)}`}>
                                       <Tooltip title="Reset Password">
                                         <Button
                                           size="Tiny"

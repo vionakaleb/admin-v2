@@ -401,8 +401,8 @@ const TransactionInstant = () => {
                                   {data?.transactionTags ? data.transactionTags : ' - '}
                                 </StyledTableCell>
                                 <StyledTableCell align="left">{data?.method ? data.method : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left" key={data?.id ? data.id : ' - '}>
-                                  <Link href={`/transaction/instant-process/${encodeURIComponent(data.id)}`}>
+                                <StyledTableCell align="left" key={data?.id}>
+                                  <Link href={`/transaction/instant-process/${encodeURIComponent(data?.id)}`}>
                                     {data?.status ? data.status : ' - '}
                                   </Link>
                                 </StyledTableCell>

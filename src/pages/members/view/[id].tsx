@@ -34,7 +34,7 @@ const ButtonWrapper = styled(Button)`
   margin: 25px 0;
 `;
 
-export default function ViewMember() {
+export default function ViewDetails() {
   const router = useRouter();
   const { id: dataId } = router.query;
 
@@ -59,9 +59,9 @@ export default function ViewMember() {
     }
   }, []);
 
-  const apiViewMember = async (e: any) => {
+  const apiViewDetails = async (e: any) => {
     e.preventDefault();
-    const viewMemberParam = {
+    const viewDetailsParam = {
       Action: action,
       UserLogin: userLogin,
       Member: {
@@ -80,7 +80,7 @@ export default function ViewMember() {
       },
     };
 
-    const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', viewMemberParam);
+    const response = await axios.post('http://localhost:5000/api/Admin/Member/SaveMember/', viewDetailsParam);
 
     if (response.data.errorCode === 0 || username !== '' || password !== '') {
       alert('Input success: ' + response.data.errorMessage);
@@ -91,7 +91,7 @@ export default function ViewMember() {
   };
 
   return (
-    <Layout title="View Member">
+    <Layout title={'Member - ' + dataId}>
       <Row center="xs">
         <Col breakPoint={{ xs: 12, md: 9 }}>
           <Card>
@@ -103,7 +103,7 @@ export default function ViewMember() {
                 justifyContent: 'space-between',
               }}
             >
-              <div>View Member</div>
+              <div>Account Details</div>
               <Link href="/members/list">
                 <Button size="Small" status="Warning" style={{ display: 'flex' }}>
                   <div style={{ alignSelf: 'center', marginRight: '2px' }}>Back</div>
@@ -112,7 +112,7 @@ export default function ViewMember() {
               </Link>
             </CardHeader>
             <CardBody>
-              <form onSubmit={apiViewMember}>
+              <form onSubmit={apiViewDetails}>
                 <Row>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -123,14 +123,11 @@ export default function ViewMember() {
                       justifyContent: 'start',
                     }}
                   >
-                    <InputWrapper fullWidth>
-                      Full Name :
-                      <input
-                        type="text"
-                        value={fullName}
-                        onChange={({ target }) => setFullName(target.value)}
-                        placeholder="Full Name"
-                      />
+                    <InputWrapper
+                      fullWidth
+                      style={{ borderBottom: '1px solid #EDF1F7', paddingBottom: '10px', marginBottom: '10px' }}
+                    >
+                      <b>Account Information</b>
                     </InputWrapper>
                     <InputWrapper fullWidth>
                       Username :
@@ -142,33 +139,32 @@ export default function ViewMember() {
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      Email :
+                      Code :
                       <input
-                        type="email"
-                        value={email}
-                        onChange={({ target }) => setEmail(target.value)}
-                        placeholder="Email"
+                        type="text"
+                        value={whiteLabelCode}
+                        onChange={({ target }) => setWhiteLabelCode(target.value)}
+                        placeholder="White Label Code"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
-                      Password :
+                      Full Name :
                       <input
-                        type="password"
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                        placeholder="Password"
+                        type="text"
+                        value={fullName}
+                        onChange={({ target }) => setFullName(target.value)}
+                        placeholder="Full Name"
                       />
                     </InputWrapper>
-                  </Col>
-                  <Col
-                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flexWrap: 'wrap',
-                      justifyContent: 'start',
-                    }}
-                  >
+                    <InputWrapper fullWidth>
+                      Date of Birth :
+                      <input
+                        type="text"
+                        value={dateOfBirth}
+                        onChange={({ target }) => setDateOfBirth(target.value)}
+                        placeholder="Date of Birth"
+                      />
+                    </InputWrapper>
                     <InputRadioWrapper>
                       Gender :
                       <InputRadio>
@@ -189,13 +185,29 @@ export default function ViewMember() {
                         Female
                       </InputRadio>
                     </InputRadioWrapper>
+                  </Col>
+                  <Col
+                    breakPoint={{ xs: 12, sm: 6, md: 4 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flexWrap: 'wrap',
+                      justifyContent: 'start',
+                    }}
+                  >
+                    <InputWrapper
+                      fullWidth
+                      style={{ borderBottom: '1px solid #EDF1F7', paddingBottom: '10px', marginBottom: '10px' }}
+                    >
+                      <b>Contact Information</b>
+                    </InputWrapper>
                     <InputWrapper fullWidth>
-                      Date of Birth :
+                      Email :
                       <input
-                        type="text"
-                        value={dateOfBirth}
-                        onChange={({ target }) => setDateOfBirth(target.value)}
-                        placeholder="Date of Birth"
+                        type="email"
+                        value={email}
+                        onChange={({ target }) => setEmail(target.value)}
+                        placeholder="Email"
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>
@@ -216,6 +228,15 @@ export default function ViewMember() {
                         placeholder="Contact 2"
                       />
                     </InputWrapper>
+                    <InputWrapper fullWidth>
+                      Password :
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
+                        placeholder="Password"
+                      />
+                    </InputWrapper>
                   </Col>
                   <Col
                     breakPoint={{ xs: 12, sm: 6, md: 4 }}
@@ -224,17 +245,9 @@ export default function ViewMember() {
                       flexDirection: 'column',
                       flexWrap: 'wrap',
                       justifyContent: 'start',
+                      marginTop: '46px',
                     }}
                   >
-                    <InputWrapper fullWidth>
-                      White Label Code :
-                      <input
-                        type="text"
-                        value={whiteLabelCode}
-                        onChange={({ target }) => setWhiteLabelCode(target.value)}
-                        placeholder="White Label Code"
-                      />
-                    </InputWrapper>
                     <InputWrapper fullWidth>
                       Currency Code :
                       <input

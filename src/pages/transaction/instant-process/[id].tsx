@@ -163,7 +163,7 @@ export default function ProcessTransaction() {
                         type="text"
                         value={username}
                         onChange={({ target }) => setUsername(target.value)}
-                        placeholder={dataId}
+                        placeholder={username}
                       />
                     </InputWrapper>
                     <InputWrapper fullWidth>

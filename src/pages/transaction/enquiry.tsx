@@ -374,8 +374,8 @@ const TransactionEnquiry = () => {
                                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.date ? data?.date : ' - '}</StyledTableCell>
                                 <StyledTableCell align="left">{data?.serial ? data?.serial : ' - '}</StyledTableCell>
-                                <StyledTableCell align="left" key={data?.id ? data.id : ' - '}>
-                                  <Link href={`/members/view/${encodeURIComponent(data.id)}`}>
+                                <StyledTableCell align="left" key={data?.id}>
+                                  <Link href={`/members/view/${encodeURIComponent(data?.id)}`}>
                                     {data?.member ? data?.member : ' - '}
                                   </Link>
                                 </StyledTableCell>
