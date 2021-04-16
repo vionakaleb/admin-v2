@@ -67,20 +67,14 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
+
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser);
+    } else {
+      window.location.href = '/login';
     }
   }, []);
-
-  if (typeof window !== 'undefined') {
-    if (user) {
-      console.log('Logged in.', user);
-    } else {
-      console.log('Not logged in.');
-      // window.location.href = '/login';
-    }
-  }
 
   const apiLogout = () => {
     setUser({});
@@ -142,7 +136,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             },
             {
               content: (
-                <Link href="/">
+                <Link href="/dashboard">
                   <a className="logo">SuperAdmin</a>
                 </Link>
               ),
